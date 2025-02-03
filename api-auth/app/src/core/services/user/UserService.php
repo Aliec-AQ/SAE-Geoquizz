@@ -33,7 +33,8 @@ class UserService implements UserServiceInterface
             $user = new User(
                 $input->email,
                 password_hash($input->password, PASSWORD_DEFAULT),
-                0
+                0,
+                $input->pseudo
             );
             $this->userRepository->save($user);
         } catch (\Exception $e) {

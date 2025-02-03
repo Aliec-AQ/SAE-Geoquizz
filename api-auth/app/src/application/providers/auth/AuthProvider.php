@@ -33,6 +33,7 @@ class AuthProvider implements AuthProviderInterface
                 'data' => [
                     'role' => $authDTO->role,
                     'email' => $authDTO->email,
+                    'pseudo' => $authDTO->pseudo
                 ]
             ];
 
@@ -45,6 +46,7 @@ class AuthProvider implements AuthProviderInterface
                 $authDTO->id,
                 $authDTO->email,
                 $authDTO->role,
+                $authDTO->pseudo,
                 $accessToken,
                 $refreshToken
             );
@@ -59,7 +61,8 @@ class AuthProvider implements AuthProviderInterface
         return new UserDTO(
             $arrayToken['sub'],
             $arrayToken['data']->email,
-            $arrayToken['data']->role
+            $arrayToken['data']->role,
+            $arrayToken['data']->pseudo
         );
     }
 
@@ -72,6 +75,7 @@ class AuthProvider implements AuthProviderInterface
             'data' => [
                 'role' => $arrayToken['data']->role,
                 'email' => $arrayToken['data']->email,
+                'pseudo' => $arrayToken['data']->pseudo
             ]
         ];
 
