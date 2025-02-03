@@ -1,6 +1,6 @@
 <?php
 
-namespace toubeelib_auth\core\dto;
+namespace geoquizz_auth\core\dto;
 
 class UserDTO extends DTO
 {

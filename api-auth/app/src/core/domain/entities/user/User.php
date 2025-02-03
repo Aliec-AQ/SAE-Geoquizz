@@ -1,9 +1,9 @@
 <?php
 
-namespace toubeelib_auth\core\domain\entities\user;
+namespace geoquizz_auth\core\domain\entities\user;
 
-use toubeelib_auth\core\domain\entities\Entity;
-use toubeelib_auth\core\dto\UserDTO;
+use geoquizz_auth\core\domain\entities\Entity;
+use geoquizz_auth\core\dto\UserDTO;
 
 class User extends Entity
 {
