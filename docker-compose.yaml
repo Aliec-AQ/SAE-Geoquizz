@@ -76,7 +76,7 @@ services:
       - geoquizz.net
     volumes:
       - ./api-geoquizz/sql:/docker-entrypoint-initdb.d
-      - ./api-geoquizz/sql_data:/var/lib/postgresql/data
+      - api-geoquizz:/var/lib/postgresql/data
 
   auth.geoquizz.db:
     image: 'postgres:latest'
@@ -85,7 +85,7 @@ services:
       - geoquizz.net
     volumes:
       - ./api-auth/sql:/docker-entrypoint-initdb.d  
-      - ./api-auth/sql_data:/var/lib/postgresql/data
+      - api-auth:/var/lib/postgresql/data
 
   adminer:
     image: 'adminer:latest'
@@ -119,3 +119,7 @@ services:
       - "3527:1025"
     networks:
       - geoquizz.net
+
+volumes:
+  api-geoquizz:
+  api-auth:
