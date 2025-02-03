@@ -44,7 +44,7 @@ input {
     background-color: transparent;
     color: var(--secondary-color-light);
     font-size: 1.2rem;
-    
+    font-family: 'Geo';
     width: 100%;
     box-sizing: border-box;
 }

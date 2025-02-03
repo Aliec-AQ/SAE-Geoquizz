@@ -15,13 +15,13 @@ const logout = () => {
     <header>
         <nav id="app-nav">
             <div class="app-title" @click="router.push({ name: 'home' })" title="Accueil">
-                <i class="fas fa-globe"></i>
+                <img src="/favicon.ico" alt="Logo" width="40" height="40">
                 <span>Geoquizz</span>
             </div>
             
             <span class="separator"></span>
             
-            <button @click="router.push({ name: 'game' })" title="Jouer">
+            <button @click="router.push({ name: 'game-create' })" title="Jouer">
                 <i class="fas fa-play"></i>
             </button>
 
@@ -59,7 +59,7 @@ header {
 }
 
 .app-title {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: bold;
   margin-right: auto;
   cursor: pointer;

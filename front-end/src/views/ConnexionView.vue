@@ -129,6 +129,7 @@ input {
     background-color: transparent;
     color: var(--secondary-color-light);
     font-size: 1.2rem;
+    font-family: 'Geo';
 }
 
 input::placeholder {
@@ -151,11 +152,13 @@ button {
     padding: 0.75rem;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 1.5rem;
+    font-family: 'Geo';
 }
 
 button:hover {
     background-color: var(--primary-color-light);
+    color: var(--secondary-color-dark);
 }
 
 .choix {
@@ -172,6 +175,7 @@ button:hover {
     cursor: pointer;
     font-size: 1rem;
     text-decoration: underline;
+    font-family: 'Geo';
 }
 
 .choix button:hover {
