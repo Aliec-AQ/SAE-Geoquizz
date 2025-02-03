@@ -28,8 +28,7 @@ class AuthService implements AuthServiceInterface
                 return new UserDTO(
                     $user->ID,
                     $user->email,
-                    $user->role,
-                    $user->pseudo
+                    $user->role
                 );
             }else{
                 throw new AuthServiceException('Identifiants incorrects');
