@@ -80,7 +80,7 @@ services:
 
   auth.geoquizz.db:
     image: 'postgres:latest'
-    env_file: api-auth/env/auth.env
+    env_file: api-auth/env/authdb.env
     networks:
       - geoquizz.net
     volumes:
