@@ -25,15 +25,14 @@ class RegisterAction extends AbstractAction
     {
         $params = $rq->getParsedBody() ?? null;
 
-        if (!isset($params['email']) || !isset($params['mdp']) || !isset($params['pseudo'])) {
+        if (!isset($params['email']) || !isset($params['mdp']) ) {
             throw new HttpBadRequestException($rq, 'Paramètres manquants');
         }
 
         $email = filter_var($params['email'], FILTER_SANITIZE_EMAIL);
-        $pseudo = filter_var($params['pseudo'], FILTER_SANITIZE_STRING);
 
         try{
-            $this->utilisateurService->createUser(new InputUserDTO($email, $params['mdp'], $pseudo));
+            $this->utilisateurService->createUser(new InputUserDTO($email, $params['mdp']));
         }catch (Exception $e){
             throw new HttpBadRequestException($rq, $e->getMessage());
         }
