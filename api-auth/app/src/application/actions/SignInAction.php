@@ -1,13 +1,13 @@
 <?php
 
-namespace toubeelib_auth\application\actions;
+namespace geoquizz_auth\application\actions;
 
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpUnauthorizedException;
-use toubeelib_auth\application\providers\auth\AuthProviderInterface;
-use toubeelib_auth\core\dto\InputUserDTO;
+use geoquizz_auth\application\providers\auth\AuthProviderInterface;
+use geoquizz_auth\core\dto\InputUserDTO;
 
 class SignInAction extends AbstractAction
 {

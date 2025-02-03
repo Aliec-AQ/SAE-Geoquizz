@@ -1,15 +1,15 @@
 <?php
 
-namespace toubeelib_auth\application\actions;
+namespace geoquizz_auth\application\actions;
 
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpUnauthorizedException;
-use toubeelib_auth\application\actions\AbstractAction;
-use toubeelib_auth\application\providers\auth\AuthProviderInterface;
-use toubeelib_auth\core\services\auth\UserServiceException;
+use geoquizz_auth\application\actions\AbstractAction;
+use geoquizz_auth\application\providers\auth\AuthProviderInterface;
+use geoquizz_auth\core\services\auth\UserServiceException;
 
 class RefreshAction extends AbstractAction
 {

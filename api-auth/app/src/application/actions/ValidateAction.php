@@ -1,6 +1,6 @@
 <?php
 
-namespace toubeelib_auth\application\actions;
+namespace geoquizz_auth\application\actions;
 
 use Firebase\JWT\BeforeValidException;
 use Firebase\JWT\ExpiredException;

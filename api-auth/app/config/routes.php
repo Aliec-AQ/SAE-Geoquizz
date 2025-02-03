@@ -4,11 +4,11 @@ declare(strict_types=1);
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\App;
-use toubeelib_auth\application\actions\HomeAction;
-use toubeelib_auth\application\actions\RefreshAction;
-use toubeelib_auth\application\actions\RegisterAction;
-use toubeelib_auth\application\actions\SignInAction;
-use toubeelib_auth\application\actions\ValidateAction;
+use geoquizz_auth\application\actions\HomeAction;
+use geoquizz_auth\application\actions\RefreshAction;
+use geoquizz_auth\application\actions\RegisterAction;
+use geoquizz_auth\application\actions\SignInAction;
+use geoquizz_auth\application\actions\ValidateAction;
 
 
 return function( App $app): App {

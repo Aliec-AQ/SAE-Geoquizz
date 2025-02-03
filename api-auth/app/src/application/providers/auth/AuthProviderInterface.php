@@ -1,8 +1,8 @@
 <?php
-namespace toubeelib_auth\application\providers\auth;
+namespace geoquizz_auth\application\providers\auth;
 
-use toubeelib_auth\core\dto\UserDTO;
-use toubeelib_auth\core\dto\InputUserDTO;
+use geoquizz_auth\core\dto\UserDTO;
+use geoquizz_auth\core\dto\InputUserDTO;
 
 interface AuthProviderInterface
 {
