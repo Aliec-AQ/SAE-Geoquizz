@@ -18,7 +18,8 @@ use Slim\Exception\HttpUnauthorizedException;
 use Slim\Exception\HttpForbiddenException;
 use Slim\Exception\HttpNotFoundException;
 
-class GeneriqueUsersAction extends AbstractAction{
+class GeneriqueMapAction extends AbstractAction
+{
 
     private ClientInterface $remote_api;
 
@@ -43,10 +44,8 @@ class GeneriqueUsersAction extends AbstractAction{
         }
 
         try {
-
-            $path2 = explode('/',$path)[2];
-
-            $rs = $this->remote_api->request($method, '/'.$path2,$options);
+            
+            $rs = $this->remote_api->request($method, $path,$options);
         } catch (ConnectException | ServerException $e) {
             throw new HttpInternalServerErrorException($rq, "The remote server is not available");
         }catch (ClientException $e) {
