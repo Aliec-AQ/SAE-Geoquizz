@@ -120,6 +120,30 @@ services:
     networks:
       - geoquizz.net
 
+  directus:
+    image: directus/directus:latest
+    depends_on:
+      - postgres
+    env_file:
+      - ./api-map/env/directus.env
+    ports:
+      - '3530:8055'
+    volumes:
+      - ./api-map/uploads:/directus/uploads
+      - ./api-map/extensions:/directus/extensions
+    networks:
+      - geoquizz.net
+
+  postgres:
+    image: postgres:15
+    env_file:
+      - ./api-map/env/directusDB.env
+    volumes:
+      - ./api-map/postgres:/var/lib/postgresql/data
+    networks:
+      - geoquizz.net
+
 volumes:
   api-geoquizz:
   api-auth:
+  directus_db_data:
