@@ -9,9 +9,20 @@ use Slim\App;
 
 return function( App $app): App {
 
-    //recoit id série
-    $app->post('/games/', PostGameAction::class);
+    $app->post('/games[/]', PostGameAction::class)     //recoit id série dans le body
+        ->setName('createGame');
 
+    $app->put('/games/{id}[/]', PutGameAction::class)
+        ->setName('finishGame');
+
+    $app->get('/games/{id}[/]', GetGameAction::class)
+        ->setName('getGame');
+
+    $app->get('/games/public[/]', GetPublicGamesAction::class)
+        ->setName('getPublicGames');
+
+    $app->get('/users/{id}/games[/]', GetUserGamesAction::class)
+        ->setName('getUserGames');
 
     return $app;
 };
