@@ -1,11 +1,11 @@
 <?php
-namespace mail;
+namespace mail\app\src\core\services;
 
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mime\Email;
 
-class mailEnvoi implements mailEnvoiInterface
+class serviceServiceMailEnvoi implements serviceMailEnvoiInterface
 {
 
     public function envoi($dns,$from, $to, $subject, $content): void

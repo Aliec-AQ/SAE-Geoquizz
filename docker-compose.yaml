@@ -61,13 +61,13 @@ services:
       - '3524:80'
     working_dir: /var/php
     volumes:
-      - ./mail:/var/php
+      - ./mail/app:/var/php
     networks:
       - geoquizz.net
     depends_on:
       rabbitmq:
         condition: service_healthy
-    command: php mail.php
+    command: php /public/mail.php
 
   geoquizz.db:
     image: 'postgres:latest'
