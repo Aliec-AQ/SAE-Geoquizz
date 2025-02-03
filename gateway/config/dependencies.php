@@ -1,8 +1,8 @@
 <?php
 
-use gateway\application\actions\GeneriquePatientAction;
-use gateway\application\actions\GeneriquePraticienAction;
-use gateway\application\actions\GeneriqueRDVAction;
+use gateway\application\actions\GeneriqueAuthnAction;
+use gateway\application\actions\GeneriqueGeoQuizzAction;
+use gateway\application\actions\GeneriqueMapAction;
 use gateway\application\actions\GeneriqueUsersAction;
 use gateway\application\middleware\AuthMiddleware;
 use GuzzleHttp\Client;
@@ -10,36 +10,28 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Client\ClientInterface;
 return [
 
-    'client_praticien' => function (ContainerInterface $c){
-        return new Client(['base_uri' => 'http://api.praticiens.toubeelib:80']);
+    'client_geoquizz' => function (ContainerInterface $c){
+        return new Client(['base_uri' => 'http://api.auth.geoquizz:80']);
     },
 
-    'client_rdv' => function (ContainerInterface $c){
-        return new Client(['base_uri' => 'http://api.rdv.toubeelib:80']);
+    'client_map' => function (ContainerInterface $c){
+        return new Client(['base_uri' => 'http://api.map.geoquizz:80']);
     },
 
-    'client_patient' => function (ContainerInterface $c){
-        return new Client(['base_uri' => 'http://api.patient.toubeelib:80']);
-    },
-
-    'client_auth' => function (ContainerInterface $c){
+    'client_authn' => function (ContainerInterface $c){
         return new Client(['base_uri' => 'http://api.auth.toubeelib:80']);
     },
 
-    GeneriquePraticienAction::class => function (ContainerInterface $c){
-        return new GeneriquePraticienAction($c->get('client_praticien'));
+    GeneriqueGeoQuizzAction::class => function (ContainerInterface $c){
+        return new GeneriqueGeoQuizzAction($c->get('client_geoquizz'));
     },
 
-    GeneriqueRDVAction::class => function (ContainerInterface $c){
-        return new GeneriqueRDVAction($c->get('client_rdv'));
+    GeneriqueMapAction::class => function (ContainerInterface $c){
+        return new GeneriqueMapAction($c->get('client_map'));
     },
 
-    GeneriqueUsersAction::class => function (ContainerInterface $c){
-        return new GeneriqueUsersAction($c->get('client_auth'));
-    },
-
-    GeneriquePatientAction::class => function (ContainerInterface $c){
-      return new GeneriquePatientAction($c->get('client_patient'));
+    GeneriqueAuthnAction::class => function (ContainerInterface $c){
+      return new GeneriqueAuthnAction($c->get('client_authn'));
     },
 
     AuthMiddleware::class => function (ContainerInterface $c) {
