@@ -1,6 +1,6 @@
 <?php
 
-namespace toubeelib_auth\core\dto;
+namespace geoquizz_auth\core\dto;
 
 use JsonSerializable;
 use Respect\Validation\Validatable;

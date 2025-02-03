@@ -1,5 +1,5 @@
 <?php
-namespace toubeelib_auth\application\providers\auth;
+namespace geoquizz_auth\application\providers\auth;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;

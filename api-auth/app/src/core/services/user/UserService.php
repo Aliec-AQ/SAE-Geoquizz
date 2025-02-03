@@ -1,13 +1,13 @@
 <?php
 
-namespace toubeelib_auth\core\services\user;
+namespace geoquizz_auth\core\services\user;
 
 use PHPUnit\Exception;
-use toubeelib_auth\core\dto\UserDTO;
-use toubeelib_auth\core\domain\entities\user\User;
-use toubeelib_auth\core\dto\InputUserDTO;
-use toubeelib_auth\core\repositoryInterfaces\UserRepositoryInterface;
-use toubeelib_auth\core\services\user\UserServiceException;
+use geoquizz_auth\core\dto\UserDTO;
+use geoquizz_auth\core\domain\entities\user\User;
+use geoquizz_auth\core\dto\InputUserDTO;
+use geoquizz_auth\core\repositoryInterfaces\UserRepositoryInterface;
+use geoquizz_auth\core\services\user\UserServiceException;
 
 class UserService implements UserServiceInterface
 {

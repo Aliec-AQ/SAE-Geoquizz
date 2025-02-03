@@ -1,6 +1,6 @@
 <?php
 
-namespace toubeelib_auth\core\domain\entities;
+namespace geoquizz_auth\core\domain\entities;
 
 abstract class Entity
 {

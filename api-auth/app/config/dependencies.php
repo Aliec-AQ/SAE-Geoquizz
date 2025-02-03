@@ -1,19 +1,19 @@
 <?php
 
 use Psr\Container\ContainerInterface;
-use toubeelib_auth\application\actions\RefreshAction;
-use toubeelib_auth\application\actions\RegisterAction;
-use toubeelib_auth\application\actions\SignInAction;
-use toubeelib_auth\application\actions\ValidateAction;
-use toubeelib_auth\application\providers\auth\AuthProvider;
-use toubeelib_auth\application\providers\auth\AuthProviderInterface;
-use toubeelib_auth\application\providers\auth\JWTManager;
-use toubeelib_auth\core\repositoryInterfaces\UserRepositoryInterface;
-use toubeelib_auth\core\services\auth\AuthService;
-use toubeelib_auth\core\services\auth\AuthServiceInterface;
-use toubeelib_auth\core\services\user\UserService;
-use toubeelib_auth\core\services\user\UserServiceInterface;
-use toubeelib_auth\infrastructure\repositories\PDOUserRepository;
+use geoquizz_auth\application\actions\RefreshAction;
+use geoquizz_auth\application\actions\RegisterAction;
+use geoquizz_auth\application\actions\SignInAction;
+use geoquizz_auth\application\actions\ValidateAction;
+use geoquizz_auth\application\providers\auth\AuthProvider;
+use geoquizz_auth\application\providers\auth\AuthProviderInterface;
+use geoquizz_auth\application\providers\auth\JWTManager;
+use geoquizz_auth\core\repositoryInterfaces\UserRepositoryInterface;
+use geoquizz_auth\core\services\auth\AuthService;
+use geoquizz_auth\core\services\auth\AuthServiceInterface;
+use geoquizz_auth\core\services\user\UserService;
+use geoquizz_auth\core\services\user\UserServiceInterface;
+use geoquizz_auth\infrastructure\repositories\PDOUserRepository;
 
 
 return [

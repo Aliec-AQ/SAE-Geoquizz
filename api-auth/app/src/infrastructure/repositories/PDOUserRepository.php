@@ -1,11 +1,11 @@
 <?php
 
-namespace toubeelib_auth\infrastructure\repositories;
+namespace geoquizz_auth\infrastructure\repositories;
 
 use PDO;
-use toubeelib_auth\core\repositoryInterfaces\UserRepositoryInterface;
-use toubeelib_auth\core\repositoryInterfaces\RepositoryEntityNotFoundException;
-use toubeelib_auth\core\domain\entities\user\User;
+use geoquizz_auth\core\repositoryInterfaces\UserRepositoryInterface;
+use geoquizz_auth\core\repositoryInterfaces\RepositoryEntityNotFoundException;
+use geoquizz_auth\core\domain\entities\user\User;
 
 class PDOUserRepository implements UserRepositoryInterface
 {
