@@ -24,7 +24,8 @@ class PDOUserRepository implements UserRepositoryInterface
             $auth = new User(
             $row['email'],
             $row['password'],
-            intval($row['role'])
+            intval($row['role']),
+            $row['pseudo']
             );
             $auth->setID($row['id']);
             return $auth;
@@ -56,11 +57,13 @@ class PDOUserRepository implements UserRepositoryInterface
         $email = $auth->email;
         $password = $auth->password;
         $role = $auth->role;
+        $pseudo = $auth->pseudo;
         try {
-            $stmt = $this->pdo->prepare('INSERT INTO users (email, password, role) VALUES (?, ?, ?) RETURNING id');
+            $stmt = $this->pdo->prepare('INSERT INTO users (email, password, pseudo, role) VALUES (?, ?, ?, ?) RETURNING id');
             $stmt->bindParam(1, $email);
             $stmt->bindParam(2, $password);
-            $stmt->bindParam(3, $role);
+            $stmt->bindParam(3, $pseudo);
+            $stmt->bindParam(4, $role);
             $stmt->execute();
             $id = $stmt->fetchColumn();
         } catch (Exception $e) {
