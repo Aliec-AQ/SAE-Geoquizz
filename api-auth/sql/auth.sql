@@ -1,9 +1,8 @@
-\list
-\c auth;
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 DROP TABLE IF EXISTS "users";
 CREATE TABLE "public"."users" (
-    "id" uuid NOT NULL,
+    "id" uuid DEFAULT uuid_generate_v4() NOT NULL,
     "email" character varying(128) NOT NULL,
     "password" character varying(256) NOT NULL,
     "role" smallint DEFAULT '0' NOT NULL,

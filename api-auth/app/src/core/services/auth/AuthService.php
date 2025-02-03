@@ -1,13 +1,13 @@
 <?php
-namespace toubeelib_auth\core\services\auth;
+namespace geoquizz_auth\core\services\auth;
 
 use Psr\Log\LoggerInterface;
 use Monolog\Level;
-use toubeelib_auth\core\repositoryInterfaces\UserRepositoryInterface;
-use toubeelib_auth\core\services\auth\AuthServiceInterface;
-use toubeelib_auth\core\services\auth\AuthServiceException;
-use toubeelib_auth\core\dto\UserDTO;
-use toubeelib_auth\core\dto\InputUserDTO;
+use geoquizz_auth\core\repositoryInterfaces\UserRepositoryInterface;
+use geoquizz_auth\core\services\auth\AuthServiceInterface;
+use geoquizz_auth\core\services\auth\AuthServiceException;
+use geoquizz_auth\core\dto\UserDTO;
+use geoquizz_auth\core\dto\InputUserDTO;
 
 class AuthService implements AuthServiceInterface
 {

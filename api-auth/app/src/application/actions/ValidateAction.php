@@ -1,6 +1,6 @@
 <?php
 
-namespace toubeelib_auth\application\actions;
+namespace geoquizz_auth\application\actions;
 
 use Firebase\JWT\BeforeValidException;
 use Firebase\JWT\ExpiredException;
@@ -9,9 +9,9 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpUnauthorizedException;
-use toubeelib_auth\core\dto\UserDTO;
-use toubeelib_auth\core\dto\InputUserDTO;
-use toubeelib_auth\application\providers\auth\AuthProviderInterface;
+use geoquizz_auth\core\dto\UserDTO;
+use geoquizz_auth\core\dto\InputUserDTO;
+use geoquizz_auth\application\providers\auth\AuthProviderInterface;
 
 class ValidateAction extends AbstractAction
 {

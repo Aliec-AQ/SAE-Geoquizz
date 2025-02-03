@@ -1,9 +1,9 @@
 <?php
 
-namespace toubeelib_auth\core\services\user;
+namespace geoquizz_auth\core\services\user;
 
-use toubeelib_auth\core\dto\UserDTO;
-use toubeelib_auth\core\dto\InputUserDTO;
+use geoquizz_auth\core\dto\UserDTO;
+use geoquizz_auth\core\dto\InputUserDTO;
 
 interface UserServiceInterface
 {
