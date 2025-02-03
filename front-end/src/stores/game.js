@@ -8,6 +8,7 @@ export const useGameStore = defineStore('game', {
             currentPhoto: 0,
             defaultCoordinates: {},
             guesses: [],
+            distance: 0, // en km
             score: 0,
             time: 0, // en secondes
         }
@@ -39,17 +40,18 @@ export const useGameStore = defineStore('game', {
                 },
             ];
             this.currentPhoto = 0;
+            this.distance = 0.3;
             this.time = 20;
         },
 
         calculateScore(distance, time) {
             let points = 0;
 
-            if (distance < 5) {
+            if (distance < this.distance) {
                 points = 5;
-            } else if (distance < 10) {
+            } else if (distance < this.distance * 2) {
                 points = 3;
-            } else if (distance < 15) {
+            } else if (distance < this.distance * 4) {
                 points = 1;
             }
 

@@ -21,8 +21,8 @@ const logout = () => {
             
             <span class="separator"></span>
             
-            <button @click="router.push({ name: 'game-create' })" title="Jouer">
-                <i class="fas fa-play"></i>
+            <button @click="router.push({ name: 'game-create' })" title="Créer une partie">
+                <i class="fas fa-plus-circle"></i>
             </button>
 
             <span class="separator"></span>
@@ -83,6 +83,6 @@ header {
 }
 
 #app-nav button:hover {
-    color: var(--primary-color-light);
+    color: var(--secondary-color-medium);
 }
 </style>

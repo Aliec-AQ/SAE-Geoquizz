@@ -83,9 +83,6 @@ watch(isExpanded, (newVal) => {
     height: 200px;
     transition: all 0.3s ease;
     z-index: 1000;
-
-    border: 2px solid var(--primary-color-dark);
-    border-radius: 5px;
 }
 
 #map-container.expanded {
