@@ -49,7 +49,7 @@ class AuthProvider implements AuthProviderInterface
                 $refreshToken
             );
         }catch(\Exception $e){
-            throw new AuthServiceException("erreur auth");
+            throw new AuthServiceException("erreur auth" . $e->getMessage());
         }
     }
 
