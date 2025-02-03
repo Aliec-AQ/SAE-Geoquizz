@@ -70,9 +70,7 @@
             </div>
         </div>
         <div class="title-container">
-            <h1 class="app-title">
-                truc ici
-            </h1>
+            <img src="/favicon.ico" alt="logo" width="200" height="200">
         </div>
     </main>
 </template>
@@ -103,16 +101,8 @@
     background-color: var(--primary-color-medium);
 }
 
-.app-title {
-    display: flex;
-    align-items: center;
-    gap: 4rem;
-    font-size: 8rem;
-    color: var(--primary-color-light);
-}
-
 h1 {
-    color: var(--primary-color-light);
+    color: var(--secondary-color-medium);
     margin-bottom: 1rem;
 }
 
@@ -158,7 +148,7 @@ button {
 
 button:hover {
     background-color: var(--primary-color-light);
-    color: var(--secondary-color-dark);
+    color: var(--secondary-color-medium);
 }
 
 .choix {
@@ -169,16 +159,16 @@ button:hover {
 
 .choix button {
     background-color: transparent;
-    color: var(--primary-color-light);
+    color: var(--secondary-color-medium);
     padding: 0.5rem;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 1.2rem;
     text-decoration: underline;
     font-family: 'Geo';
 }
 
 .choix button:hover {
-    color: var(--primary-color-light);
+    color: var(--secondary-color-light);
 }
 </style>

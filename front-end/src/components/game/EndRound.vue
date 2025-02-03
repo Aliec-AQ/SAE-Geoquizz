@@ -38,6 +38,7 @@ onMounted(() => {
             popupAnchor: [0, -32]
         })
     }).addTo(map);
+
     const photoMarker = L.marker([props.guess.photoLat, props.guess.photoLong], {
         icon: L.icon({
             iconUrl: '/location.png',
@@ -65,30 +66,42 @@ const nextPhoto = () => {
 </script>
 
 <template>
-    <div v-if="showMap" id="map" style="height: 500px;"></div>
-    <div v-else class="info-container">
-        <p>Pas répondu à temps</p>
-    </div>
-    <div class="info-container">
-        <p><i class="fas fa-map-marker-alt"></i> Distance de l'emplacement : {{ props.guess.distance }} km</p>
-        <p><i class="fas fa-star"></i> Score gagné : {{ props.guess.score }}</p>
-        <p><i class="fas fa-trophy"></i> Score total : {{ score }}</p>
-        <button @click="nextPhoto" class="btn btn-primary">Round Suivant</button>
+    <div id="end-round-container">
+        <div v-if="showMap" id="map" style="height: 500px;"></div>
+        <div v-else class="info-container">
+            <p>Pas répondu à temps</p>
+        </div>
+        <div class="info-container">
+            <p><i class="fas fa-map-marker-alt"></i> Distance de l'emplacement : {{ props.guess.distance }} km</p>
+            <p><i class="fas fa-star"></i> Score gagné : {{ props.guess.score }}</p>
+            <p><i class="fas fa-trophy"></i> Score total : {{ score }}</p>
+            <button @click="nextPhoto" class="btn btn-primary">Round Suivant</button>
+        </div>
     </div>
 </template>
 
-<style>
+<style scoped>
+#end-round-container {
+    display: flex;
+    flex-direction: column;
+    margin: 2.5%;
+    border: 3px solid var(--secondary-color-medium);
+    border-radius: 10px;
+    box-shadow: 0 0 10px var(--secondary-color-medium);
+}
+
+#map {
+    border-radius: 10px 10px 0 0;
+}
+
 .info-container {
     margin-top: 20px;
     text-align: center;
-    background-color: var(--secondary-color-lighter);
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .info-container p {
-    color: var(--primary-color-dark);
+    color: var(--text-color);
     font-size: 1.5rem;
     margin: 10px 0;
 }
