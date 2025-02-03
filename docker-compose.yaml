@@ -24,7 +24,7 @@ services:
     build:
       context: api-auth/build
       dockerfile: 8.3-cli.Dockerfile
-    env_file: api-auth/geoquizz.env
+    env_file: api-auth/env/auth.env
     ports:
       - '3522:80'
     volumes:
@@ -40,7 +40,7 @@ services:
     build:
       context: api-geoquizz/build
       dockerfile: 8.3-cli.Dockerfile
-    env_file: api-geoquizz/exemple.geoquizz.env
+    env_file: api-geoquizz/env/geoquizz.env
     ports:
       - '3523:80'
     volumes:
@@ -56,7 +56,7 @@ services:
     build:
       context: mail/build
       dockerfile: 8.3-cli.Dockerfile
-    env_file: mail/mail.env
+    env_file: mail/env/mail.env
     ports:
       - '3524:80'
     working_dir: /var/php
@@ -71,21 +71,21 @@ services:
 
   geoquizz.db:
     image: 'postgres:latest'
-    env_file: api-geoquizz/exemple.geoquizzdb.env
+    env_file: api-geoquizz/env/geoquizzdb.env
     networks:
       - geoquizz.net
     volumes:
       - ./api-geoquizz/sql:/docker-entrypoint-initdb.d
-      - ./api-geoquizz/sql_data:/var/lib/postgresql/data
+      - api-geoquizz:/var/lib/postgresql/data
 
   auth.geoquizz.db:
     image: 'postgres:latest'
-    env_file: api-auth/geoquizzdb.env
+    env_file: api-auth/env/authdb.env
     networks:
       - geoquizz.net
     volumes:
       - ./api-auth/sql:/docker-entrypoint-initdb.d  
-      - ./api-auth/sql_data:/var/lib/postgresql/data
+      - api-auth:/var/lib/postgresql/data
 
   adminer:
     image: 'adminer:latest'
@@ -119,3 +119,7 @@ services:
       - "3527:1025"
     networks:
       - geoquizz.net
+
+volumes:
+  api-geoquizz:
+  api-auth:

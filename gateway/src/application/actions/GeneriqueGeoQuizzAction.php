@@ -2,19 +2,23 @@
 
 namespace gateway\application\actions;
 
+use gateway\application\actions\AbstractAction;
+
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
+
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Slim\Exception\HttpBadRequestException;
-use Slim\Exception\HttpForbiddenException;
-use Slim\Exception\HttpInternalServerErrorException;
-use Slim\Exception\HttpNotFoundException;
-use Slim\Exception\HttpUnauthorizedException;
 
-class GeneriquePatientAction extends AbstractAction
+use Slim\Exception\HttpBadRequestException;
+use Slim\Exception\HttpInternalServerErrorException;
+use Slim\Exception\HttpUnauthorizedException;
+use Slim\Exception\HttpForbiddenException;
+use Slim\Exception\HttpNotFoundException;
+
+class GeneriqueGeoQuizzAction extends AbstractAction
 {
 
     private ClientInterface $remote_api;
