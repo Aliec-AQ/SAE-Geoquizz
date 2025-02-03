@@ -1,0 +1,121 @@
+networks:
+  geoquizz.net:
+    driver: bridge
+
+services:
+
+  gateway.geoquizz:
+    build:
+      context: gateway/build
+      dockerfile: 8.3-cli.Dockerfile
+    ports:
+      - '3521:80'
+    volumes:
+      - ./gateway:/var/php
+    working_dir: /var/php
+    networks:
+      - geoquizz.net
+    depends_on:
+      - api.geoquizz
+      - api.auth.geoquizz
+    command: php -S 0.0.0.0:80 -t /var/php/public
+
+  api.auth.geoquizz:
+    build:
+      context: api-auth/build
+      dockerfile: 8.3-cli.Dockerfile
+    env_file: api-auth/geoquizz.env
+    ports:
+      - '3522:80'
+    volumes:
+      - ./api-auth/app:/var/php
+    working_dir: /var/php
+    networks:
+      - geoquizz.net
+    depends_on:
+      - auth.geoquizz.db
+    command: php -S 0.0.0.0:80 -t /var/php/public
+
+  api.geoquizz:
+    build:
+      context: api-geoquizz/build
+      dockerfile: 8.3-cli.Dockerfile
+    env_file: api-geoquizz/exemple.geoquizz.env
+    ports:
+      - '3523:80'
+    volumes:
+      - ./api-geoquizz/app:/var/php
+    working_dir: /var/php
+    networks:
+      - geoquizz.net
+    depends_on:
+      - geoquizz.db
+    command: php -S 0.0.0.0:80 -t /var/php/public
+
+  geoquizz.mail:
+    build:
+      context: mail/build
+      dockerfile: 8.3-cli.Dockerfile
+    env_file: mail/mail.env
+    ports:
+      - '3524:80'
+    working_dir: /var/php
+    volumes:
+      - ./mail:/var/php
+    networks:
+      - geoquizz.net
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    command: php mail.php
+
+  geoquizz.db:
+    image: 'postgres:latest'
+    env_file: api-geoquizz/exemple.geoquizzdb.env
+    networks:
+      - geoquizz.net
+    volumes:
+      - ./api-geoquizz/sql:/docker-entrypoint-initdb.d
+      - ./api-geoquizz/sql_data:/var/lib/postgresql/data
+
+  auth.geoquizz.db:
+    image: 'postgres:latest'
+    env_file: api-auth/geoquizzdb.env
+    networks:
+      - geoquizz.net
+    volumes:
+      - ./api-auth/sql:/docker-entrypoint-initdb.d  
+      - ./api-auth/sql_data:/var/lib/postgresql/data
+
+  adminer:
+    image: 'adminer:latest'
+    ports:
+      - '3529:8080'
+    networks:
+      - geoquizz.net
+
+  rabbitmq:
+    image: rabbitmq:4-management
+    ports:
+      - '3526:15672'
+      - '3525:5672'
+    networks:
+      - geoquizz.net
+    volumes:
+      - ./rabbitmq_dir:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=@dm1#!
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 8s
+      timeout: 30s
+      retries: 3
+
+  mailcatcher:
+    image: dockage/mailcatcher:latest
+    ports:
+      - "3528:1080"
+      - "3527:1025"
+    networks:
+      - geoquizz.net
