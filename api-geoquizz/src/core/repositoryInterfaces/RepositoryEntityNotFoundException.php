@@ -1,6 +1,6 @@
 <?php
 
-namespace repositoryInterfaces;
+namespace core\repositoryInterfaces;
 
 class RepositoryEntityNotFoundException extends \Exception
 {

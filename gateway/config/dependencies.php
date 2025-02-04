@@ -3,7 +3,6 @@
 use gateway\application\actions\GeneriqueAuthnAction;
 use gateway\application\actions\GeneriqueGeoQuizzAction;
 use gateway\application\actions\GeneriqueMapAction;
-use gateway\application\actions\GeneriqueUsersAction;
 use gateway\application\middleware\AuthMiddleware;
 use GuzzleHttp\Client;
 use Psr\Container\ContainerInterface;
