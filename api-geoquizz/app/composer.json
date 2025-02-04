@@ -18,7 +18,7 @@
   },
   "autoload": {
     "psr-4" : {
-      "geo-quizz\\" : "./src"
+      "geoquizz\\" : "./src"
     }
   }
 }
