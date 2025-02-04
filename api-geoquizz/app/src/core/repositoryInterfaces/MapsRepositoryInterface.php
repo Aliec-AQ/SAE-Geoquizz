@@ -4,5 +4,5 @@ namespace geoquizz\core\repositoryInterfaces;
 
 interface MapsRepositoryInterface
 {
-    public function getImagesInfos($idSequence) : array;
+    public function getImagesInfos(string $idSerie) : array;
 }

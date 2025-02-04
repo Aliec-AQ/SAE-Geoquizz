@@ -11,7 +11,6 @@ class PhotoDTO extends DTO
     protected string $image;
     protected string $lat;
     protected string $long;
-    protected string $theme_id;
 
     public function __construct(Photo $p){
         $this->id = $p->getID();
@@ -19,7 +18,6 @@ class PhotoDTO extends DTO
         $this->image = $p->image;
         $this->lat = $p->lat;
         $this->long = $p->long;
-        $this->theme_id = $p->theme_id;
     }
 
     public function jsonSerialize(): array{
@@ -28,8 +26,7 @@ class PhotoDTO extends DTO
             'nom' => $this->nom,
             'image' => $this->image,
             'lat' => $this->lat,
-            'long' => $this->long,
-            'theme_id' => $this->theme_id
+            'long' => $this->long
         ];
     }
 

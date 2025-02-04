@@ -10,14 +10,12 @@ class Photo extends Entity
     protected string $image;
     protected string $lat;
     protected string $long;
-    protected string $theme_id;
 
-    public function __construct(string $nom, string $image, string $lat, string $long, string $theme_id){
+    public function __construct(string $nom, string $image, string $lat, string $long){
         $this->nom = $nom;
         $this->image = $image;
         $this->lat = $lat;
         $this->long = $long;
-        $this->theme_id = $theme_id;
     }
 
     public function toDTO(): PhotoDTO{

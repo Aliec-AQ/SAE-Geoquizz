@@ -13,14 +13,19 @@ return function( App $app): App {
     $app->put('/games/{id}[/]', PutGameAction::class)
         ->setName('finishGame');
 
-    $app->get('/games/{id}[/]', GetGameAction::class)
-        ->setName('getGame');
+    $app->get('/sequence/{id}[/]', GetGameAction::class)
+        ->setName('getSequence');
+
+    $app->post('/games/replay', PostGameReplayAction::class) // id de la séquence dans la query
+        ->setName('postReplayGame');
 
     $app->get('/games/public[/]', GetPublicGamesAction::class)
         ->setName('getPublicGames');
 
     $app->get('/users/{id}/games[/]', GetUserGamesAction::class)
         ->setName('getUserGames');
+
+
 
     return $app;
 };
