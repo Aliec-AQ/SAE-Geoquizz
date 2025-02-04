@@ -1,0 +1,6 @@
+host=auth.geoquizz.db
+port=5432
+driver=pgsql
+database=auth
+username=root
+password=root
