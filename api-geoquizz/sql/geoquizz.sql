@@ -36,7 +36,7 @@ CREATE TABLE "public"."players_sequences" (
     "high_score" int NOT NULL,
     "status" int DEFAULT 0 NOT NULL,
     "date" timestamp NOT NULL,
-    CONSTRAINT "players_sequences_player_id" FOREIGN KEY ("player_id") REFERENCES "players"("id"),
+    CONSTRAINT "players_sequences_player_id" FOREIGN KEY ("player_id") REFERENCES "players"("id_user"),
     CONSTRAINT "players_sequences_sequence_id" FOREIGN KEY ("sequence_id") REFERENCES "sequences"("id"),
     CONSTRAINT "players_sequences_id" PRIMARY KEY ("id")
 ) WITH (oids = false);
