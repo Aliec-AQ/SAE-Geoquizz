@@ -2,6 +2,7 @@
 
 namespace geoquizz\infrastructure;
 
+use geoquizz\core\domain\entity\Photo;
 use geoquizz\core\repositoryInterfaces\MapsRepositoryInterface;
 
 class AdapterMapsRepository implements MapsRepositoryInterface
@@ -13,10 +14,17 @@ class AdapterMapsRepository implements MapsRepositoryInterface
         $this->client = $client;
     }
 
-    public function getImagesInfos($idSequence): array
+    public function getImagesInfos($idSerie): array
     {
-        $response = $this->client->get("");
+        $response = $this->client->get('/items/themes?fields=photos.photos_id.*&filter={"id":{"_eq":"'. $idSerie . '"}}');
         $data = json_decode($response->getBody()->getContents(), true);
-        return $data;
+        $randomData = array_rand($data, 10);
+
+        $returnData = [];
+        foreach ($randomData as $photo) {
+            $p = new Photo($photo['nom'], $photo['image'], $photo['lat'], $photo['long']);
+            $returnData[] = $p;
+        }
+        return $returnData;
     }
 }

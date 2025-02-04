@@ -19,9 +19,9 @@ class PostGameAction extends AbstractAction
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         $idserie = $rq->getQueryParams()['idserie'];
-        
+        $idUser = "user"; //faire la gestion user
         $token = "faire la gestion token";
-        $game = $this->game_service->createGame($idserie);
+        $game = $this->game_service->createGame($idserie, $idUser);
         
         $res = [
             "token" => $token,

@@ -2,9 +2,9 @@
 
 namespace geoquizz\core\services;
 
-use geoquizz\core\services\GameDTO;
+use geoquizz\core\dto\GameDTO;
 
 interface GameServiceInterface
 {
-    public function createGame($idserie) : GameDTO;
+    public function createGame(string $idserie, string $idUser) : GameDTO;
 }
