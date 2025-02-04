@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS "sequences";
 CREATE TABLE "public"."sequences" (
     "id" uuid DEFAULT uuid_generate_v4() NOT NULL,
     "public" boolean NOT NULL,
+    "serie_id" uuid NOT NULL,
     CONSTRAINT "sequences_id" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
