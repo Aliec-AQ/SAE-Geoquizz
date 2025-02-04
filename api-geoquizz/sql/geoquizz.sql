@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS "players";
 CREATE TABLE "public"."players" (
     "id_user" uuid NOT NULL,
     "pseudo" character varying(128) NOT NULL,
+    "last_connection" timestamp NOT NULL,
     CONSTRAINT "players_id" PRIMARY KEY ("id_user"),
     CONSTRAINT "players_pseudo" UNIQUE ("pseudo")
 ) WITH (oids = false);
@@ -30,8 +31,10 @@ CREATE TABLE "public"."players_sequences" (
     "id" uuid DEFAULT uuid_generate_v4() NOT NULL,
     "player_id" uuid NOT NULL,
     "sequence_id" uuid NOT NULL,
-    "score" smallint NOT NULL,
+    "last_score" int NOT NULL,
+    "high_score" int NOT NULL,
     "status" int DEFAULT 0 NOT NULL,
+    "date" timestamp NOT NULL,
     CONSTRAINT "players_sequences_player_id" FOREIGN KEY ("player_id") REFERENCES "players"("id"),
     CONSTRAINT "players_sequences_sequence_id" FOREIGN KEY ("sequence_id") REFERENCES "sequences"("id"),
     CONSTRAINT "players_sequences_id" PRIMARY KEY ("id")
