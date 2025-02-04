@@ -16,7 +16,7 @@ return  [
     },
 
     'client_maps' => function (ContainerInterface $c){
-        return new Client(['base_uri' => 'http://api.maps.geoquizz:80']);
+        return new Client(['base_uri' => 'http://directus:8055']);
     },
 
     'SECRET_KEY' => getenv('JWT_SECRET_KEY'),
