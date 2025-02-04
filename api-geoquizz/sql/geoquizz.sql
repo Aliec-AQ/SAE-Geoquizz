@@ -34,7 +34,7 @@ CREATE TABLE "public"."players_sequences" (
     "player_id" uuid,
     "sequence_id" uuid NOT NULL,
     "score" int NOT NULL,
-    "status" int DEFAULT 0 NOT NULL,
+    "status" boolean DEFAULT false NOT NULL,
     "date" timestamp NOT NULL,
     CONSTRAINT "players_sequences_player_id" FOREIGN KEY ("player_id") REFERENCES "players"("id_user"),
     CONSTRAINT "players_sequences_sequence_id" FOREIGN KEY ("sequence_id") REFERENCES "sequences"("id"),
