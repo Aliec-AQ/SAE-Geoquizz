@@ -43,7 +43,7 @@ return [
     },
 
     RegisterAction::class => function(ContainerInterface $c){
-        return new RegisterAction($c->get(UserServiceInterface::class));
+        return new RegisterAction($c->get(UserServiceInterface::class), $c->get(AuthProviderInterface::class));
     },
 
     RefreshAction::class => function(ContainerInterface $c){

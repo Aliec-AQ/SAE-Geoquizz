@@ -134,6 +134,8 @@ services:
       retries: 5
       start_interval: 5s
       start_period: 30s
+    networks:
+      - geoquizz.net
 
   cache:
     image: redis:6
@@ -144,6 +146,8 @@ services:
       retries: 5
       start_interval: 5s
       start_period: 30s
+    networks:
+      - geoquizz.net
 
   directus:
     image: directus/directus:11.3.5
@@ -159,6 +163,8 @@ services:
         condition: service_healthy
     env_file:
       - ./api-map/env/directus.env
+    networks:
+      - geoquizz.net
 
 volumes:
   api-geoquizz:
