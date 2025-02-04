@@ -72,6 +72,7 @@ onBeforeUnmount(() => {
                 <div class="guesses-cell" v-else>Pas répondu à temps</div>
             </div>
         </div>
+        <button @click="exit">Retour au menu</button>
     </div>
 </template>
 
@@ -146,12 +147,13 @@ h1 {
 }
 
 button {
-    background-color: var(--primary-color);
+    background-color: var(--primary-color-light);
     color: white;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin: 10px;
 }
 
 button:hover {

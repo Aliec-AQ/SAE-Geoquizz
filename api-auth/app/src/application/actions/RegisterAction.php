@@ -8,14 +8,17 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpBadRequestException;
 use geoquizz_auth\core\dto\InputUserDTO;
 use geoquizz_auth\core\services\user\UserServiceInterface;
+use geoquizz_auth\application\providers\auth\AuthProviderInterface;
 
 class RegisterAction extends AbstractAction
 {
     private UserServiceInterface $utilisateurService;
+    private AuthProviderInterface $authProvider;
 
-    public function __construct(UserServiceInterface $serviceUtilisateur)
+    public function __construct(UserServiceInterface $serviceUtilisateur, AuthProviderInterface $authProvider)
     {
         $this->utilisateurService = $serviceUtilisateur;
+        $this->authProvider = $authProvider;
     }
 
   /**
@@ -36,6 +39,22 @@ class RegisterAction extends AbstractAction
         }catch (Exception $e){
             throw new HttpBadRequestException($rq, $e->getMessage());
         }
-        return $rs->withStatus(200);
+
+        try {
+            $authRes = $this->authProvider->signIn(new InputUserDTO($email, $params['mdp']));
+          }catch (Exception $e){
+            throw new HttpUnauthorizedException($rq, 'Identifiants incorrects ' . $e->getMessage());
+          }
+      
+          $response = [
+            'type' => 'ressource',
+            'atoken' => $authRes->accessToken,
+            'rtoken' => $authRes->refreshToken,
+            'role' => $authRes->role
+          ];
+      
+          $rs->getBody()->write(json_encode($response));
+      
+          return $rs->withStatus(200)->withHeader('Content-Type', 'application/json');
     }
 }
