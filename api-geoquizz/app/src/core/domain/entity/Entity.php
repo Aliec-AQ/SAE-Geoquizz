@@ -1,6 +1,6 @@
 <?php
 
-namespace GeoQuizz\core\domain\entity;
+namespace geoquizz\core\domain\entity;
 
 abstract class Entity
 {

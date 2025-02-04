@@ -1,13 +1,13 @@
 <?php
 
 
-use application\actions\PostGameAction;
-use core\repositoryInterfaces\GameRepositoryInterface;
-use core\repositoryInterfaces\MapsRepositoryInterface;
-use core\services\GameService;
-use core\services\GameServiceInterface;
-use infrastructure\AdapterMapsRepository;
-use infrastructure\PDOGameRepository;
+use app\src\application\actions\PostGameAction;
+use app\src\core\repositoryInterfaces\GameRepositoryInterface;
+use app\src\core\repositoryInterfaces\MapsRepositoryInterface;
+use app\src\core\services\GameService;
+use app\src\core\services\GameServiceInterface;
+use app\src\infrastructure\AdapterMapsRepository;
+use app\src\infrastructure\PDOGameRepository;
 
 return [
 

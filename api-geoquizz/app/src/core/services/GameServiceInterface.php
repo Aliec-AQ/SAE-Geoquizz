@@ -1,6 +1,8 @@
 <?php
 
-namespace core\services;
+namespace geoquizz\core\services;
+
+use geoquizz\core\services\GameDTO;
 
 interface GameServiceInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace infrastructure;
+namespace geoquizz\infrastructure;
 
-use core\repositoryInterfaces\MapsRepositoryInterface;
+use geoquizz\core\repositoryInterfaces\MapsRepositoryInterface;
 
 class AdapterMapsRepository implements MapsRepositoryInterface
 {

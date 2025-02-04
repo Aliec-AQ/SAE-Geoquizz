@@ -1,8 +1,10 @@
 <?php
 
-namespace core\services;
+namespace geoquizz\core\services;
 
-use core\repositoryInterfaces\GameRepositoryInterface;
+use geoquizz\core\repositoryInterfaces\GameRepositoryInterface;
+use geoquizz\core\dto\GameDTO;
+use geoquizz\core\services\MapsRepositoryInterface;
 
 class GameService implements GameServiceInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace GeoQuizz\application\renderer;
+namespace geoquizz\application\renderer;
 
 use Psr\Http\Message\ResponseInterface as Response;
 

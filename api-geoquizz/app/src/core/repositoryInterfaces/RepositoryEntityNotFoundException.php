@@ -1,6 +1,6 @@
 <?php
 
-namespace core\repositoryInterfaces;
+namespace geoquizz\core\repositoryInterfaces;
 
 class RepositoryEntityNotFoundException extends \Exception
 {

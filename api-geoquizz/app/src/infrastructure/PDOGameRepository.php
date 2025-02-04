@@ -1,10 +1,12 @@
 <?php
 
-namespace infrastructure;
+namespace geoquizz\infrastructure;
 
-use core\repositoryInterfaces\Game;
-use core\repositoryInterfaces\GameRepositoryInterface;
-use core\repositoryInterfaces\RepositoryEntityNotFoundException;
+use geoquizz\core\repositoryInterfaces\GameRepositoryInterface;
+use geoquizz\core\repositoryInterfaces\RepositoryEntityNotFoundException;
+use geoquizz\core\repositoryInterfaces\Game;
+use geoquizz\infrastructure\PDO;
+use geoquizz\infrastructure\Sequence;
 
 class PDOGameRepository implements GameRepositoryInterface
 {
@@ -31,5 +33,10 @@ class PDOGameRepository implements GameRepositoryInterface
         } else {
             throw new RepositoryEntityNotFoundException("Game not found");
         }
+    }
+
+    public function createSequence($idserie): \geoquizz\core\repositoryInterfaces\Sequence
+    {
+        // TODO: Implement createSequence() method.
     }
 }

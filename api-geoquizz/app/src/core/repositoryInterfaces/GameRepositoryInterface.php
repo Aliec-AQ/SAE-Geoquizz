@@ -1,6 +1,8 @@
 <?php
 
-namespace core\repositoryInterfaces;
+namespace geoquizz\core\repositoryInterfaces;
+
+use geoquizz\core\repositoryInterfaces\Sequence;
 
 interface GameRepositoryInterface
 {

@@ -1,9 +1,8 @@
 <?php
 
-namespace application\actions;
+namespace geoquizz\application\actions;
 
-use core\services\GameServiceInterface;
-use gateway\application\actions\AbstractAction;
+use geoquizz\core\services\GameServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 

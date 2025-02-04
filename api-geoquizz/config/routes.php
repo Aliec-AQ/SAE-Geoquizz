@@ -1,11 +1,8 @@
 <?php
 declare(strict_types=1);
 
-use application\actions\PostGameAction;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
+use app\src\application\actions\PostGameAction;
 use Slim\App;
-
 
 
 return function( App $app): App {

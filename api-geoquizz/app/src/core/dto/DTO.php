@@ -1,6 +1,6 @@
 <?php
 
-namespace core\dto;
+namespace geoquizz\core\dto;
 
 use JsonSerializable;
 use Respect\Validation\Validatable;
