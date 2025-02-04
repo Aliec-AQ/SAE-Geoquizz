@@ -22,26 +22,68 @@ export const useGameStore = defineStore('game', {
             this.photos = [
                 {
                     id: 1,
-                    url: 'https://www.francebleu.fr/s3/cruiser-production/2021/09/ef5a918d-d43a-4025-8460-a3000ac2cfc2/1200x680_place_stan_une_artucle_factuel_escudero_patrick_024_3766077.jpg',
-                    lat: 48.6921,
-                    long: 6.1844,
+                    url: this.$imageApiUrl + 'f25cc352-60d3-4457-9ffb-5cc806537050',
+                    lat: 48.670187,
+                    long: 6.1463581,
                 },
                 {
                     id: 2,
-                    url: 'https://i-de.unimedias.fr/2023/12/07/dt179nancyplacestanislasbr-6571e8fca31b1.jpg?auto=format%2Ccompress&crop=faces&cs=tinysrgb&fit=max&w=1050',
-                    lat: 48.6921,
-                    long: 6.1844,
+                    url: this.$imageApiUrl + 'ebc75392-2911-4caf-8712-c270c7534d78',
+                    lat: 48.6650565,
+                    long: 6.1615529,
                 },
                 {
                     id: 3,
-                    url: 'https://cdn-s-www.leprogres.fr/images/9293DCF2-288D-40E5-9EAC-A1E567E8F7DC/NW_raw/nancy-capitale-des-ducs-de-lorraine-affiche-un-impressionnant-patrimoine-historique-photo-helix-solutions-1616173288.jpg',
-                    lat: 48.6921,
-                    long: 6.1844,
+                    url: this.$imageApiUrl + 'bb7588e4-f0d8-4a2f-a487-3d4167447cff',
+                    lat: 48.6892936,
+                    long: 6.1821537,
+                },
+                {
+                    id: 4,
+                    url: this.$imageApiUrl + 'fae48f1d-72a8-497f-9438-9e6c718a552f',
+                    lat: 48.6979622,
+                    long: 6.1741624,
+                },
+                {
+                    id: 5,
+                    url: this.$imageApiUrl + '7387f3ba-fc88-4268-89a9-887bbde6f034',
+                    lat: 48.680431,
+                    long: 6.166484,
+                },
+                {
+                    id: 6,
+                    url: this.$imageApiUrl + 'a78b70af-ab87-4376-9385-3302f8361263',
+                    lat: 48.6939622,
+                    long: 6.1981006,
+                },
+                {
+                    id: 7,
+                    url: this.$imageApiUrl + '9dd25d3f-6afa-4624-b06e-6785949e19af',
+                    lat: 48.6883448,
+                    long: 6.1662374,
+                },
+                {
+                    id: 8,
+                    url: this.$imageApiUrl + '8d2700e9-58cd-445e-add4-ee59f6d80a42',
+                    lat: 48.6950418,
+                    long: 6.188216,
+                },
+                {
+                    id: 9,
+                    url: this.$imageApiUrl + '4b69f905-1433-4878-9119-b12df7c05d59',
+                    lat: 48.6943483,
+                    long: 6.1767979,
+                },
+                {
+                    id: 10,
+                    url: this.$imageApiUrl + '8f07bc2f-b061-42a1-94c3-c16d236e453d',
+                    lat: 48.6926711,
+                    long: 6.183916,
                 },
             ];
             this.currentPhoto = 0;
             this.distance = 0.3;
-            this.time = 20;
+            this.time = 6000;
         },
 
         calculateScore(distance, time) {

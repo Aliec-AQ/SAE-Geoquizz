@@ -32,6 +32,9 @@ return function( App $app): App {
      * Routes de l'API GeoQuizz
      *************************/
 
+     $app->get('/games/public[/]', GeneriqueGeoQuizzAction::class)
+     ->setName('getPublicGames');
+
      $app->post('/games[/]', GeneriqueGeoQuizzAction::class)
      ->setName('createGame');
 
@@ -40,9 +43,6 @@ return function( App $app): App {
 
  $app->get('/games/{id}[/]', GeneriqueGeoQuizzAction::class)
      ->setName('getGame');
-
- $app->get('/games/public[/]', GeneriqueGeoQuizzAction::class)
-     ->setName('getPublicGames');
 
  $app->get('/users/{id}/games[/]', GeneriqueGeoQuizzAction::class)
      ->setName('getUserGames');

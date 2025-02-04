@@ -61,13 +61,15 @@ function nextPhoto(){
 
 <template>
     <main>
-        <template  v-if="currentPhoto">
+        <template v-if="currentPhoto">
             <span :key="time" id="timer" :style="[time <= 15 ? 'color:#cc0000;':'']">{{ time }}</span>
             <img :src="currentPhoto.url" alt="image à trouver" />
             <MapComponent :defaultCoordinates="defaultCoordinates" @validate="validate"/>
         </template>
         <template v-else-if="gameIsOver">
-            <EndRound :guess="gameStore.getLastGuess" :score="gameStore.getScore" @next="nextPhoto"/>
+            <transition name="slide-up">
+                <EndRound :guess="gameStore.getLastGuess" :score="gameStore.getScore" @next="nextPhoto"/>
+            </transition>
         </template>
     </main>
 </template>

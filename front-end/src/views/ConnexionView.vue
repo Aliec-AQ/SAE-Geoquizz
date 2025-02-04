@@ -7,37 +7,42 @@
 
     const userStore = useUserStore();
     const router = useRouter();
+    const toast = useToast();
 
     const page = ref(1);
     const email = ref('');
     const password = ref('');
     const password2 = ref('');
 
-    const signIn = () => {
+    const signIn = async () => {
         if (!email.value || !password.value) {
-            const toast = useToast();
             toast.warning('Veuillez remplir tous les champs');
             return;
         }
 
-        userStore.signIn(email.value, password.value);
+        let achieved = await userStore.signIn(email.value, password.value);
+        if (!achieved) {
+            return;
+        }
         router.push('/');
     };
 
-    const signUp = () => {
+    const signUp = async () => {
         if (!email.value || !password.value || !password2.value) {
-            const toast = useToast();
             toast.warning('Veuillez remplir tous les champs');
             return;
         }
 
         if (password.value !== password2.value) {
-            const toast = useToast();
             toast.warning('Les mots de passe ne correspondent pas');
             return;
         }
 
-        userStore.signUp(email.value, password.value);
+        let achieved = await userStore.signUp(email.value, password.value);
+
+        if (!achieved) {
+            return;
+        }
         router.push('/');
     };
     

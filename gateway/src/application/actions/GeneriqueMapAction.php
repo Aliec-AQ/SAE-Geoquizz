@@ -52,7 +52,7 @@ class GeneriqueMapAction extends AbstractAction
             match($e->getCode()) {
                 400 => throw new HttpBadRequestException($rq, "The request is invalid"),
                 401 => throw new HttpUnauthorizedException($rq, "You are not authorized to access this resource"),
-                403 => throw new HttpForbiddenException($rq, "You are not allowed to access this resource"),
+                403 => throw new HttpForbiddenException($rq, "You are not allowed to access this resource".$e->getMessage()),
                 404 => throw new HttpNotFoundException($rq, "The requested resource was not found"),
             };
         }
