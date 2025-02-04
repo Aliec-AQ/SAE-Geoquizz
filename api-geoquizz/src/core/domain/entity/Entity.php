@@ -1,5 +1,7 @@
 <?php
 
+namespace GeoQuizz\core\domain\entity;
+
 abstract class Entity
 {
     protected ?string $ID=null;

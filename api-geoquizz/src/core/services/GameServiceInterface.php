@@ -1,8 +1,8 @@
 <?php
 
-namespace services;
+namespace core\services;
 
 interface GameServiceInterface
 {
-
+    public function createGame($idserie) : GameDTO;
 }

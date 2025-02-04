@@ -1,6 +1,6 @@
 <?php
 
-namespace services;
+namespace core\services;
 
 class GameServiceException extends \Exception
 {
