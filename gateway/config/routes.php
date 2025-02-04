@@ -25,9 +25,27 @@ return function( App $app): App {
     * Routes de l'API Map
     *************************/
 
+    $app->get('/assets/{id}[/]', GeneriqueMapAction::class)
+        ->setName('getAsset');
+
     /*************************
      * Routes de l'API GeoQuizz
      *************************/
+
+     $app->post('/games[/]', GeneriqueGeoQuizzAction::class)
+     ->setName('createGame');
+
+ $app->put('/games/{id}[/]', GeneriqueGeoQuizzAction::class)
+     ->setName('finishGame');
+
+ $app->get('/games/{id}[/]', GeneriqueGeoQuizzAction::class)
+     ->setName('getGame');
+
+ $app->get('/games/public[/]', GeneriqueGeoQuizzAction::class)
+     ->setName('getPublicGames');
+
+ $app->get('/users/{id}/games[/]', GeneriqueGeoQuizzAction::class)
+     ->setName('getUserGames');
 
     /*************************
      * Routes de l'API Auth
