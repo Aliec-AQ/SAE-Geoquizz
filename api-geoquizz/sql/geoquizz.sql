@@ -30,10 +30,10 @@ CREATE TABLE "public"."photos_sequences" (
 DROP TABLE IF EXISTS "players_sequences";
 CREATE TABLE "public"."players_sequences" (
     "id" uuid DEFAULT uuid_generate_v4() NOT NULL,
-    "player_id" uuid NOT NULL,
+    -- peut être null si la personne est anonyme
+    "player_id" uuid,
     "sequence_id" uuid NOT NULL,
-    "last_score" int NOT NULL,
-    "high_score" int NOT NULL,
+    "score" int NOT NULL,
     "status" int DEFAULT 0 NOT NULL,
     "date" timestamp NOT NULL,
     CONSTRAINT "players_sequences_player_id" FOREIGN KEY ("player_id") REFERENCES "players"("id_user"),
