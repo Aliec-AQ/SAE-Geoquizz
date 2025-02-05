@@ -51,4 +51,9 @@ class GameService implements GameServiceInterface
     {
         $this->gameRepository->finishGame($idGame);
     }
+
+    public function historiqueGames(string $userId): array
+    {
+        return $this->gameRepository->historiqueGames($userId);
+    }
 }

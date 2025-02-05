@@ -6,19 +6,25 @@ use geoquizz\core\services\GameServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class PutFinishGameAction extends AbstractAction
+class GetHistoriqueGameAction extends AbstractAction
 {
     private GameServiceInterface $gameService;
-    public function __construct(GameServiceInterface $gs){
+
+    public function __construct(GameServiceInterface $gs)
+    {
         $this->gameService = $gs;
     }
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-        $idGame = $rq->getAttribute('idGame');
-        $score = $rq->getAttribute('score');
-        $this->gameService->finishGame($idGame, $score);
+        $userId = $rq->getAttribute('playerID');
+        $games = $this->gameService->historiqueGames($userId);
 
+        $res = [
+            'games' => $games
+        ];
+
+        $rs->getBody()->write(json_encode($res));
         return $rs->withHeader('Content-Type', 'application/json');
     }
 }

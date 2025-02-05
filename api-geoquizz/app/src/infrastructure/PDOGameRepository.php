@@ -185,4 +185,20 @@ class PDOGameRepository implements GameRepositoryInterface
         $stmt->bindParam(2, $idGame);
         $stmt->execute();
     }
+
+    public function historiqueGames(string $userId): array
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM players_sequences WHERE player_id = ? ORDER BY date DESC');
+        $stmt->bindParam(1, $userId);
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        $gamesHistorique = [];
+        foreach ($rows as $row) {
+            $gamesHistorique[] = [
+                "id" => $row['id'],
+                "score" => $row['score'],
+            ];
+        }
+        return $gamesHistorique;
+    }
 }
