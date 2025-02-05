@@ -126,7 +126,6 @@ services:
       - ./api-map/data/database:/var/lib/postgresql/data
     env_file:
       - ./api-map/env/directusDB.env
-
     healthcheck:
       test: ["CMD", "pg_isready", "--host=localhost", "--username=directus"]
       interval: 10s
@@ -136,9 +135,7 @@ services:
       start_period: 30s
     networks:
       - geoquizz.net
-    user: 
-    - "1000:1000"
-    - "1002:1002"
+    user: ${UID}:${GID}
 
   directus.cache:
     image: redis:6
@@ -159,6 +156,7 @@ services:
     volumes:
       - ./api-map/uploads:/directus/uploads
       - ./api-map/extensions:/directus/extensions
+
     depends_on:
       directus.database:
         condition: service_healthy
@@ -168,9 +166,7 @@ services:
       - ./api-map/env/directus.env
     networks:
       - geoquizz.net
-    user: 
-    - "1000:1000"
-    - "1002:1002"
+    user: ${UID}:${GID}
 
 volumes:
   api-geoquizz:
