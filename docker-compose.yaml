@@ -9,7 +9,7 @@ services:
       context: gateway/build
       dockerfile: 8.3-cli.Dockerfile
     ports:
-      - '3521:80'
+      - '35621:80'
     volumes:
       - ./gateway:/var/php
     working_dir: /var/php
@@ -26,7 +26,7 @@ services:
       dockerfile: 8.3-cli.Dockerfile
     env_file: api-auth/env/auth.env
     ports:
-      - '3522:80'
+      - '35622:80'
     volumes:
       - ./api-auth/app:/var/php
     working_dir: /var/php
@@ -42,7 +42,7 @@ services:
       dockerfile: 8.3-cli.Dockerfile
     env_file: api-geoquizz/env/geoquizz.env
     ports:
-      - '3523:80'
+      - '35623:80'
     volumes:
       - ./api-geoquizz/app:/var/php
     working_dir: /var/php
@@ -58,7 +58,7 @@ services:
       dockerfile: 8.3-cli.Dockerfile
     env_file: mail/env/mail.env
     ports:
-      - '3524:80'
+      - '35624:80'
     working_dir: /var/php
     volumes:
       - ./mail:/var/php
@@ -90,15 +90,15 @@ services:
   adminer:
     image: 'adminer:latest'
     ports:
-      - '3529:8080'
+      - '35629:8080'
     networks:
       - geoquizz.net
 
   rabbitmq:
     image: rabbitmq:4-management
     ports:
-      - '3526:15672'
-      - '3525:5672'
+      - '35626:15672'
+      - '35625:5672'
     networks:
       - geoquizz.net
     volumes:
@@ -115,14 +115,15 @@ services:
   mailcatcher:
     image: dockage/mailcatcher:latest
     ports:
-      - "3528:1080"
-      - "3527:1025"
+      - "35628:1080"
+      - "35627:1025"
     networks:
       - geoquizz.net
 
   directus.database:
     image: postgis/postgis:13-master
     volumes:
+      # - api-map:/var/lib/postgresql/data
       - ./api-map/data/database:/var/lib/postgresql/data
     env_file:
       - ./api-map/env/directusDB.env
@@ -136,6 +137,7 @@ services:
     networks:
       - geoquizz.net
     # user: ${UID}:${GID}
+      
 
   directus.cache:
     image: redis:6
@@ -171,3 +173,4 @@ services:
 volumes:
   api-geoquizz:
   api-auth:
+  # api-map:
