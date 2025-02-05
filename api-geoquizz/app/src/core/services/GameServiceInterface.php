@@ -10,5 +10,6 @@ interface GameServiceInterface
     public function getPublicSequences(): array;
     public function changeSequenceStatus(string $idSequence): void;
     public function finishGame(string $idGame, int $score): void;
+    public function historiqueGames(string $userId): array;
 
 }
