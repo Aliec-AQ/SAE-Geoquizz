@@ -135,7 +135,7 @@ services:
       start_period: 30s
     networks:
       - geoquizz.net
-    user: ${UID}:${GID}
+    # user: ${UID}:${GID}
 
   directus.cache:
     image: redis:6
@@ -166,7 +166,7 @@ services:
       - ./api-map/env/directus.env
     networks:
       - geoquizz.net
-    user: ${UID}:${GID}
+    # user: ${UID}:${GID}
 
 volumes:
   api-geoquizz:
