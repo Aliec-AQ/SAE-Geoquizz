@@ -1,7 +1,5 @@
 // CSS
 import '@/assets/main.css'
-import '@fortawesome/fontawesome-free/css/all.css';
-import '@fortawesome/fontawesome-free/js/all.js';
 import "vue-toastification/dist/index.css";
 import "leaflet/dist/leaflet.css";
 

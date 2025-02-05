@@ -83,7 +83,7 @@ export const useGameStore = defineStore('game', {
             ];
             this.currentPhoto = 0;
             this.distance = 0.3;
-            this.time = 6000;
+            this.time = 3;
         },
 
         calculateScore(distance, time) {
@@ -93,15 +93,15 @@ export const useGameStore = defineStore('game', {
                 points = 5;
             } else if (distance < this.distance * 2) {
                 points = 3;
-            } else if (distance < this.distance * 4) {
+            } else if (distance < this.distance * 6) {
                 points = 1;
             }
 
-            if (time < 5) {
+            if (time < this.time / 6) {
                 points *= 4;
-            } else if (time < 10) {
+            } else if (time < this.time / 3) {
                 points *= 2;
-            } else if (time > 20) {
+            } else if (time > this.time / 2 + this.time / 4) {
                 points = 0;
             }
 
