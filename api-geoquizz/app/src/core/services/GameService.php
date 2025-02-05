@@ -10,7 +10,7 @@ use geoquizz\core\repositoryInterfaces\MapsRepositoryInterface;
 class GameService implements GameServiceInterface
 {
     private GameRepositoryInterface $gameRepository;
-    private MapsRepositoryInterface $MapsRepository;
+    private MapsRepositoryInterface $mapsRepository;
 
     public function __construct(GameRepositoryInterface $gameRepository, MapsRepositoryInterface $mapsRepository)
     {
@@ -20,10 +20,17 @@ class GameService implements GameServiceInterface
 
     public function createGame(string $idserie, string $idUser): GameDTO
     {
-        $imagesInfos = $this->MapsRepository->getImagesInfos($idserie);
+        $imagesInfos = $this->mapsRepository->getImagesInfos($idserie);
         $sequence = $this->gameRepository->createSequence($idserie,$imagesInfos);
         $game = $this->gameRepository->createGame($sequence,$idUser);
         $gameDTO = new GameDTO();
         return $gameDTO;
+    }
+
+    public function getPublicSequences(): array
+    {
+        $sequences = $this->gameRepository->getPublicSequences();
+        $sequencesHighScore = $this->gameRepository->getHighScore($sequences);
+        $sequencesTheme = $this->mapsRepository->getThemesBySequences($sequences);
     }
 }

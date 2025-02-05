@@ -20,10 +20,6 @@ class Sequence extends Entity
         return new SequenceDTO($this);
     }
 
-    public function getSerieId(): string
-    {
-        return $this->serie_id;
-    }
     public function setPhotos(array $photos): void{
         $this->photos = $photos;
     }

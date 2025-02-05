@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use app\src\application\actions\PostGameAction;
+use geoquizz\application\actions\PostGameAction;
 use Slim\App;
 
 
@@ -19,8 +19,8 @@ return function( App $app): App {
     $app->post('/games/replay', PostGameReplayAction::class) // id de la séquence dans la query
         ->setName('postReplayGame');
 
-    $app->get('/games/public[/]', GetPublicGamesAction::class)
-        ->setName('getPublicGames');
+    $app->get('/sequences/public[/]', GetPublicSequencesAction::class)
+        ->setName('getPublicSequences');
 
     $app->get('/users/{id}/games[/]', GetUserGamesAction::class)
         ->setName('getUserGames');

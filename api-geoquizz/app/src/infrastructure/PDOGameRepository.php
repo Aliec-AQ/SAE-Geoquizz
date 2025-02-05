@@ -63,7 +63,7 @@ class PDOGameRepository implements GameRepositoryInterface
         if($row) {
             $game = new Game(
                 $playerId,
-                $sequence->getSerieId(),
+                $sequence->serie_id,
                 $sequence,
                 0,
                 false
@@ -127,4 +127,35 @@ class PDOGameRepository implements GameRepositoryInterface
         }
         return $ids;
     }
+
+    public function getPublicSequences(): array
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM sequences WHERE public = true');
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        $sequences = [];
+        foreach ($rows as $row) {
+            $sequence = new Sequence(
+                $row['public'],
+                $row['serie_id']
+            );
+            $sequence->setId($row['id']);
+            $sequences[] = $sequence;
+        }
+        return $sequences;
+    }
+
+    public function getHighScore(array $sequences): array
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM players_sequences WHERE sequence_id =? ORDER BY score DESC LIMIT 1');
+        $scores = [];
+        foreach ($sequences as $sequence) {
+            $stmt->bindParam(1, $sequence->getId());
+            $stmt->execute();
+            $row = $stmt->fetch();
+            $scores [$row['sequence_id']] = $row['score'];
+        }
+        return $scores;
+    }
+
 }

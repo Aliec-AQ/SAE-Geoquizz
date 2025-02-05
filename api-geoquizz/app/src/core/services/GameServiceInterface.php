@@ -7,4 +7,5 @@ use geoquizz\core\dto\GameDTO;
 interface GameServiceInterface
 {
     public function createGame(string $idserie, string $idUser) : GameDTO;
+    public function getPublicSequences(): array;
 }

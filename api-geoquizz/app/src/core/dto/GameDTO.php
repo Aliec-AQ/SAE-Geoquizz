@@ -7,12 +7,12 @@ use geoquizz\core\domain\entity\Sequence;
 
 class GameDTO extends DTO
 {
-    public string  $id;
-    public ?string $player_id;
-    public string $serie_id;
-    public Sequence $sequence;
-    public int $score;
-    public bool $status;
+    protected string  $id;
+    protected ?string $player_id;
+    protected string $serie_id;
+    protected Sequence $sequence;
+    protected int $score;
+    protected bool $status;
 
     public function __construct(Game $g){
         $this->id = $g->getID();
