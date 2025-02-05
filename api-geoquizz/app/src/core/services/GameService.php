@@ -46,4 +46,9 @@ class GameService implements GameServiceInterface
     {
         $this->gameRepository->changeSequenceStatus($idSequence);
     }
+
+    public function finishGame(string $idGame, int $score): void
+    {
+        $this->gameRepository->finishGame($idGame);
+    }
 }

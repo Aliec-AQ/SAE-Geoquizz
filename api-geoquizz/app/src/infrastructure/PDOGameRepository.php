@@ -164,4 +164,12 @@ class PDOGameRepository implements GameRepositoryInterface
         $stmt->bindParam(1, $idSequence);
         $stmt->execute();
     }
+
+    public function finishGame(string $idGame, $score): void
+    {
+        $stmt = $this->pdo->prepare('UPDATE players_sequences SET score = ?, status = true WHERE id = ?');
+        $stmt->bindParam(1, $score);
+        $stmt->bindParam(2, $idGame);
+        $stmt->execute();
+    }
 }

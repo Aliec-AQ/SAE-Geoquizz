@@ -35,6 +35,7 @@ class AuthorisationPartieMiddleware
         $h = $rq->getHeader('Authorization')[0];
         $tokenstring = sscanf($h, "Bearer %s")[0];
         $partieId = $this->tokenPartieService->getTokenPartie($tokenstring);
+        $rq->withAttribute('idGame', $partieId);
         try{
             $this->tokenPartieService->verifyPartie($partieId);
         }catch (TokenServiceException $e){

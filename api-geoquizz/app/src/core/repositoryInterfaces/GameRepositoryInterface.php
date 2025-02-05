@@ -23,4 +23,5 @@ interface GameRepositoryInterface
     public function getHighScore(array $sequences): array;
 
     public function changeSequenceStatus(string $idSequence): void;
+    public function finishGame(string $idGame, int $score): void;
 }
