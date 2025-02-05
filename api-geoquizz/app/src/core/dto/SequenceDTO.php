@@ -23,13 +23,13 @@ class SequenceDTO extends DTO
     public function jsonSerialize(): array
     {
         $tab=[];
-        foreach($this->photo as $photo){
+        foreach($this->photos as $photo){
             $tab[]=$photo->jsonSerialize();
         }
         return [
             'id' => $this->id,
-            '$public' => $this->status,
-            '$serie_id' => $this->type,
+            '$public' => $this->public,
+            '$serie_id' => $this->serie_id,
             'photo' => $tab
         ];
     }

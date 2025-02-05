@@ -3,7 +3,8 @@
 namespace geoquizz\application\middlewares;
 
 use Exception;
-use geoquizz\application\providers\auth\JWTManager;
+use geoquizz\application\providers\tokenPartie\JWTManager;
+use geoquizz\application\providers\tokenPartie\TokenPartieProviderInterface;
 use geoquizz\core\services\TokenPartieServiceInterface;
 use geoquizz\core\services\TokenServiceException;
 use Psr\Http\Message\ResponseInterface;
@@ -19,10 +20,13 @@ class AuthorisationPartieMiddleware
     private JWTManager $jwtManager;
     private TokenPartieServiceInterface $tokenPartieService;
 
-    public function __construct(JWTManager $jwtManager, TokenPartieServiceInterface $tokenPartieService)
+    private TokenPartieProviderInterface $tokenPartieProvider;
+
+    public function __construct(JWTManager $jwtManager, TokenPartieServiceInterface $tokenPartieService, TokenPartieProviderInterface $tokenPartieProvider)
     {
         $this->jwtManager = $jwtManager;
         $this->tokenPartieService = $tokenPartieService;
+        $this->tokenPartieProvider = $tokenPartieProvider;
     }
 
     public function __invoke(ServerRequestInterface $rq, RequestHandlerInterface $next): ResponseInterface
@@ -34,7 +38,7 @@ class AuthorisationPartieMiddleware
 
         $h = $rq->getHeader('Authorization')[0];
         $tokenstring = sscanf($h, "Bearer %s")[0];
-        $partieId = $this->tokenPartieService->getTokenPartie($tokenstring);
+        $partieId = $this->tokenPartieProvider->getTokenPartie($tokenstring);
         $rq->withAttribute('idGame', $partieId);
         try{
             $this->tokenPartieService->verifyPartie($partieId);

@@ -12,7 +12,7 @@ CREATE TABLE "public"."players" (
 DROP TABLE IF EXISTS "sequences";
 CREATE TABLE "public"."sequences" (
     "id" uuid DEFAULT uuid_generate_v4() NOT NULL,
-    "public" boolean NOT NULL,
+    "public" boolean DEFAULT false NOT NULL,
     "serie_id" uuid NOT NULL,
     CONSTRAINT "sequences_id" PRIMARY KEY ("id")
 ) WITH (oids = false);
@@ -30,13 +30,12 @@ CREATE TABLE "public"."photos_sequences" (
 DROP TABLE IF EXISTS "players_sequences";
 CREATE TABLE "public"."players_sequences" (
     "id" uuid DEFAULT uuid_generate_v4() NOT NULL,
-    "player_id" uuid NOT NULL,
+    -- peut être null si la personne est anonyme
+    "player_id" uuid,
     "sequence_id" uuid NOT NULL,
-    "last_score" int NOT NULL,
-    "high_score" int NOT NULL,
-    "status" int DEFAULT 0 NOT NULL,
+    "score" int DEFAULT 0 NOT NULL,
+    "status" boolean DEFAULT false NOT NULL,
     "date" timestamp NOT NULL,
-    CONSTRAINT "players_sequences_player_id" FOREIGN KEY ("player_id") REFERENCES "players"("id"),
     CONSTRAINT "players_sequences_sequence_id" FOREIGN KEY ("sequence_id") REFERENCES "sequences"("id"),
     CONSTRAINT "players_sequences_id" PRIMARY KEY ("id")
 ) WITH (oids = false);

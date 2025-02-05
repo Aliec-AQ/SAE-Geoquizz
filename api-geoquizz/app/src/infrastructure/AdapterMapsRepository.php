@@ -19,14 +19,16 @@ class AdapterMapsRepository implements MapsRepositoryInterface
     public function getImagesInfos($idSerie): array
     {
         $response = $this->client->get('/items/themes?fields=photos.photos_id.*&filter={"id":{"_eq":"'. $idSerie . '"}}');
-        $data = json_decode($response->getBody()->getContents(), true);
-        $randomData = array_rand($data, 10);
-
+        $data = json_decode($response->getBody(), true);
+        $randomData = array_rand($data["data"][0]["photos"], 10);
         $returnData = [];
-        foreach ($randomData as $photo) {
+        foreach ($randomData as $p) {
+            $photo = $data["data"][0]["photos"][$p]["photos_id"];
             $p = new Photo($photo['nom'], $photo['image'], $photo['lat'], $photo['long']);
+            $p->setId($photo['id']);
             $returnData[] = $p;
         }
+
         return $returnData;
     }
 

@@ -23,6 +23,10 @@ class GameDTO extends DTO
         $this->status = $g->status;
     }
 
+    public function getID(){
+        return $this->id;
+    }
+
     public function jsonSerialize(): array
     {
         return [

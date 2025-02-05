@@ -1,5 +1,5 @@
 <?php
-namespace geoquizz\application\providers\auth;
+namespace geoquizz\application\providers\tokenPartie;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;

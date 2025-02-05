@@ -6,8 +6,8 @@ use geoquizz\core\domain\entity\Game;
 use geoquizz\core\domain\entity\Photo;
 use geoquizz\core\repositoryInterfaces\GameRepositoryInterface;
 use geoquizz\core\repositoryInterfaces\RepositoryEntityNotFoundException;
-use geoquizz\infrastructure\PDO;
 use geoquizz\core\domain\entity\Sequence;
+use PDO;
 
 
 class PDOGameRepository implements GameRepositoryInterface
@@ -21,7 +21,7 @@ class PDOGameRepository implements GameRepositoryInterface
 
     public function createSequence(string $idserie, array $images): Sequence
     {
-        $stmt = $this->pdo->prepare('INSERT INTO sequences (serie_id) VALUES ($idserie) RETURNING id');
+        $stmt = $this->pdo->prepare('INSERT INTO sequences (serie_id) VALUES (?) RETURNING id');
         $stmt->bindParam(1, $idserie);
         $stmt->execute();
         $row = $stmt->fetch();
@@ -44,19 +44,26 @@ class PDOGameRepository implements GameRepositoryInterface
         $idSequence = $sequence->getId();
         $order = 0;
         foreach ($sequence->photos as $photo) {
-            $order++;
             $idPhoto = $photo->getId();
-            $stmt = $this->pdo->prepare('INSERT INTO photos_sequences (photo_id, order, sequence_id ) VALUES (?, ?, ?)');
+            if ($idPhoto === null) {
+                throw new \Exception("Erreur: une photo n'a pas d'ID.");
+            }
+
+            $stmt = $this->pdo->prepare('INSERT INTO "photos_sequences" ("photo_id","order","sequence_id" ) VALUES (?, ?, ?)');
+
             $stmt->bindParam(1, $idPhoto);
             $stmt->bindParam(2, $order);
             $stmt->bindParam(3, $idSequence);
             $stmt->execute();
+            $order++;
         }
+
+        $date = date('Y-m-d H:i:s');
 
         $stmt = $this->pdo->prepare('INSERT INTO players_sequences (player_id, sequence_id, date) VALUES (?,?,?) RETURNING id');
         $stmt->bindParam(1, $playerId);
         $stmt->bindParam(2, $idSequence);
-        $stmt->bindParam(3, date('Y-m-d H:i:s'));
+        $stmt->bindParam(3, $date);
         $stmt->execute();
         $row = $stmt->fetch();
 
@@ -156,6 +163,12 @@ class PDOGameRepository implements GameRepositoryInterface
             $scores [$row['sequence_id']] = $row['score'];
         }
         return $scores;
+    }
+
+    public function ajouterPlayer(string $idplayer) : void{
+        $stmt = $this->pdo->prepare('INSERT INTO players (id) VALUES (?)');
+        $stmt->bindParam(1, $idplayer);
+        $stmt->execute();
     }
 
     public function changeSequenceStatus(string $idSequence): void

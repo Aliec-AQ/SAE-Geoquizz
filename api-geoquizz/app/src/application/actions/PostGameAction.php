@@ -2,7 +2,7 @@
 
 namespace geoquizz\application\actions;
 
-use geoquizz\application\providers\auth\TokenPartieProviderInterface;
+use geoquizz\application\providers\tokenPartie\TokenPartieProviderInterface;
 use geoquizz\core\services\GameServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -25,7 +25,7 @@ class PostGameAction extends AbstractAction
         $idUser = $rq->getAttribute('playerID');
         $game = $this->game_service->createGame($idserie, $idUser);
 
-        $token = $this->token_partie->createTokenPartie($game['id']);
+        $token = $this->token_partie->createTokenPartie($game->id);
         
         $res = [
             "token" => $token,

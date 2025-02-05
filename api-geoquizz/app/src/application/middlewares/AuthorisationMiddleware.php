@@ -43,9 +43,7 @@ class AuthorisationMiddleware{
         }catch (Exception $e){
             throw new HttpUnauthorizedException($rq,"token invalide");
         }
-
         $playerID = $this->authorisationService->playerID($tokenstring);
-
         $rq = $rq->withAttribute('playerID',$playerID);
         return $next->handle($rq);
     }
