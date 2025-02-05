@@ -1,5 +1,6 @@
 <?php
 
+use geoquizz_auth\application\actions\GetPlayerIDAction;
 use Psr\Container\ContainerInterface;
 use geoquizz_auth\application\actions\RefreshAction;
 use geoquizz_auth\application\actions\RegisterAction;
@@ -52,6 +53,10 @@ return [
 
     ValidateAction::class => function(ContainerInterface $c){
         return new ValidateAction($c->get(AuthProviderInterface::class));
+    },
+
+    GetPlayerIDAction::class => function(ContainerInterface $c){
+        return new GetPlayerIDAction($c->get(AuthProviderInterface::class));
     }
 
 ];

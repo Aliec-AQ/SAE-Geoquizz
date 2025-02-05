@@ -34,8 +34,7 @@ class AuthorisationPartieMiddleware
 
         $h = $rq->getHeader('Authorization')[0];
         $tokenstring = sscanf($h, "Bearer %s")[0];
-        $tokenData = $this->jwtManager->decodeToken($tokenstring);
-        $partieId = $tokenData['sub'];
+        $partieId = $this->tokenPartieService->getTokenPartie($tokenstring);
         try{
             $this->tokenPartieService->verifyPartie($partieId);
         }catch (TokenServiceException $e){
