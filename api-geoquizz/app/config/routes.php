@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use geoquizz\application\actions\GetPublicSequencesAction;
 use geoquizz\application\actions\PostGameAction;
+use geoquizz\application\actions\PutSequenceStatusAction;
 use geoquizz\application\middlewares\AuthorisationMiddleware;
 use geoquizz\application\middlewares\AuthorisationPartieMiddleware;
 use Slim\App;
@@ -32,6 +33,9 @@ return function( App $app): App {
 
     $app->get('/sequences/public[/]', GetPublicSequencesAction::class)
         ->setName('getPublicSequences');
+
+    $app->put('/sequences/{idSequence}/status[/]',PutSequenceStatusAction::class)
+        ->setName('putStatusSequences');
 
     $app->get('/users/{id}/games[/]', GetUserGamesAction::class)
         ->setName('getUserGames');
