@@ -19,5 +19,8 @@ interface GameRepositoryInterface
     public function getIDPhotosByIDSequence(string $sequenceID): array;
 
     public function getPublicSequences(): array;
+
     public function getHighScore(array $sequences): array;
+
+    public function changeSequenceStatus(string $idSequence): void;
 }

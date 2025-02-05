@@ -2,6 +2,7 @@
 
 namespace geoquizz\core\services;
 
+use geoquizz\core\dto\PublicSequencesDTO;
 use geoquizz\core\repositoryInterfaces\GameRepositoryInterface;
 use geoquizz\core\dto\GameDTO;
 use geoquizz\core\repositoryInterfaces\MapsRepositoryInterface;
@@ -23,7 +24,7 @@ class GameService implements GameServiceInterface
         $imagesInfos = $this->mapsRepository->getImagesInfos($idserie);
         $sequence = $this->gameRepository->createSequence($idserie,$imagesInfos);
         $game = $this->gameRepository->createGame($sequence,$idUser);
-        $gameDTO = new GameDTO();
+        $gameDTO = $game->toDTO();
         return $gameDTO;
     }
 
@@ -32,5 +33,17 @@ class GameService implements GameServiceInterface
         $sequences = $this->gameRepository->getPublicSequences();
         $sequencesHighScore = $this->gameRepository->getHighScore($sequences);
         $sequencesTheme = $this->mapsRepository->getThemesBySequences($sequences);
+
+        $publicSequences = [];
+        foreach ($sequences as $sequence) {
+            $publicSequences[] = new PublicSequencesDTO($sequence->ID, $sequence->serie_id, $sequencesTheme[$sequence->ID], $sequencesHighScore[$sequence->ID]);
+        }
+        return $publicSequences;
+    }
+
+
+    public function changeSequenceStatus(string $idSequence): void
+    {
+        $this->gameRepository->changeSequenceStatus($idSequence);
     }
 }

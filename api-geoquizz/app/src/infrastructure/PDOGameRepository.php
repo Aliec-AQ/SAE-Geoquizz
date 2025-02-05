@@ -158,4 +158,10 @@ class PDOGameRepository implements GameRepositoryInterface
         return $scores;
     }
 
+    public function changeSequenceStatus(string $idSequence): void
+    {
+        $stmt = $this->pdo->prepare('UPDATE sequences SET public = true WHERE id = ?');
+        $stmt->bindParam(1, $idSequence);
+        $stmt->execute();
+    }
 }
