@@ -156,8 +156,10 @@ class PDOGameRepository implements GameRepositoryInterface
     {
         $stmt = $this->pdo->prepare('SELECT * FROM players_sequences WHERE sequence_id =? ORDER BY score DESC LIMIT 1');
         $scores = [];
+
         foreach ($sequences as $sequence) {
-            $stmt->bindParam(1, $sequence->getId());
+            $idSequence =$sequence->getId();
+            $stmt->bindParam(1, $idSequence);
             $stmt->execute();
             $row = $stmt->fetch();
             $scores [$row['sequence_id']] = $row['score'];

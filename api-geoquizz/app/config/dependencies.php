@@ -1,6 +1,7 @@
 <?php
 
 
+use geoquizz\application\actions\GetPublicSequencesAction;
 use geoquizz\application\actions\PostGameAction;
 use geoquizz\application\middlewares\AuthorisationMiddleware;
 use geoquizz\application\middlewares\AuthorisationPartieMiddleware;
@@ -63,6 +64,10 @@ return [
     //actions
     PostGameAction::class => function (ContainerInterface $container) {
     return new PostGameAction($container->get(GameServiceInterface::class), $container->get(TokenPartieProviderInterface::class));
+    },
+
+    GetPublicSequencesAction::class => function (ContainerInterface $container) {
+        return new GetPublicSequencesAction($container->get(GameServiceInterface::class));
     },
 
     //middleware

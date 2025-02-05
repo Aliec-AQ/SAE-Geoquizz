@@ -51,7 +51,7 @@ class AdapterMapsRepository implements MapsRepositoryInterface
         foreach ($sequences as $sequence) {
             $response = $this->client->get('/items/themes?fields=nom&filter={"id":{"_eq":"'. $sequence->serie_id . '"}}');
             $data = json_decode($response->getBody()->getContents(), true);
-            $themes[$sequence->ID] = $data[0]['nom'];
+            $themes[$sequence->ID] = $data['data'][0]['nom'];
         }
         return $themes;
     }
