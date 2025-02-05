@@ -56,4 +56,10 @@ class GameService implements GameServiceInterface
     {
         return $this->gameRepository->historiqueGames($userId);
     }
+
+    public function gameById(string $id): GameDTO
+    {
+        $game = $this->gameRepository->gameById($id);
+        return $game->toDTO();
+    }
 }

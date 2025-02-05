@@ -203,4 +203,26 @@ class PDOGameRepository implements GameRepositoryInterface
         }
         return $gamesHistorique;
     }
+
+    public function gameById(string $id): Game
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM players_sequences WHERE id = ? inner join sequences on players_sequences.sequence_id = sequences.id');
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        $row = $stmt->fetch();
+
+        if($row) {
+            $game = new Game(
+                $row['player_id'],
+                $row['serie_id'],
+                new Sequence($row['public'], $row['serie_id']),
+                $row['score'],
+                $row['status']
+            );
+            $game->setId($row['id']);
+            return $game;
+        } else {
+            throw new RepositoryEntityNotFoundException("Game not found");
+        }
+    }
 }
