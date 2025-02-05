@@ -3,6 +3,7 @@
 namespace geoquizz\infrastructure;
 
 use geoquizz\core\domain\entity\Game;
+use geoquizz\core\domain\entity\Photo;
 use geoquizz\core\repositoryInterfaces\GameRepositoryInterface;
 use geoquizz\core\repositoryInterfaces\RepositoryEntityNotFoundException;
 use geoquizz\infrastructure\PDO;
@@ -38,7 +39,7 @@ class PDOGameRepository implements GameRepositoryInterface
         }
     }
 
-    public function createGame(Sequence $sequence, $playerId): Game
+    public function createGame(Sequence $sequence,string $playerId): Game
     {
         $idSequence = $sequence->getId();
         $order = 0;
@@ -73,5 +74,57 @@ class PDOGameRepository implements GameRepositoryInterface
             throw new RepositoryEntityNotFoundException("Game not found");
         }
 
+    }
+
+    public function findGameByIdForAuthorisation(int $id): Game{
+        $stmt = $this->pdo->prepare('SELECT * FROM players_sequences WHERE id =?');
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        $row = $stmt->fetch();
+
+        if($row) {
+            $game = new Game(
+                $row['player_id'],
+                null,
+                null,
+                $row['score'],
+                $row['status']
+            );
+            $game->setId($row['id']);
+            return $game;
+        } else {
+            throw new RepositoryEntityNotFoundException("Game not found");
+        }
+    }
+
+    public function findSequenceById($sequence_id): Sequence
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM sequences WHERE id =?');
+        $stmt->bindParam(1, $sequence_id);
+        $stmt->execute();
+        $row = $stmt->fetch();
+
+        if($row) {
+            $sequence = new Sequence(
+                $row['public'],
+                $row['serie_id'],
+            );
+            $sequence->setId($row['id']);
+            return $sequence;
+        } else {
+            throw new RepositoryEntityNotFoundException("Sequence not found");
+        }
+    }
+
+    public function getIDPhotosByIDSequence(string $sequenceID): array{
+        $stmt = $this->pdo->prepare('SELECT photo_id FROM photos_sequences WHERE sequence_id =? ORDER BY order ASC');
+        $stmt->bindParam(1, $sequenceID);
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        $ids = [];
+        foreach ($rows as $row) {
+            $ids[] = $row['photo_id'];
+        }
+        return $ids;
     }
 }

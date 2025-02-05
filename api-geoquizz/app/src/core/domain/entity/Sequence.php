@@ -8,9 +8,9 @@ class Sequence extends Entity
 {
     protected bool $public;
     protected string $serie_id;
-    protected array $photos;
+    protected ?array $photos;
 
-    public function __construct(bool $public, string $serie_id, array $photo){
+    public function __construct(bool $public, string $serie_id, array $photo=null){
         $this->public = $public;
         $this->serie_id = $serie_id;
         $this->photos = $photo;
@@ -20,7 +20,13 @@ class Sequence extends Entity
         return new SequenceDTO($this);
     }
 
-
+    public function getSerieId(): string
+    {
+        return $this->serie_id;
+    }
+    public function setPhotos(array $photos): void{
+        $this->photos = $photos;
+    }
 
 
 }

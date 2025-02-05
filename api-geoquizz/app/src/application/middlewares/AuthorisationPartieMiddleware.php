@@ -2,11 +2,15 @@
 
 namespace geoquizz\application\middlewares;
 
+use Exception;
 use geoquizz\application\providers\auth\JWTManager;
 use geoquizz\core\services\TokenPartieServiceInterface;
+use geoquizz\core\services\TokenServiceException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Slim\Exception\HttpBadRequestException;
+use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Routing\RouteContext;
 
 
@@ -32,7 +36,13 @@ class AuthorisationPartieMiddleware
         $tokenstring = sscanf($h, "Bearer %s")[0];
         $tokenData = $this->jwtManager->decodeToken($tokenstring);
         $partieId = $tokenData['sub'];
-
+        try{
+            $this->tokenPartieService->verifyPartie($partieId);
+        }catch (TokenServiceException $e){
+            throw new HttpBadRequestException($rq,"Invalide put : ".$e->getMessage());
+        }catch(Exception $e){
+            throw new HttpInternalServerErrorException($rq,"Erreur put game");
+        }
 
         $response = $next->handle($rq);
         return $response;

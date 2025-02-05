@@ -2,7 +2,9 @@
 
 namespace geoquizz\infrastructure;
 
+use Exception;
 use geoquizz\core\domain\entity\Photo;
+use geoquizz\core\repositoryInterfaces\MapsRepositoryException;
 use geoquizz\core\repositoryInterfaces\MapsRepositoryInterface;
 
 class AdapterMapsRepository implements MapsRepositoryInterface
@@ -27,4 +29,18 @@ class AdapterMapsRepository implements MapsRepositoryInterface
         }
         return $returnData;
     }
+
+    public function getPhotoByID(string $photoID):Photo{
+        try{
+            $response = $this->client->get('/items/photos?filter={"id":{"_eq":"'. $photoID . '"}}');
+            $data = json_decode($response->getBody()->getContents(), true);
+            return new Photo($data[0]['nom'], $data[0]['image'], $data[0]['lat'], $data[0]['long']);
+        }catch (Exception $e){
+            throw new MapsRepositoryException("Erreur lors de la récupération de la photo : ". $e->getMessage());
+        }
+
+
+    }
+
+
 }

@@ -10,5 +10,11 @@ use Ramsey\Uuid\Uuid;
 interface GameRepositoryInterface
 {
     public function createSequence(string $idserie, array $images) : Sequence;
-    public function createGame(Sequence $sequence,Uuid $playerId) : Game;
+    public function createGame(Sequence $sequence,string $playerId) : Game;
+
+    public function findGameByIdForAuthorisation(int $id): Game;
+
+    public function findSequenceById($sequence_id): Sequence;
+
+    public function getIDPhotosByIDSequence(string $sequenceID): array;
 }
