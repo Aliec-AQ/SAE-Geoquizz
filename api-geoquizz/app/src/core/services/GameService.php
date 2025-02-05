@@ -49,7 +49,7 @@ class GameService implements GameServiceInterface
 
     public function finishGame(string $idGame, int $score): void
     {
-        $this->gameRepository->finishGame($idGame);
+        $this->gameRepository->finishGame($idGame, $score);
     }
 
     public function historiqueGames(string $userId): array

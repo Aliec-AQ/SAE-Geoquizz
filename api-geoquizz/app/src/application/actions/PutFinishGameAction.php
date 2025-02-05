@@ -16,7 +16,8 @@ class PutFinishGameAction extends AbstractAction
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         $idGame = $rq->getAttribute('idGame');
-        $score = $rq->getAttribute('score');
+        $param = $rq->getQueryParams()['score'];
+        $score = intval($param);
         $this->gameService->finishGame($idGame, $score);
 
         return $rs->withHeader('Content-Type', 'application/json');

@@ -83,7 +83,7 @@ class PDOGameRepository implements GameRepositoryInterface
 
     }
 
-    public function findGameByIdForAuthorisation(int $id): Game{
+    public function findGameByIdForAuthorisation(string $id): Game{
         $stmt = $this->pdo->prepare('SELECT * FROM players_sequences WHERE id =?');
         $stmt->bindParam(1, $id);
         $stmt->execute();

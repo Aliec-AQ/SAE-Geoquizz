@@ -17,6 +17,7 @@ class TokenPartieService implements TokenPartieServiceInterface
     public function verifyPartie(string $idGame){
         try{
             $game = $this->gameRepository->findGameByIdForAuthorisation($idGame);
+            var_dump($game);
             if($game->status != false){
                 throw new TokenServiceException("la partie est deja terminee");
             }

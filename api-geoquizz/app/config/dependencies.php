@@ -3,6 +3,7 @@
 
 use geoquizz\application\actions\GetPublicSequencesAction;
 use geoquizz\application\actions\PostGameAction;
+use geoquizz\application\actions\PutFinishGameAction;
 use geoquizz\application\actions\PutSequenceStatusAction;
 use geoquizz\application\middlewares\AuthorisationMiddleware;
 use geoquizz\application\middlewares\AuthorisationPartieMiddleware;
@@ -73,6 +74,10 @@ return [
 
     PutSequenceStatusAction::class => function (ContainerInterface $container) {
         return new PutSequenceStatusAction($container->get(GameServiceInterface::class));
+    },
+
+    PutFinishGameAction::class => function (ContainerInterface $container) {
+        return new PutFinishGameAction($container->get(GameServiceInterface::class));
     },
 
     //middleware

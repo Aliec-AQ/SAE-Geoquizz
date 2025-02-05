@@ -12,7 +12,7 @@ interface GameRepositoryInterface
     public function createSequence(string $idserie, array $images) : Sequence;
     public function createGame(Sequence $sequence,string $playerId) : Game;
 
-    public function findGameByIdForAuthorisation(int $id): Game;
+    public function findGameByIdForAuthorisation(string $id): Game;
 
     public function findSequenceById($sequence_id): Sequence;
 

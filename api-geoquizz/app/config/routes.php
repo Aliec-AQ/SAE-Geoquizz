@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use geoquizz\application\actions\GetPublicSequencesAction;
 use geoquizz\application\actions\PostGameAction;
+use geoquizz\application\actions\PutFinishGameAction;
 use geoquizz\application\actions\PutSequenceStatusAction;
 use geoquizz\application\middlewares\AuthorisationMiddleware;
 use geoquizz\application\middlewares\AuthorisationPartieMiddleware;
@@ -22,7 +23,8 @@ return function( App $app): App {
         ->add(AuthorisationMiddleware::class)
         ->setName('createGame');
 
-    $app->put('/games/{id}[/]', PutGameAction::class)
+    $app->put('/games[/]',PutFinishGameAction::class)
+        ->add(AuthorisationPartieMiddleware::class)
         ->setName('finishGame');
 
     $app->get('/sequence/{id}[/]', GetGameAction::class)
