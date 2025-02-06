@@ -18,7 +18,7 @@ class PostSequenceReplayAction extends AbstractAction
     {
         $idSequence = $rq->getQueryParams()['idSequence'];
         $idUser = $rq->getAttribute('playerID');
-        $game = $this->gameService->replayGame($idSequence, $idUser);
+        $game = $this->gameService->replaySequence($idSequence, $idUser);
 
         $res = [
             'game' => $game

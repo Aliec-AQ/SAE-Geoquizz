@@ -16,7 +16,7 @@ class AdapterMapsRepository implements MapsRepositoryInterface
         $this->client = $client;
     }
 
-    public function getImagesInfos($idSerie): array
+    public function getImagesRandoms($idSerie): array
     {
         $response = $this->client->get('/items/themes?fields=photos.photos_id.*&filter={"id":{"_eq":"'. $idSerie . '"}}');
         $data = json_decode($response->getBody(), true);

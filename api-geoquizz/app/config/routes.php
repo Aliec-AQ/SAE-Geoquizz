@@ -31,17 +31,17 @@ return function( App $app): App {
         ->add(AuthorisationPartieMiddleware::class)
         ->setName('finishGame');
 
-    $app->get('/sequences/{id}[/]', GetSequenceByIdAction::class)
-        ->setName('getSequenceById');
-
-    $app->post('/sequences/replay[/]', PostSequenceReplayAction::class) // id de la séquence dans la query
-        ->setName('postReplaySequence');
-
     $app->get('/sequences/public[/]', GetPublicSequencesAction::class)
         ->setName('getPublicSequences');
 
+    $app->post('/sequences/replay[/]', PostSequenceReplayAction::class) // id de la séquence dans la query
+    ->setName('postReplaySequence');
+
     $app->put('/sequences/{idSequence}/status[/]',PutSequenceStatusAction::class)
         ->setName('putStatusSequences');
+
+    $app->get('/sequences/{id}[/]', GetSequenceByIdAction::class)
+        ->setName('getSequenceById');
 
     $app->get('/users/games[/]', GetHistoriqueGameAction::class)
         ->add(AuthorisationMiddleware::class)

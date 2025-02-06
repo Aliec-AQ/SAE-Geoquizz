@@ -12,6 +12,6 @@ interface GameServiceInterface
     public function finishGame(string $idGame, int $score): void;
     public function historiqueGames(string $userId): array;
     public function gameById(string $id): GameDTO;
-    public function replayGame(string $idSequence, ?string $idUser): GameDTO;
+    public function replaySequence(string $idSequence, ?string $idUser): GameDTO;
 
 }
