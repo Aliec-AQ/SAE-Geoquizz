@@ -18,7 +18,7 @@ class GetGameByIdAction extends AbstractAction
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-        $idGame = $rq->getAttribute('idGame');
+        $idGame = $args['id'];
         $game = $this->gameService->gameById($idGame);
 
         $res = [
