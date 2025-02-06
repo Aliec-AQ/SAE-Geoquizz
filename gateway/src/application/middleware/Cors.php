@@ -21,6 +21,13 @@ class Cors{
      * @return ResponseInterface
      */
     public function __invoke(ServerRequestInterface $rq, RequestHandlerInterface $next): ResponseInterface {
+        $path = $rq->getUri()->getPath();
+
+        // Permettre la récupération des assets de bypass le CORS (car src="gateway/assets/..." n'a pas d'origin)
+        if (strpos($path, '/assets/') === 0) {
+            return $next->handle($rq);
+        }
+
         if (!$rq->hasHeader('Origin')) {
             throw new HttpUnauthorizedException($rq, "missing Origin Header (cors)");
         }
@@ -31,6 +38,7 @@ class Cors{
         }
 
         $response = $next->handle($rq);
+
         $response = $response
             ->withHeader('Access-Control-Allow-Origin', $origin)
             ->withHeader('Access-Control-Allow-Methods', 'POST, PUT, GET, PATCH')

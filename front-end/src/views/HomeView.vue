@@ -39,6 +39,27 @@ onUnmounted(() => {
         Jouer
         <i class="fas fa-play"></i>
       </button>
+      <p class="ascii">
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡤⣤⣒⣒⡾⢭⡩⠉⢰⢖⣖⠤⢤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢀⣠⣶⣿⢷⣫⠤⢲⠄⠀⠀⠧⡵⠀⡛⠉⢂⢄⣀⢻⣶⣄⡀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⢀⡴⣏⡽⢿⣿⣜⢲⡀⡼⠃⠀⡠⢻⣓⣄⢹⣼⢪⠇⢠⠉⠞⠋⠉⠢⡀⠀⠀⠀⠀⠀
+⠀⠀⠀⢀⣴⠏⠀⢠⠴⢾⡽⣥⡟⡃⢙⡤⢤⡱⣈⠤⡍⣄⣞⠛⣒⣼⣲⠀⠀⠀⠀⠈⢢⡀⠀⠀⠀
+⠀⠀⢠⡞⠁⠀⠀⠳⡤⡼⠀⠋⠱⣔⢄⡎⠭⠕⠁⠸⢹⠛⢯⣦⠊⠉⠁⠀⠀⠀⠀⠀⠀⠱⡄⠀⠀
+⠀⢠⡟⠀⠀⠀⠀⠀⠛⠀⠀⢤⣶⡸⡼⠸⡀⠀⠀⠸⢸⢠⠈⠃⡠⠤⣲⣄⢀⣗⣷⡄⢷⡀⠘⡄⠀
+⠀⣮⠃⠀⠀⠀⠀⠀⢀⡠⠞⠛⠁⠈⠑⡣⠃⠀⠀⢰⢈⠈⡢⠶⠕⠒⣜⡋⣻⣟⢦⠀⠘⠃⠀⢱⡀
+⢸⢻⠀⠀⠀⠀⠀⢀⡼⣘⡕⠀⠀⠀⠈⠀⠀⠀⢀⢇⢎⡜⠁⠀⠀⠀⢀⠈⠈⠉⠉⣄⠀⠀⠀⡀⡇
+⡟⡎⡄⠀⡖⠒⢲⢣⠌⡎⠀⠀⠀⠀⠀⠀⠀⠀⡜⡜⡎⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣆⠀⢠⠟⣼
+⡿⡔⢝⣄⢇⢶⠀⠽⢲⠁⠀⠀⠀⠀⠀⠀⠀⠀⢇⢇⢇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⣶⡇⠀⣿
+⣷⠈⠢⣈⠉⡪⣧⡂⠌⠒⠄⠀⠀⠀⠀⠀⠀⠀⠘⢎⠪⡓⠤⠠⠤⠲⡄⠀⠀⠀⠀⠀⠀⣰⢱⢡⢻
+⢸⡄⠀⠀⠙⢎⡎⡎⠑⠒⠲⣄⡀⠀⢦⡀⠀⠀⠀⠀⠑⠢⠄⠀⡄⡇⢧⠀⠀⠀⠀⠀⠞⢡⠃⡠⡇
+⠈⣷⠀⠀⠀⠘⣇⠇⠀⠀⠀⠀⠹⢂⣂⡀⠉⠲⡄⠀⠀⠀⠀⠀⠁⠠⢸⠀⠀⠀⠀⢸⢀⡹⡀⢱⠁
+⠀⠘⣧⠀⠀⢰⢇⢆⠀⠀⠀⠀⠀⠀⠀⠈⡵⡀⡅⠀⠀⠀⠀⠀⠀⠀⡎⠀⠀⠀⠰⢳⢫⢣⢣⠇⠀
+⠀⠀⠘⣧⠀⠀⠳⣗⢳⢤⠀⠀⠀⠀⠀⠸⣰⢱⠁⠀⠀⠀⠀⠀⠀⠀⢹⠀⢀⠜⠁⠓⡣⣣⠏⠀⠀
+⠀⠀⠀⠈⢷⣄⠀⠈⢣⢏⡇⠀⠀⠀⡔⣊⢜⡎⠀⠀⠀⠀⠀⠀⢆⠰⣘⣺⠕⣀⠤⢀⡴⠁⠀⠀⠀
+⠀⠀⠀⠀⠀⠙⢷⣄⠀⢫⠘⡄⢀⡞⡝⡰⠋⠀⠀⠀⠀⠀⠀⠀⠀⠁⠒⠒⠊⢁⡴⠋⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠉⠻⢦⣧⡘⢾⣜⠰⡅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡠⠖⠉⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠳⠿⢤⣌⣀⣀⣀⣀⣀⣠⡤⠤⠖⠊⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      </p>
     </section>
     <section class="gallery">
       <div class="image-container">
@@ -62,6 +83,10 @@ onUnmounted(() => {
   overflow: hidden;
 }
 
+.ascii{
+  font-size: 1rem;
+}
+
 .content {
   flex: 1;
   padding: 20px;
@@ -78,8 +103,9 @@ h1 {
 }
 
 p {
-  font-size: 2rem;
+  font-size: 1.3rem;
   font-weight: bold;
+  text-align: center;
   color: var(--text-color);
 }
 
@@ -121,20 +147,40 @@ p {
 }
 
 button {
-  background-color: var(--primary-color);
+  background-color: transparent;
   color: var(--text-color);
   border: none;
-
-
-  font-family: "Geo", sans-serif;
+  font-family: "Lexend", sans-serif;
   font-size: 2rem;
-  
   padding: 10px 20px;
   cursor: pointer;
   transition: background-color 0.3s;
+
+  text-align: center;
 }
 
 button:hover {
   background-color: var(--accent-color);
 }
+
+
+@media (max-width: 768px) {
+  .home {
+    flex-direction: column;
+  }
+
+  .content {
+    gap: 20px;
+  }
+  
+  .gallery{
+    display: none;
+  }
+
+  p{
+    font-size: 1rem;
+    text-wrap: wrap;
+  }
+}
+
 </style>

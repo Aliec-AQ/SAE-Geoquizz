@@ -81,20 +81,17 @@
 </template>
 
 <style scoped>
-:root {
-    --background-color: #313338;
-    --primary-color: #7289da;
-    --secondary-color: #2b2d31;
-    --dark-color: #232428;
-    --accent-color: #5865f2;
-    --text-color: #ffffff;
-}
-
 .main-container {
     display: flex;
     flex: 1;
     background-color: var(--background-color);
     color: var(--text-color);
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+    }
 }
 
 .form-container {
@@ -132,7 +129,7 @@ input {
     background-color: var(--dark-color);
     color: var(--text-color);
     font-size: 1.2rem;
-    font-family: 'Geo';
+    font-family: 'Lexend';
 }
 
 input::placeholder {
@@ -154,7 +151,7 @@ button {
     border-radius: 4px;
     cursor: pointer;
     font-size: 1.5rem;
-    font-family: 'Geo';
+    font-family: 'Lexend';
     background-color: var(--primary-color);
     color: var(--text-color);
 }
@@ -176,7 +173,7 @@ button:hover {
     cursor: pointer;
     font-size: 1.2rem;
     text-decoration: underline;
-    font-family: 'Geo';
+    font-family: 'Lexend';
     color: var(--text-color);
 }
 

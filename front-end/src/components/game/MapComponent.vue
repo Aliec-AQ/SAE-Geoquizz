@@ -117,7 +117,7 @@ button {
     padding: 0.5rem;
     background-color: var(--accent-color);
     color: var(--text-color);
-    font-family: "Geo", sans-serif;
+    font-family: "Lexend", sans-serif;
     font-size: 1.5rem;
     border: none;
     cursor: pointer;
@@ -136,5 +136,16 @@ button:disabled {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 999;
+}
+
+@media (max-width: 768px) {
+    #map-container {
+        width: 100%;
+    }
+
+    #map-container.expanded {
+        width: 100%;
+        height: 70%;
+    }
 }
 </style>

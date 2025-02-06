@@ -19,11 +19,13 @@ const logout = () => {
                 <img src="/favicon.ico" alt="Logo" width="40" height="40">
                 <span>Geoquizz</span>
             </div>
-            
+
+            <div class="app-buttons">
+                            
             <span class="separator"></span>
             
             <button @click="router.push({ name: 'game-create' })" title="Créer une partie">
-                <i class="fas fa-plus-circle"></i>
+                <i class="fas fa-play"></i>
             </button>
 
             <span class="separator"></span>
@@ -37,21 +39,20 @@ const logout = () => {
                     <i class="fas fa-user"></i>
                 </button>
                 <button @click="logout" title="Déconnexion">
-                    <i class="fas fa-sign-out-alt"></i>
+                    <i class="fas fa-power-off"></i>
                 </button>
             </template>
             <template v-else>
                 <button @click="router.push({ name: 'connexion' })" title="Connexion">
-                    <i class="fas fa-sign-in-alt"></i>
+                    <i class="fas fa-power-off"></i>
                 </button>
             </template>
-
+            </div>
         </nav>
     </header>
 </template>
 
 <style scoped>
-
 header {
     padding: 0.5rem;
     background-color: var(--dark-color);
@@ -81,7 +82,7 @@ header {
   background-color: var(--accent-color);
 }
 
-#app-nav button {
+button {
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
@@ -89,7 +90,24 @@ header {
     color: var(--text-color);
 }
 
-#app-nav button:hover {
+button:hover {
     color: var(--accent-color);
+}
+
+.app-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    #app-nav {
+        flex-direction: column;
+    }
+
+    .app-buttons {
+        align-items: flex-start;
+        width: 100%;
+    }
 }
 </style>
