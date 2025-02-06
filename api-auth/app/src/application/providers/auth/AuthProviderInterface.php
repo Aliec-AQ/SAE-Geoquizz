@@ -9,4 +9,6 @@ interface AuthProviderInterface
     public function signIn(InputUserDTO $credentials): UserDTO;
 
     public function getSignIn(string $token): UserDTO;
+
+    public function getPlayerID(string $token): string;
 }

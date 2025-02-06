@@ -79,4 +79,9 @@ class AuthProvider implements AuthProviderInterface
 
         return $accessToken;
     }
+
+    public function getPlayerID(string $token): string{
+        $arrayToken = $this->jwtManager->decodeToken($token);
+        return $arrayToken['sub'];
+    }
 }
