@@ -219,8 +219,7 @@ class PDOGameRepository implements GameRepositoryInterface
 
     public function gameById(string $id): Game
     {
-        $stmt = $this->pdo->prepare('SELECT * FROM players_sequences inner join sequences on players_sequences.sequence_id = sequences.id WHERE players_sequences.id = ?');
-        var_dump($stmt);
+        $stmt = $this->pdo->prepare('SELECT * FROM players_sequences INNER JOIN sequences ON players_sequences.sequence_id = sequences.id WHERE players_sequences.id = ?');
         $stmt->bindParam(1, $id);
         $stmt->execute();
         $row = $stmt->fetch();

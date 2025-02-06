@@ -2,7 +2,7 @@
 
 
 use geoquizz\application\actions\GetHighscoreAction;
-use geoquizz\application\actions\GetSequenceByIdAction;
+use geoquizz\application\actions\GetGameByIdAction;
 use geoquizz\application\actions\GetHistoriqueGameAction;
 use geoquizz\application\actions\GetPublicSequencesAction;
 use geoquizz\application\actions\PostGameAction;
@@ -89,8 +89,8 @@ return [
         return new GetHistoriqueGameAction($container->get(GameServiceInterface::class));
     },
 
-    GetSequenceByIdAction::class => function (ContainerInterface $container) {
-        return new GetSequenceByIdAction($container->get(GameServiceInterface::class));
+    GetGameByIdAction::class => function (ContainerInterface $container) {
+        return new GetGameByIdAction($container->get(GameServiceInterface::class));
     },
 
     PostSequenceReplayAction::class => function (ContainerInterface $container) {

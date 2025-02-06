@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 use geoquizz\application\actions\GetHighscoreAction;
-use geoquizz\application\actions\GetSequenceByIdAction;
+use geoquizz\application\actions\GetGameByIdAction;
 use geoquizz\application\actions\GetHistoriqueGameAction;
 use geoquizz\application\actions\GetPublicSequencesAction;
 use geoquizz\application\actions\PostGameAction;
@@ -24,11 +24,15 @@ return function( App $app): App {
         return $response;
     });
 
-    $app->post('/games[/]', PostGameAction::class)     //recoit id série dans la query
+    $app->get('/game[/]', GetGameByIdAction::class)
+        ->add(AuthorisationPartieMiddleware::class)
+        ->setName('getGame');
+
+    $app->post('/game[/]', PostGameAction::class)     //recoit id série dans la query
         ->add(AuthorisationMiddleware::class)
         ->setName('createGame');
 
-    $app->put('/games[/]',PutFinishGameAction::class)
+    $app->put('/game[/]',PutFinishGameAction::class)
         ->add(AuthorisationPartieMiddleware::class)
         ->setName('finishGame');
 
@@ -41,8 +45,6 @@ return function( App $app): App {
     $app->put('/sequences/{idSequence}/status[/]',PutSequenceStatusAction::class)
         ->setName('putStatusSequences');
 
-    $app->get('/sequences/{id}[/]', GetSequenceByIdAction::class)
-        ->setName('getSequenceById');
 
     $app->get('/users/games[/]', GetHistoriqueGameAction::class)
         ->add(AuthorisationMiddleware::class)

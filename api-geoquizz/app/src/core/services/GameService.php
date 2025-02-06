@@ -60,6 +60,12 @@ class GameService implements GameServiceInterface
     public function gameById(string $id): GameDTO
     {
         $game = $this->gameRepository->gameById($id);
+        $images = $this->gameRepository->getIDPhotosByIDSequence($game->sequence->ID);
+        $photos = [];
+        foreach ($images as $id) {
+            $photos[] = $this->mapsRepository->getPhotoByID($id);
+        }
+        $game->sequence->setPhotos($photos);
         return $game->toDTO();
     }
 
