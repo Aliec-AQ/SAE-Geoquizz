@@ -18,7 +18,6 @@ class GetPlayerIDAction extends AbstractAction
     }
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-        $playerId = "";
         try{
             $headers = $rq->getHeader('Authorization');
             $tokenstring = sscanf($headers[0], "Bearer %s")[0];
@@ -26,7 +25,6 @@ class GetPlayerIDAction extends AbstractAction
         }catch (Exception $e){
             throw new HttpBadRequestException($rq,"erreur lors de la récupération de l'id");
         }
-
         $response = [
             'type' => 'ressource',
             'playerid' => $playerId,

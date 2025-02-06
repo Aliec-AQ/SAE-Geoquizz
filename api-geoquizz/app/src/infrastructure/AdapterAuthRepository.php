@@ -19,13 +19,11 @@ class AdapterAuthRepository implements AuthRepositoryInterface
 
     public function RecuperationIDPlayer(string $token): string
     {
-
-        $response = $this->client->get('/x', [
+        $response = $this->client->get('/token/playerID', [
             'headers' => ['Authorization' => 'Bearer '.$token]
         ]);
         $data = json_decode($response->getBody()->getContents(), true);
-
-        return "";
+        return $data["playerid"];
     }
 
 }

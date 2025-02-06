@@ -29,7 +29,7 @@ return function( App $app): App {
     $app->post('/token/validate[/]',ValidateAction::class)
         ->setName('tokenValidate');
 
-    $app->post('/token/PlayerID[/]',GetPlayerIDAction::class)
+    $app->get('/token/playerID[/]',GetPlayerIDAction::class)
         ->setName('getPlayerID');
 
     return $app;

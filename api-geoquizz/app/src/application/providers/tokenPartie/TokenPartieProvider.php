@@ -1,5 +1,5 @@
 <?php
-namespace geoquizz\application\providers\auth;
+namespace geoquizz\application\providers\tokenPartie;
 
 use geoquizz\core\services\TokenPartieService;
 

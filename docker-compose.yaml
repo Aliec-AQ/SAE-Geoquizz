@@ -137,7 +137,6 @@ services:
     networks:
       - geoquizz.net
     # user: ${UID}:${GID}
-      
 
   directus.cache:
     image: redis:6
