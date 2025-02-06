@@ -62,4 +62,17 @@ class GameService implements GameServiceInterface
         $game = $this->gameRepository->gameById($id);
         return $game->toDTO();
     }
+
+    public function replayGame(string $idSequence, ?string $idUser): GameDTO
+    {
+        $sequence = $this->gameRepository->getSequenceById($idSequence);
+        $imagesIds = $this->gameRepository->getIDPhotosByIDSequence($idSequence);
+        $images = [];
+        foreach ($imagesIds as $id) {
+            $images[] = $this->mapsRepository->getPhotoByID($id);
+        }
+        $sequence->setPhotos($images);
+        $game = $this->gameRepository->createGame($sequence, $idUser);
+        return $game->toDTO();
+    }
 }

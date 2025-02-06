@@ -5,6 +5,7 @@ use geoquizz\application\actions\GetGameByIdAction;
 use geoquizz\application\actions\GetHistoriqueGameAction;
 use geoquizz\application\actions\GetPublicSequencesAction;
 use geoquizz\application\actions\PostGameAction;
+use geoquizz\application\actions\PostGameReplayAction;
 use geoquizz\application\actions\PostPlayerAction;
 use geoquizz\application\actions\PutFinishGameAction;
 use geoquizz\application\actions\PutSequenceStatusAction;
@@ -31,13 +32,9 @@ return function( App $app): App {
         ->setName('finishGame');
 
     $app->get('/games/{id}[/]', GetGameByIdAction::class)
-        ->add(AuthorisationPartieMiddleware::class)
         ->setName('getGame');
 
-    $app->get('/sequence/{id}[/]', GetGameAction::class)
-        ->setName('getSequence');
-
-    $app->post('/games/replay', PostGameReplayAction::class) // id de la séquence dans la query
+    $app->post('/games/replay[/]', PostGameReplayAction::class) // id de la séquence dans la query
         ->setName('postReplayGame');
 
     $app->get('/sequences/public[/]', GetPublicSequencesAction::class)

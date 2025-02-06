@@ -27,6 +27,7 @@ interface GameRepositoryInterface
     public function finishGame(string $idGame, int $score): void;
     public function historiqueGames(string $userId): array;
     public function gameById(string $id): Game;
+    public function getSequenceById(?string $id): Sequence;
 
     public function ajouterPlayer(Player $p) : void;
 }

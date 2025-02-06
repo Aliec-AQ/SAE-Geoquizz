@@ -5,6 +5,7 @@ use geoquizz\application\actions\GetGameByIdAction;
 use geoquizz\application\actions\GetHistoriqueGameAction;
 use geoquizz\application\actions\GetPublicSequencesAction;
 use geoquizz\application\actions\PostGameAction;
+use geoquizz\application\actions\PostGameReplayAction;
 use geoquizz\application\actions\PostPlayerAction;
 use geoquizz\application\actions\PutFinishGameAction;
 use geoquizz\application\actions\PutSequenceStatusAction;
@@ -89,6 +90,10 @@ return [
 
     GetGameByIdAction::class => function (ContainerInterface $container) {
         return new GetGameByIdAction($container->get(GameServiceInterface::class));
+    },
+
+    PostGameReplayAction::class => function (ContainerInterface $container) {
+        return new PostGameReplayAction($container->get(GameServiceInterface::class));
     },
 
     PostPlayerAction::class => function (ContainerInterface $container) {

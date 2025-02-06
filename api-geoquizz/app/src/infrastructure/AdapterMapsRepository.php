@@ -32,18 +32,6 @@ class AdapterMapsRepository implements MapsRepositoryInterface
         return $returnData;
     }
 
-    public function getPhotoByID(string $photoID):Photo{
-        try{
-            $response = $this->client->get('/items/photos?filter={"id":{"_eq":"'. $photoID . '"}}');
-            $data = json_decode($response->getBody()->getContents(), true);
-            return new Photo($data[0]['nom'], $data[0]['image'], $data[0]['lat'], $data[0]['long']);
-        }catch (Exception $e){
-            throw new MapsRepositoryException("Erreur lors de la récupération de la photo : ". $e->getMessage());
-        }
-
-
-    }
-
 
     public function getThemesBySequences(array $sequences): array
     {
@@ -54,5 +42,18 @@ class AdapterMapsRepository implements MapsRepositoryInterface
             $themes[$sequence->ID] = $data['data'][0]['nom'];
         }
         return $themes;
+    }
+
+    public function getPhotoByID(string $photoID):Photo{
+        try{
+            $response = $this->client->get('/items/photos?filter={"id":{"_eq":"'. $photoID . '"}}');
+            $data = json_decode($response->getBody()->getContents(), true)["data"];
+
+            $photo = new Photo($data[0]['nom'], $data[0]['image'], $data[0]['lat'], $data[0]['long']);
+            $photo->setId($data[0]['id']);
+            return $photo;
+        }catch (Exception $e){
+            throw new MapsRepositoryException("Erreur lors de la récupération de la photo : ". $e->getMessage());
+        }
     }
 }

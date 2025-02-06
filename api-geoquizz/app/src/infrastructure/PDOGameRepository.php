@@ -41,7 +41,7 @@ class PDOGameRepository implements GameRepositoryInterface
         }
     }
 
-    public function createGame(Sequence $sequence,string $playerId): Game
+    public function createGame(Sequence $sequence,?string $playerId): Game
     {
         $idSequence = $sequence->getId();
         $order = 0;
@@ -126,7 +126,7 @@ class PDOGameRepository implements GameRepositoryInterface
     }
 
     public function getIDPhotosByIDSequence(string $sequenceID): array{
-        $stmt = $this->pdo->prepare('SELECT photo_id FROM photos_sequences WHERE sequence_id =? ORDER BY order ASC');
+        $stmt = $this->pdo->prepare('SELECT photo_id FROM photos_sequences WHERE sequence_id =? ORDER BY "order" ASC');
         $stmt->bindParam(1, $sequenceID);
         $stmt->execute();
         $rows = $stmt->fetchAll();
@@ -220,6 +220,7 @@ class PDOGameRepository implements GameRepositoryInterface
     public function gameById(string $id): Game
     {
         $stmt = $this->pdo->prepare('SELECT * FROM players_sequences inner join sequences on players_sequences.sequence_id = sequences.id WHERE players_sequences.id = ?');
+        var_dump($stmt);
         $stmt->bindParam(1, $id);
         $stmt->execute();
         $row = $stmt->fetch();
@@ -239,6 +240,25 @@ class PDOGameRepository implements GameRepositoryInterface
             return $game;
         } else {
             throw new RepositoryEntityNotFoundException("Game not found");
+        }
+    }
+
+    public function getSequenceById(?string $id): Sequence
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM sequences WHERE id = ?');
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        $row = $stmt->fetch();
+
+        if($row) {
+            $sequence = new Sequence(
+                $row['public'],
+                $row['serie_id']
+            );
+            $sequence->setId($row['id']);
+            return $sequence;
+        } else {
+            throw new RepositoryEntityNotFoundException("Sequence not found");
         }
     }
 }
