@@ -54,7 +54,12 @@ class GameService implements GameServiceInterface
 
     public function historiqueGames(string $userId): array
     {
-        return $this->gameRepository->historiqueGames($userId);
+        $historique =  $this->gameRepository->historiqueGames($userId);
+        $games = [];
+        foreach ($historique as $game) {
+            $games[] = $this->gameRepository->gameById($game['id'])->toDTO();
+        }
+        return $games;
     }
 
     public function gameById(string $id): GameDTO
