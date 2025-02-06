@@ -5,6 +5,7 @@ use geoquizz\application\actions\GetGameByIdAction;
 use geoquizz\application\actions\GetHistoriqueGameAction;
 use geoquizz\application\actions\GetPublicSequencesAction;
 use geoquizz\application\actions\PostGameAction;
+use geoquizz\application\actions\PostPlayerAction;
 use geoquizz\application\actions\PutFinishGameAction;
 use geoquizz\application\actions\PutSequenceStatusAction;
 use geoquizz\application\middlewares\AuthorisationMiddleware;
@@ -49,7 +50,8 @@ return function( App $app): App {
         ->add(AuthorisationMiddleware::class)
         ->setName('getHistoriqueGames');
 
-
+    $app->post('/players[/]',PostPlayerAction::class)
+        ->setName('createPlayer');
 
     return $app;
 };

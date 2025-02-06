@@ -4,6 +4,7 @@ namespace geoquizz\core\repositoryInterfaces;
 
 
 use geoquizz\core\domain\entity\Game;
+use geoquizz\core\domain\entity\Player;
 use geoquizz\core\domain\entity\Sequence;
 use Ramsey\Uuid\Uuid;
 
@@ -26,4 +27,6 @@ interface GameRepositoryInterface
     public function finishGame(string $idGame, int $score): void;
     public function historiqueGames(string $userId): array;
     public function gameById(string $id): Game;
+
+    public function ajouterPlayer(Player $p) : void;
 }

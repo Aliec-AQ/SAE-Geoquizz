@@ -2,6 +2,7 @@
 
 namespace geoquizz_auth\infrastructure\repositories;
 
+use Exception;
 use PDO;
 use geoquizz_auth\core\repositoryInterfaces\UserRepositoryInterface;
 use geoquizz_auth\core\repositoryInterfaces\RepositoryEntityNotFoundException;

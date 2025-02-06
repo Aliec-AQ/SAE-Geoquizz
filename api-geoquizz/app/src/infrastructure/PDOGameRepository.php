@@ -2,8 +2,10 @@
 
 namespace geoquizz\infrastructure;
 
+use Faker\Factory;
 use geoquizz\core\domain\entity\Game;
 use geoquizz\core\domain\entity\Photo;
+use geoquizz\core\domain\entity\Player;
 use geoquizz\core\repositoryInterfaces\GameRepositoryInterface;
 use geoquizz\core\repositoryInterfaces\RepositoryEntityNotFoundException;
 use geoquizz\core\domain\entity\Sequence;
@@ -167,9 +169,20 @@ class PDOGameRepository implements GameRepositoryInterface
         return $scores;
     }
 
-    public function ajouterPlayer(string $idplayer) : void{
-        $stmt = $this->pdo->prepare('INSERT INTO players (id) VALUES (?)');
-        $stmt->bindParam(1, $idplayer);
+    public function ajouterPlayer(Player $p) : void{
+
+        $idPlayer = $p->getID();
+        $pseudo = $p->pseudo;
+        if($pseudo == null || $pseudo == ''){
+            $faker = Factory::create('fr_FR');
+            $pseudo = $faker->userName;
+        }
+        $date = date('Y-m-d H:i:s');
+
+        $stmt = $this->pdo->prepare('INSERT INTO players (id_user,pseudo,last_connection) VALUES (?,?,?)');
+        $stmt->bindParam(1, $idPlayer);
+        $stmt->bindParam(2, $pseudo);
+        $stmt->bindParam(3, $date);
         $stmt->execute();
     }
 

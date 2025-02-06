@@ -2,6 +2,7 @@
 
 namespace geoquizz_auth\core\services\user;
 
+use geoquizz_auth\core\repositoryInterfaces\GeoquizzRepositoryInterface;
 use PHPUnit\Exception;
 use geoquizz_auth\core\dto\UserDTO;
 use geoquizz_auth\core\domain\entities\user\User;
@@ -13,10 +14,13 @@ class UserService implements UserServiceInterface
 {
     private UserRepositoryInterface $userRepository;
 
+    private GeoquizzRepositoryInterface $geoquizzRepository;
 
-    public function __construct(UserRepositoryInterface $userRepository)
+
+    public function __construct(UserRepositoryInterface $userRepository, GeoquizzRepositoryInterface $geoquizzRepository)
     {
         $this->userRepository = $userRepository;
+        $this->geoquizzRepository = $geoquizzRepository;
     }
 
     public function createUser(InputUserDTO $input): void
@@ -35,7 +39,9 @@ class UserService implements UserServiceInterface
                 password_hash($input->password, PASSWORD_DEFAULT),
                 0
             );
-            $this->userRepository->save($user);
+
+            $id = $this->userRepository->save($user);
+            $this->geoquizzRepository->createUser($id, $input->pseudo);
         } catch (\Exception $e) {
             throw new UserServiceException('Erreur lors de la création de l\'utilisateur' . $e->getMessage());
         }

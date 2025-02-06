@@ -1,6 +1,8 @@
 <?php
 
 use geoquizz_auth\application\actions\GetPlayerIDAction;
+use geoquizz_auth\core\repositoryInterfaces\GeoquizzRepositoryInterface;
+use geoquizz_auth\infrastructure\adaptater\AdapterGeoquizzRepository;
 use Psr\Container\ContainerInterface;
 use geoquizz_auth\application\actions\RefreshAction;
 use geoquizz_auth\application\actions\RegisterAction;
@@ -23,6 +25,10 @@ return [
         return new JWTManager($c->get('SECRET_KEY'));
     },
 
+    GeoquizzRepositoryInterface::class => function(ContainerInterface $c){
+    return new AdapterGeoquizzRepository($c->get('client_geoquizz'));
+    },
+
     AuthProviderInterface::class => function(ContainerInterface $c){
         return new AuthProvider($c->get(AuthServiceInterface::class),$c->get(JWTManager::class));
     },
@@ -32,7 +38,7 @@ return [
     },
 
     UserServiceInterface::class => function(ContainerInterface $c){
-        return new UserService($c->get(UserRepositoryInterface::class));
+        return new UserService($c->get(UserRepositoryInterface::class),$c->get(GeoquizzRepositoryInterface::class));
     },
 
     AuthServiceInterface::class => function(ContainerInterface $c){

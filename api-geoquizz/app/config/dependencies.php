@@ -5,6 +5,7 @@ use geoquizz\application\actions\GetGameByIdAction;
 use geoquizz\application\actions\GetHistoriqueGameAction;
 use geoquizz\application\actions\GetPublicSequencesAction;
 use geoquizz\application\actions\PostGameAction;
+use geoquizz\application\actions\PostPlayerAction;
 use geoquizz\application\actions\PutFinishGameAction;
 use geoquizz\application\actions\PutSequenceStatusAction;
 use geoquizz\application\middlewares\AuthorisationMiddleware;
@@ -52,7 +53,7 @@ return [
     },
 
     AuthorisationServiceInterface::class => function(ContainerInterface $container) {
-        return new AuthorisationService($container->get(AuthRepositoryInterface::class));
+        return new AuthorisationService($container->get(AuthRepositoryInterface::class),$container->get(GameRepositoryInterface::class));
     },
 
     TokenPartieServiceInterface::class => function(ContainerInterface $container) {
@@ -88,6 +89,10 @@ return [
 
     GetGameByIdAction::class => function (ContainerInterface $container) {
         return new GetGameByIdAction($container->get(GameServiceInterface::class));
+    },
+
+    PostPlayerAction::class => function (ContainerInterface $container) {
+        return new PostPlayerAction($container->get(AuthorisationServiceInterface::class));
     },
 
     //middleware

@@ -7,10 +7,10 @@ use geoquizz\core\dto\PlayerDTO;
 
 class Player extends Entity
 {
-    protected string $pseudo;
+    protected ?string $pseudo;
     protected DateTime $lastConnections;
 
-    public function __construct(string $pseudo, DateTime $lastConnections = new DateTime("now")){
+    public function __construct(?string $pseudo, DateTime $lastConnections = new DateTime("now")){
         $this->pseudo = $pseudo;
         $this->lastConnections = $lastConnections;
     }

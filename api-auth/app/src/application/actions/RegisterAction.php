@@ -9,6 +9,7 @@ use Slim\Exception\HttpBadRequestException;
 use geoquizz_auth\core\dto\InputUserDTO;
 use geoquizz_auth\core\services\user\UserServiceInterface;
 use geoquizz_auth\application\providers\auth\AuthProviderInterface;
+use Slim\Exception\HttpUnauthorizedException;
 
 class RegisterAction extends AbstractAction
 {
@@ -32,16 +33,22 @@ class RegisterAction extends AbstractAction
             throw new HttpBadRequestException($rq, 'Paramètres manquants');
         }
 
+        $pseudo = null;
+
+        if(isset($params['pseudo'])){
+           $pseudo = $params['pseudo'];
+        }
+
         $email = filter_var($params['email'], FILTER_SANITIZE_EMAIL);
 
         try{
-            $this->utilisateurService->createUser(new InputUserDTO($email, $params['mdp']));
+            $this->utilisateurService->createUser(new InputUserDTO($email, $params['mdp'],$pseudo));
         }catch (Exception $e){
             throw new HttpBadRequestException($rq, $e->getMessage());
         }
 
         try {
-            $authRes = $this->authProvider->signIn(new InputUserDTO($email, $params['mdp']));
+            $authRes = $this->authProvider->signIn(new InputUserDTO($email, $params['mdp'],$pseudo));
           }catch (Exception $e){
             throw new HttpUnauthorizedException($rq, 'Identifiants incorrects ' . $e->getMessage());
           }
