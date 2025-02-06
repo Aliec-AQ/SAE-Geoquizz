@@ -36,16 +36,27 @@ return function(App $app): App {
         ->setName('getPublicGames');
 
     $app->post('/games[/]', GeneriqueGeoQuizzAction::class)
+        ->add(AuthMiddleware::class)
         ->setName('createGame');
 
-    $app->put('/games/{id}[/]', GeneriqueGeoQuizzAction::class)
+    $app->put('/games[/]', GeneriqueGeoQuizzAction::class)
         ->setName('finishGame');
 
-    $app->get('/games/{id}[/]', GeneriqueGeoQuizzAction::class)
-        ->setName('getGame');
+    $app->get('/sequences/{id}[/]', GeneriqueGeoQuizzAction::class)
+        ->setName('getSequenceById');
 
-    $app->get('/users/{id}/games[/]', GeneriqueGeoQuizzAction::class)
-        ->setName('getUserGames');
+    $app->post('/sequences/replay[/]', GeneriqueGeoQuizzAction::class)
+        ->setName('postReplaySequence');
+
+    $app->put('/sequences/{idSequence}/status[/]', GeneriqueGeoQuizzAction::class)
+        ->setName('putStatusSequences');
+
+    $app->get('/users/games[/]', GeneriqueGeoQuizzAction::class)
+        ->add(AuthMiddleware::class)
+        ->setName('getHistoriqueGames');
+
+    $app->post('/players[/]', GeneriqueGeoQuizzAction::class)
+        ->setName('createUser');
 
     /*************************
     * Routes de l'API Auth

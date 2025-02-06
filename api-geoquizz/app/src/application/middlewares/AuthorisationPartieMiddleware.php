@@ -12,6 +12,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpInternalServerErrorException;
+use Slim\Exception\HttpUnauthorizedException;
 use Slim\Routing\RouteContext;
 
 
@@ -36,7 +37,16 @@ class AuthorisationPartieMiddleware
         $route = $routeContext->getRoute();
         $routeName = $route->getName();
 
+        if (! $rq->hasHeader('Origin'))
+            New HttpUnauthorizedException ($rq, "missing Origin Header (auth)");
+        if (! $rq->hasHeader("Authorization")){
+            New HttpUnauthorizedException ($rq, "missing Authorization Header (auth)");
+        }
+
         $h = $rq->getHeader('Authorization')[0];
+        if($h == null || empty($h)){
+            throw new HttpUnauthorizedException($rq,"no auth, try /users/signin[/] or /users/signup[/]");
+        }
         $tokenstring = sscanf($h, "Bearer %s")[0];
         $partieId = $this->tokenPartieProvider->getTokenPartie($tokenstring);
         $rq = $rq->withAttribute('idGame', $partieId);

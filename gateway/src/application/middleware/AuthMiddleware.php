@@ -16,8 +16,6 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Exception\HttpUnauthorizedException;
-//use nrv\application\providers\auth\AuthProviderInterface;
-//use nrv\application\providers\auth\JWTManager;
 
 class AuthMiddleware{
 
