@@ -75,15 +75,6 @@ watch(isExpanded, (newVal) => {
 </template>
 
 <style scoped>
-:root {
-    --background-color: #313338;
-    --primary-color: #7289da;
-    --secondary-color: #2b2d31;
-    --dark-color: #232428;
-    --accent-color: #5865f2;
-    --text-color: #ffffff;
-}
-
 #map-container {
     position: fixed;
     bottom: 0;

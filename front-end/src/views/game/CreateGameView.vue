@@ -5,12 +5,13 @@ import { useUserStore } from '@/stores/user';
 import { useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
 
-const { startGame, getPublicGames } = useGame();
+const { startGame, getPublicGames, getSeries } = useGame();
 const userStore = useUserStore();
 const router = useRouter();
 const toast = useToast();
 
 const publicGames = ref([]);
+const series = ref([]);
 const selectedGame = ref(null);
 const showModal = ref(false);
 
@@ -22,13 +23,28 @@ const fetchPublicGames = async () => {
     }
 };
 
+const getSeriesData = async () => {
+    try {
+        series.value = await getSeries();
+    } catch (error) {
+        toast.error('Failed to fetch series');
+    }
+};
+
 const createGame = async () => {
+    if(!selectedGame.value){
+        toast.warning('Veuillez selectionner un thème de photos');
+        return;
+    }
+
     await startGame(selectedGame.value);
+
     router.push({ name: 'game-play' });
 };
 
 onMounted(() => {
     fetchPublicGames();
+    getSeriesData();
     if (!userStore.isSignedIn) {
         showModal.value = true;
     }
@@ -40,9 +56,10 @@ onMounted(() => {
         <div class="public-games">
             <h2>Parties publiques</h2>
             <div class="games-grid">
-                <div v-for="game in publicGames" :key="game.id" class="game-card">
+                <div v-for="game in publicGames" :key="game.id" class="game-card" v-if="publicGames.length > 0">
                     <p>{{ game.name }}</p>
                 </div>
+                <p v-else>Aucune partie publique disponible</p>
             </div>
         </div>
         <div class="create-game-container">
@@ -50,7 +67,7 @@ onMounted(() => {
                 <h2>Créer une partie</h2>
                 <select v-model="selectedGame">
                     <option disabled value="">Sélectionnez un thème de photos</option>
-                    <option v-for="game in publicGames" :key="game.id" :value="game.id">{{ game.name }}</option>
+                    <option v-for="serie in series" :key="serie.id" :value="serie.id">{{ serie.nom }}</option>
                 </select>
                 <button @click="createGame" class="create-game-button">
                     Créer la partie

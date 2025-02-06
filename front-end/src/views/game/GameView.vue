@@ -3,12 +3,14 @@ import EndRound from '@/components/game/EndRound.vue';
 import MapComponent from '@/components/game/MapComponent.vue';
 import router from '@/router';
 import { useGame } from '@/services/game';
+import { useGameStore } from '@/stores/game';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 
 // Gestion du jeu
-const { validate, getCurrentPhoto, getLastGuess, getScore, gameConfig, isEnded} = useGame();
+const { validate, gameConfig} = useGame();
 const currentPhoto = ref(null);
 const gameIsOver = ref(false);
+const gameStore = useGameStore();
 
 // timer
 const time = ref(0);
@@ -29,7 +31,7 @@ function submitGuess(data) {
 
 function initGame(){
     gameIsOver.value = false;
-    currentPhoto.value = getCurrentPhoto();
+    currentPhoto.value = gameStore.getCurrentPhoto;
 
     time.value = gameConfig.time;
     timer.value = setInterval(() => {
@@ -48,7 +50,7 @@ function resetGame(){
 
 function nextPhoto(){
     console.log('next');
-    if(isEnded()){
+    if(gameStore.isEnded){
         console.log('end');
         router.push({name: 'game-end'});
     }else{
@@ -66,7 +68,7 @@ function nextPhoto(){
             <MapComponent :defaultCoordinates="gameConfig.defaultCoordinates" @validate="submitGuess" v-if="!gameIsOver"/>
 
             <transition-group name="fade" appear>
-                <EndRound :guess="getLastGuess()" :score="getScore()" @next="nextPhoto" v-if="gameIsOver"/>
+                <EndRound :guess="gameStore.getLastGuess" :score="gameStore.getScore" @next="nextPhoto" v-if="gameIsOver"/>
             </transition-group>
         </template>
     </main>

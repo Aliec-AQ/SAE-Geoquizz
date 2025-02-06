@@ -10,16 +10,13 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\App;
 
-
-return function( App $app): App {
+return function(App $app): App {
 
     $app->add(Cors::class);
 
-    $app->options('/{routes:.+}',
-        function( Request $rq,
-                  Response $rs, array $args) : Response {
-            return $rs;
-        });
+    $app->options('/{routes:.+}', function(Request $rq, Response $rs, array $args): Response {
+        return $rs;
+    });
 
     /*************************
     * Routes de l'API Map
@@ -28,28 +25,31 @@ return function( App $app): App {
     $app->get('/assets/{id}[/]', GeneriqueMapAction::class)
         ->setName('getAsset');
 
-    /*************************
-     * Routes de l'API GeoQuizz
-     *************************/
-
-     $app->get('/games/public[/]', GeneriqueGeoQuizzAction::class)
-     ->setName('getPublicGames');
-
-     $app->post('/games[/]', GeneriqueGeoQuizzAction::class)
-     ->setName('createGame');
-
- $app->put('/games/{id}[/]', GeneriqueGeoQuizzAction::class)
-     ->setName('finishGame');
-
- $app->get('/games/{id}[/]', GeneriqueGeoQuizzAction::class)
-     ->setName('getGame');
-
- $app->get('/users/{id}/games[/]', GeneriqueGeoQuizzAction::class)
-     ->setName('getUserGames');
+    $app->get('/items/themes[/]', GeneriqueMapAction::class)
+        ->setName('getSeries');
 
     /*************************
-     * Routes de l'API Auth
-     *************************/
+    * Routes de l'API GeoQuizz
+    *************************/
+
+    $app->get('/sequences/public[/]', GeneriqueGeoQuizzAction::class)
+        ->setName('getPublicGames');
+
+    $app->post('/games[/]', GeneriqueGeoQuizzAction::class)
+        ->setName('createGame');
+
+    $app->put('/games/{id}[/]', GeneriqueGeoQuizzAction::class)
+        ->setName('finishGame');
+
+    $app->get('/games/{id}[/]', GeneriqueGeoQuizzAction::class)
+        ->setName('getGame');
+
+    $app->get('/users/{id}/games[/]', GeneriqueGeoQuizzAction::class)
+        ->setName('getUserGames');
+
+    /*************************
+    * Routes de l'API Auth
+    *************************/
 
     $app->post('/signin[/]', GeneriqueAuthnAction::class)
         ->setName('usersSignIn');
@@ -60,8 +60,6 @@ return function( App $app): App {
     $app->post('/refresh[/]', GeneriqueAuthnAction::class)
         ->add(AuthMiddleware::class)
         ->setName('usersRefresh');
-
-
 
     return $app;
 };

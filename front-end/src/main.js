@@ -16,14 +16,14 @@ const app = createApp(App)
 
 //setup api
 app.use(api, {
-    baseURL: 'http://localhost:3521/',
+    baseURL: 'http://localhost:35621/',
 })
 
 //setup pinia
 const pinia = createPinia()
 pinia.use(piniaPersist)
 pinia.use(({ store }) => {
-    store.$imageApiUrl = 'http://localhost:3521/assets/';
+    store.$imageApiUrl = 'http://localhost:35621/assets/';
     store.$api = app.config.globalProperties.$api;
 });
 

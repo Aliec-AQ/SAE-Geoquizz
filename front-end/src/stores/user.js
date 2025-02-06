@@ -5,7 +5,6 @@ export const useUserStore = defineStore('user', {
         return {
             accessToken: '',
             refreshToken: '',
-            role: '',
         }
     },
     actions: {
@@ -17,7 +16,6 @@ export const useUserStore = defineStore('user', {
                 });
                 this.accessToken = res.data.atoken;
                 this.refreshToken = res.data.rtoken;
-                this.role = res.data.role;
                 return true;
             } catch (e) {
                 return false;
@@ -33,7 +31,6 @@ export const useUserStore = defineStore('user', {
                 });
                 this.accessToken = res.data.atoken;
                 this.refreshToken = res.data.rtoken;
-                this.role = res.data.role;
                 return true;
             } catch (e) {
                 return false;
@@ -49,11 +46,14 @@ export const useUserStore = defineStore('user', {
         isSignedIn(state) {
             return state.accessToken !== '';
         },
+        getAccessToken(state) {
+            return state.accessToken;
+        },
     },
     persist: {
         enabled: true,
         strategies: [
-            { storage: localStorage, paths: ['accessToken', 'refreshToken', 'role'] }
+            { storage: localStorage, paths: ['accessToken', 'refreshToken'] }
         ]
     }
 })

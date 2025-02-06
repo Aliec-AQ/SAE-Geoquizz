@@ -1,4 +1,5 @@
 import { useGameStore } from "@/stores/game";
+import { useUserStore } from "@/stores/user";
 import { inject } from "vue";
 
 export function useGame(){
@@ -6,6 +7,7 @@ export function useGame(){
     /* Fonctions en rapport avec le déroulement d'une partie */
 
     const gameStore = useGameStore();
+    const userStore = useUserStore();
     const gameConfig = gameStore.getGameConfig;
 
     function calculateDistance(lat1Deg, lon1Deg, lat2Deg, lon2Deg) {
@@ -71,27 +73,11 @@ export function useGame(){
     }
 
     async function startGame(idSerie){
-        await gameStore.createGame(idSerie);
+        await gameStore.createGame(idSerie, userStore.getAccessToken);
     }
 
     function resetGame() {
         gameStore.resetData();
-    }
-
-    function getCurrentPhoto(){
-        return gameStore.getCurrentPhoto;
-    }
-
-    function getLastGuess(){
-        return gameStore.getLastGuess;
-    }
-
-    function getScore(){
-        return gameStore.getScore;
-    }
-
-    function isEnded(){
-        return gameStore.isEnded;
     }
 
     /* Autres fonctions en rapport avec le jeu */
@@ -99,17 +85,14 @@ export function useGame(){
     const api = inject('api');
 
     async function getPublicGames(){
-        return [
-            { id: 1, name: 'Game 1' },
-            { id: 2, name: 'Game 2' },
-            { id: 3, name: 'Game 3' },
-            { id: 4, name: 'Game 4' },
-        ];
+        let publicGames = await api.get('/sequences/public');
+        return publicGames.data.sequences_publiques;
     }
 
     async function getSeries(){
-        return [];
+        let series = await api.get('/items/themes');
+        return series.data.data;
     }
 
-    return {startGame, validate, resetGame, getCurrentPhoto, getLastGuess, getScore, gameConfig, isEnded, getPublicGames};
+    return {startGame, validate, resetGame,  gameConfig, getPublicGames, getSeries};
 }

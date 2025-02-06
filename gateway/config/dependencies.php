@@ -10,7 +10,7 @@ use Psr\Http\Client\ClientInterface;
 return [
 
     'client_geoquizz' => function (ContainerInterface $c){
-        return new Client(['base_uri' => 'http://api.auth.geoquizz:80']);
+        return new Client(['base_uri' => 'http://api.geoquizz:80']);
     },
 
     'client_map' => function (ContainerInterface $c){
