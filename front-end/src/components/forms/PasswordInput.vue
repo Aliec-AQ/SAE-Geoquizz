@@ -44,7 +44,7 @@ input {
     background-color: var(--dark-color);
     color: var(--text-color);
     font-size: 1.2rem;
-    font-family: 'Geo';
+    font-family: 'Lexend';
     width: 100%;
     box-sizing: border-box;
 }

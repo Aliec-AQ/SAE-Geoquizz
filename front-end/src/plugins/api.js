@@ -29,6 +29,7 @@ api.install = function (app, options) {
     instance = createInstance(options.apiKey);
 
     app.config.globalProperties.$api = instance;
+    app.provide('api', instance);
 }
 
 export default api;

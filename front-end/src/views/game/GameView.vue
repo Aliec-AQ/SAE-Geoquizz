@@ -2,12 +2,11 @@
 import EndRound from '@/components/game/EndRound.vue';
 import MapComponent from '@/components/game/MapComponent.vue';
 import router from '@/router';
-import { useGameStore } from '@/stores/game';
+import { useGame } from '@/services/game';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 
 // Gestion du jeu
-const gameStore = useGameStore();
-const defaultCoordinates = ref({});
+const { validate, getCurrentPhoto, getLastGuess, getScore, gameConfig, isEnded} = useGame();
 const currentPhoto = ref(null);
 const gameIsOver = ref(false);
 
@@ -23,21 +22,19 @@ onBeforeUnmount(() => {
     resetGame();
 });
 
-
-function validate(data) {
-    gameStore.addGuess(data.lat, data.long, gameStore.maxTime - time.value);
+function submitGuess(data) {
+    validate(data.lat, data.long, gameConfig.time - time.value);
     resetGame();
 }
 
 function initGame(){
     gameIsOver.value = false;
-    defaultCoordinates.value = gameStore.defaultCoordinates;
-    currentPhoto.value = gameStore.getCurrentPhoto;
+    currentPhoto.value = getCurrentPhoto();
 
-    time.value = gameStore.maxTime;
+    time.value = gameConfig.time;
     timer.value = setInterval(() => {
         if(time.value<=1) {
-            validate({lat: null, long: null});
+            submitGuess({lat: null, long: null});
         }
         time.value--;
     }, 1000);
@@ -50,7 +47,9 @@ function resetGame(){
 }
 
 function nextPhoto(){
-    if(gameStore.isEnded){
+    console.log('next');
+    if(isEnded()){
+        console.log('end');
         router.push({name: 'game-end'});
     }else{
         initGame();
@@ -64,10 +63,10 @@ function nextPhoto(){
         <template v-if="currentPhoto">
             <span :key="time" id="timer" :style="[time <= 15 ? 'color:#cc0000;':'']" v-if="!gameIsOver">{{ time }}</span>
             <img :src="currentPhoto.url" alt="image à trouver" />
-            <MapComponent :defaultCoordinates="defaultCoordinates" @validate="validate" v-if="!gameIsOver"/>
+            <MapComponent :defaultCoordinates="gameConfig.defaultCoordinates" @validate="submitGuess" v-if="!gameIsOver"/>
 
             <transition-group name="fade" appear>
-                <EndRound :guess="gameStore.getLastGuess" :score="gameStore.getScore" @next="nextPhoto" v-if="gameIsOver"/>
+                <EndRound :guess="getLastGuess()" :score="getScore()" @next="nextPhoto" v-if="gameIsOver"/>
             </transition-group>
         </template>
     </main>

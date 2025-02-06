@@ -1,5 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useGameStore } from '@/stores/game'
+import HomeView from '@/views/HomeView.vue'
+import ConnexionView from '@/views/ConnexionView.vue'
+import CreateGameView from '@/views/game/CreateGameView.vue'
+import GameView from '@/views/game/GameView.vue'
+import EndGameView from '@/views/game/EndGameView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,12 +12,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('@/views/HomeView.vue'),
+      component: HomeView,
     },
     {
       path: '/connexion',
       name: 'connexion',
-      component: () => import('@/views/ConnexionView.vue'),
+      component: ConnexionView,
     },
     {
       path: '/game',
@@ -22,17 +27,17 @@ const router = createRouter({
         {
           path: 'create',
           name: 'game-create',
-          component: () => import('@/views/game/CreateGameView.vue'),
+          component: CreateGameView,
         },
         {
           path: 'play',
           name: 'game-play',
-          component: () => import('@/views/game/GameView.vue'),
+          component: GameView,
         },
         {
           path: 'end',
           name: 'game-end',
-          component: () => import('@/views/game/EndGameView.vue'),
+          component: EndGameView,
         },
       ],
     }
@@ -45,10 +50,9 @@ router.beforeEach((to, from, next) => {
     console.log('Redirect to create')
     console.log(gameStore.isInit)
     next({ name: 'game-create' })
-  }else{
+  } else {
     next()
   }
-
 })
 
 export default router
