@@ -15,7 +15,7 @@ export const useGameStore = defineStore('game', {
     },
     actions: {
         async createGame(id) {
-            this.finishGame();
+            this.resetData();
 
             this.defaultCoordinates = { lat: 48.6921, long: 6.1844 };
             this.GameJWT = "JWT";
@@ -83,70 +83,24 @@ export const useGameStore = defineStore('game', {
             ];
             this.currentPhoto = 0;
             this.distance = 0.3;
-            this.time = 3;
+            this.time = 60;
         },
 
-        calculateScore(distance, time) {
-            let points = 0;
-
-            if (distance < this.distance) {
-                points = 5;
-            } else if (distance < this.distance * 2) {
-                points = 3;
-            } else if (distance < this.distance * 6) {
-                points = 1;
-            }
-
-            if (time < this.time / 6) {
-                points *= 4;
-            } else if (time < this.time / 3) {
-                points *= 2;
-            } else if (time > this.time / 2 + this.time / 4) {
-                points = 0;
-            }
-
-            return points;
+        storeNewGuess(data) {
+            this.guesses.push(data);
         },
 
-        addGuess(lat, long, time) {
-            const currentPhoto = this.photos[this.currentPhoto];
-            if(lat === null || long === null) {
-                this.guesses.push({ lat, long, time, distance: 0, score: 0, photoLat: currentPhoto.lat, photoLong: currentPhoto.long });
-            }else{
-                const distance = this.calculateDistance(currentPhoto.lat, currentPhoto.long, lat, long);
-                const score = this.calculateScore(distance, time);
-                this.score += score;
-                this.guesses.push({ lat, long, time, distance, score, photoLat: currentPhoto.lat, photoLong: currentPhoto.long });
-            }
-            
+        updateScore(addingScore){
+            this.score += addingScore;
+        },
+
+        nextPhoto() {
             if(this.currentPhoto < this.photos.length - 1) {
                 this.currentPhoto++;
             }else {
                 this.currentPhoto = -1;
             }
-        },
-
-        calculateDistance(lat1Deg, lon1Deg, lat2Deg, lon2Deg) {
-            function toRad(degree) {
-                return degree * Math.PI / 180;
-            }
-
-            const lat1 = toRad(lat1Deg);
-            const lon1 = toRad(lon1Deg);
-            const lat2 = toRad(lat2Deg);
-            const lon2 = toRad(lon2Deg);
-
-            const { sin, cos, sqrt, atan2 } = Math;
-
-            const R = 6371;
-            const dLat = lat2 - lat1;
-            const dLon = lon2 - lon1;
-            const a = sin(dLat / 2) * sin(dLat / 2)
-                + cos(lat1) * cos(lat2)
-                * sin(dLon / 2) * sin(dLon / 2);
-            const c = 2 * atan2(sqrt(a), sqrt(1 - a));
-            const d = R * c;
-            return d.toFixed(2);
+            return this.currentPhoto;
         },
 
         saveGame() {
@@ -154,11 +108,13 @@ export const useGameStore = defineStore('game', {
             console.log("envoi de la partie au serveur");
         },
 
-        finishGame() {
+        resetData() {
             this.GameJWT = '';
             this.photos = [];
             this.currentPhoto = 0;
+            this.defaultCoordinates = {};
             this.guesses = [];
+            this.distance = 0;
             this.score = 0;
             this.time = 0;
         }
@@ -182,11 +138,11 @@ export const useGameStore = defineStore('game', {
         isInit(state) {
             return state.GameJWT != '';
         },
-        maxTime(state) {
-            return state.time;
-        },
         getGuesses(state) {
             return state.guesses;
+        },
+        getGameConfig(state) {
+            return { defaultCoordinates: state.defaultCoordinates, time: state.time, distance: state.distance };
         }
     },
     persist: {

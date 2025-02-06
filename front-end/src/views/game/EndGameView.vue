@@ -2,8 +2,10 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import L from 'leaflet';
 import { useGameStore } from '@/stores/game';
+import { useGame } from '@/services/game';
 import { useRouter } from 'vue-router';
 
+const { resetGame } = useGame();
 const gameStore = useGameStore();
 const guesses = ref([]);
 const router = useRouter();
@@ -55,7 +57,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-    gameStore.finishGame();
+    resetGame();
 });
 </script>
 
@@ -165,6 +167,7 @@ h1 {
 button {
     background-color: var(--primary-color);
     color: var(--text-color);
+    font-family: 'Lexend';
     border: none;
     padding: 10px 20px;
     cursor: pointer;
@@ -174,5 +177,31 @@ button {
 
 button:hover {
     background-color: var(--accent-color);
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.5rem;
+        width: 90%;
+        border-radius: 0;
+        border: none;
+    }
+
+    #map {
+        height: 400px;
+    }
+
+    .guesses-table {
+        font-size: 1rem;
+    }
+
+    .guesses-cell {
+        padding: 5px;
+    }
+
+    button {
+        padding: 5px 10px;
+        font-size: 2rem;
+    }
 }
 </style>

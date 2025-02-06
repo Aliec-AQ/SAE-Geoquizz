@@ -61,6 +61,7 @@ onMounted(() => {
 });
 
 const nextPhoto = () => {
+    console.log('next');
     emit('next');
 };
 </script>
@@ -137,11 +138,19 @@ const nextPhoto = () => {
     border: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    font-family: "Geo", sans-serif;
+    font-family: "Lexend", sans-serif;
     font-size: 1.5rem;
 }
 
 .btn:hover {
     background-color: var(--accent-color);
+}
+
+@media (max-width: 768px) {
+    #modal-content {
+        min-width: 90%;
+        border-radius: 0;
+    }
+    
 }
 </style>

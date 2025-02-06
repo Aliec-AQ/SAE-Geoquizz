@@ -6,7 +6,6 @@ export const useUserStore = defineStore('user', {
             accessToken: '',
             refreshToken: '',
             role: '',
-            signedIn: false
         }
     },
     actions: {
@@ -19,13 +18,11 @@ export const useUserStore = defineStore('user', {
                 this.accessToken = res.data.atoken;
                 this.refreshToken = res.data.rtoken;
                 this.role = res.data.role;
-                this.signedIn = true;
                 return true;
             } catch (e) {
                 return false;
             }
         },
-
         async signIn(email, password) {
             try {
                 let credentials = btoa(`${email}:${password}`);
@@ -37,16 +34,12 @@ export const useUserStore = defineStore('user', {
                 this.accessToken = res.data.atoken;
                 this.refreshToken = res.data.rtoken;
                 this.role = res.data.role;
-                this.signedIn = true;
                 return true;
             } catch (e) {
-                this.signedIn = false;
                 return false;
             }
         },
-
         logout() {
-            this.signedIn = false;
             this.accessToken = '';
             this.refreshToken = '';
             this.role = '';
@@ -54,13 +47,13 @@ export const useUserStore = defineStore('user', {
     },
     getters: {
         isSignedIn(state) {
-            return state.signedIn;
+            return state.accessToken !== '';
         },
     },
     persist: {
         enabled: true,
         strategies: [
-            { storage: localStorage, paths: ['signedIn', 'accessToken', 'refreshToken', 'role'] }
+            { storage: localStorage, paths: ['accessToken', 'refreshToken', 'role'] }
         ]
     }
 })
