@@ -24,4 +24,6 @@ composer.lock
 # rabbitmq
 rabbitmq_dir
 api-map/data
+
 *.ini
+api-map/uploads
