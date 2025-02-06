@@ -14,11 +14,11 @@ return [
     },
 
     'client_map' => function (ContainerInterface $c){
-        return new Client(['base_uri' => 'http://api.map.geoquizz:80']);
+        return new Client(['base_uri' => 'http://directus:8055']);
     },
 
     'client_authn' => function (ContainerInterface $c){
-        return new Client(['base_uri' => 'http://api.auth.toubeelib:80']);
+        return new Client(['base_uri' => 'http://api.auth.geoquizz:80']);
     },
 
     GeneriqueGeoQuizzAction::class => function (ContainerInterface $c){

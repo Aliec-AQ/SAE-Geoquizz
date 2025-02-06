@@ -39,10 +39,10 @@ watch(() => password.value, (newValue) => {
 
 input {
     padding: 1rem;
-    border: 1px solid var(--primary-color-medium);
+    border: 1px solid var(--primary-color);
     border-radius: 4px;
-    background-color: transparent;
-    color: var(--secondary-color-light);
+    background-color: var(--dark-color);
+    color: var(--text-color);
     font-size: 1.2rem;
     font-family: 'Geo';
     width: 100%;
@@ -50,16 +50,16 @@ input {
 }
 
 input::placeholder {
-    color: var(--secondary-color-light);
+    color: var(--text-color);
 }
 
 input:focus {
     outline: none;
-    border-color: var(--primary-color-light);
+    border-color: var(--accent-color);
 }
 
 input:is(:-webkit-autofill, :autofill) {
-    background-color: transparent;
+    background-color: var(--dark-color);
 }
 
 button {
@@ -67,7 +67,7 @@ button {
     right: 0;
     top: 0;
     background-color: transparent;
-    color: var(--primary-color-medium);
+    color: var(--primary-color);
     border: none;
     padding: 1rem;
     cursor: pointer;

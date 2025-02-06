@@ -7,37 +7,42 @@
 
     const userStore = useUserStore();
     const router = useRouter();
+    const toast = useToast();
 
     const page = ref(1);
     const email = ref('');
     const password = ref('');
     const password2 = ref('');
 
-    const signIn = () => {
+    const signIn = async () => {
         if (!email.value || !password.value) {
-            const toast = useToast();
             toast.warning('Veuillez remplir tous les champs');
             return;
         }
 
-        userStore.signIn(email.value, password.value);
+        let achieved = await userStore.signIn(email.value, password.value);
+        if (!achieved) {
+            return;
+        }
         router.push('/');
     };
 
-    const signUp = () => {
+    const signUp = async () => {
         if (!email.value || !password.value || !password2.value) {
-            const toast = useToast();
             toast.warning('Veuillez remplir tous les champs');
             return;
         }
 
         if (password.value !== password2.value) {
-            const toast = useToast();
             toast.warning('Les mots de passe ne correspondent pas');
             return;
         }
 
-        userStore.signUp(email.value, password.value);
+        let achieved = await userStore.signUp(email.value, password.value);
+
+        if (!achieved) {
+            return;
+        }
         router.push('/');
     };
     
@@ -76,11 +81,20 @@
 </template>
 
 <style scoped>
+:root {
+    --background-color: #313338;
+    --primary-color: #7289da;
+    --secondary-color: #2b2d31;
+    --dark-color: #232428;
+    --accent-color: #5865f2;
+    --text-color: #ffffff;
+}
+
 .main-container {
     display: flex;
     flex: 1;
-    background-color: var(--primary-color-dark);
-    color: var(--secondary-color-light);
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 .form-container {
@@ -89,7 +103,7 @@
     flex-direction: column;
     justify-content: center;
     padding: 2rem;
-    background-color: var(--primary-color-dark);
+    background-color: var(--secondary-color);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -98,12 +112,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--primary-color-medium);
 }
 
 h1 {
-    color: var(--secondary-color-medium);
     margin-bottom: 1rem;
+    color: var(--text-color);
 }
 
 form {
@@ -114,41 +127,40 @@ form {
 
 input {
     padding: 1rem;
-    border: 1px solid var(--primary-color-medium);
+    border: 1px solid var(--primary-color);
     border-radius: 4px;
-    background-color: transparent;
-    color: var(--secondary-color-light);
+    background-color: var(--dark-color);
+    color: var(--text-color);
     font-size: 1.2rem;
     font-family: 'Geo';
 }
 
 input::placeholder {
-    color: var(--secondary-color-light);
+    color: var(--text-color);
 }
 
 input:focus {
     outline: none;
-    border-color: var(--primary-color-light);
+    border-color: var(--accent-color);
 }
 
 input:is(:-webkit-autofill, :autofill) {
-    background-color: transparent;
+    background-color: var(--dark-color);
 }
 
 button {
-    background-color: var(--primary-color-medium);
-    color: var(--secondary-color-light);
     border: none;
     padding: 0.75rem;
     border-radius: 4px;
     cursor: pointer;
     font-size: 1.5rem;
     font-family: 'Geo';
+    background-color: var(--primary-color);
+    color: var(--text-color);
 }
 
 button:hover {
-    background-color: var(--primary-color-light);
-    color: var(--secondary-color-medium);
+    background-color: var(--accent-color);
 }
 
 .choix {
@@ -159,16 +171,16 @@ button:hover {
 
 .choix button {
     background-color: transparent;
-    color: var(--secondary-color-medium);
     padding: 0.5rem;
     border-radius: 4px;
     cursor: pointer;
     font-size: 1.2rem;
     text-decoration: underline;
     font-family: 'Geo';
+    color: var(--text-color);
 }
 
 .choix button:hover {
-    color: var(--secondary-color-light);
+    color: var(--accent-color);
 }
 </style>

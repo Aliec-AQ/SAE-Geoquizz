@@ -1,7 +1,5 @@
 // CSS
 import '@/assets/main.css'
-import '@fortawesome/fontawesome-free/css/all.css';
-import '@fortawesome/fontawesome-free/js/all.js';
 import "vue-toastification/dist/index.css";
 import "leaflet/dist/leaflet.css";
 
@@ -18,13 +16,14 @@ const app = createApp(App)
 
 //setup api
 app.use(api, {
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://localhost:3521/',
 })
 
 //setup pinia
 const pinia = createPinia()
 pinia.use(piniaPersist)
 pinia.use(({ store }) => {
+    store.$imageApiUrl = 'http://localhost:3521/assets/';
     store.$api = app.config.globalProperties.$api;
 });
 

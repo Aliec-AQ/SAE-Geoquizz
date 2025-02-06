@@ -1,6 +1,7 @@
 <script setup>
 import { useUserStore } from '@/stores/user'
 import { useRouter } from 'vue-router'
+import SwitchThemeButton from './buttons/SwitchThemeButton.vue';
 
 const userStore = useUserStore();
 const router = useRouter();
@@ -26,6 +27,10 @@ const logout = () => {
             </button>
 
             <span class="separator"></span>
+
+            <SwitchThemeButton />
+
+            <span class="separator"></span>
             
             <template v-if="userStore.isSignedIn">
                 <button @click="router.push({ name: 'profil' })" title="Profil">
@@ -46,10 +51,11 @@ const logout = () => {
 </template>
 
 <style scoped>
+
 header {
-    background-color: var(--primary-color-dark);
-    color: var(--secondary-color-light);
     padding: 0.5rem;
+    background-color: var(--dark-color);
+    color: var(--text-color);
 }
 
 #app-nav {
@@ -66,23 +72,24 @@ header {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  color: var(--text-color);
 }
 
 .separator {
   width: 2px;
   height: 2rem;
-  background-color: var(--primary-color-medium);
+  background-color: var(--accent-color);
 }
 
 #app-nav button {
-    background-color: transparent;
-    color: var(--secondary-color-light);
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
+    background-color: transparent;
+    color: var(--text-color);
 }
 
 #app-nav button:hover {
-    color: var(--secondary-color-medium);
+    color: var(--accent-color);
 }
 </style>
