@@ -32,8 +32,8 @@ class SequenceDTO extends DTO
         }
         return [
             'id' => $this->id,
-            '$public' => $this->public,
-            '$serie_id' => $this->serie_id,
+            'public' => $this->public,
+            'serie_id' => $this->serie_id,
             'photo' => $tab
         ];
     }
