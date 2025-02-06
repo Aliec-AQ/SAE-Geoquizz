@@ -261,4 +261,13 @@ class PDOGameRepository implements GameRepositoryInterface
             throw new RepositoryEntityNotFoundException("Sequence not found");
         }
     }
+
+    public function getHighscoreForUserBySerie(string $idSerie, string $idUser): int
+    {
+        $stmt = $this->pdo->prepare('SELECT score FROM sequences INNER JOIN players_sequences ON sequences.id = players_sequences.sequence_id WHERE sequences.serie_id = ? ORDER BY score DESC LIMIT 1');
+        $stmt->bindParam(1, $idSerie);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        return $row['score'];
+    }
 }

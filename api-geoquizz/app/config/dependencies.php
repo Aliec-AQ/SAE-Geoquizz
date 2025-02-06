@@ -1,6 +1,7 @@
 <?php
 
 
+use geoquizz\application\actions\GetHighscoreAction;
 use geoquizz\application\actions\GetSequenceByIdAction;
 use geoquizz\application\actions\GetHistoriqueGameAction;
 use geoquizz\application\actions\GetPublicSequencesAction;
@@ -98,6 +99,10 @@ return [
 
     PostPlayerAction::class => function (ContainerInterface $container) {
         return new PostPlayerAction($container->get(AuthorisationServiceInterface::class));
+    },
+
+    GetHighscoreAction::class => function (ContainerInterface $container) {
+        return new GetHighscoreAction($container->get(GameServiceInterface::class));
     },
 
     //middleware

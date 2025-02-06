@@ -13,5 +13,6 @@ interface GameServiceInterface
     public function historiqueGames(string $userId): array;
     public function gameById(string $id): GameDTO;
     public function replaySequence(string $idSequence, ?string $idUser): GameDTO;
+    public function getHighscore(string $idSerie, string $idUser): int;
 
 }

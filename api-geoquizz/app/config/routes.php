@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use geoquizz\application\actions\GetHighscoreAction;
 use geoquizz\application\actions\GetSequenceByIdAction;
 use geoquizz\application\actions\GetHistoriqueGameAction;
 use geoquizz\application\actions\GetPublicSequencesAction;
@@ -49,6 +50,10 @@ return function( App $app): App {
 
     $app->post('/players[/]',PostPlayerAction::class)
         ->setName('createPlayer');
+
+    $app->get('/series/{id}/highscore[/]', GetHighscoreAction::class)
+        ->add(AuthorisationMiddleware::class)
+        ->setName('getHighscore');
 
     return $app;
 };

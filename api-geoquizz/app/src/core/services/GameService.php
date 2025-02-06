@@ -75,4 +75,9 @@ class GameService implements GameServiceInterface
         $game = $this->gameRepository->createGame($sequence, $idUser);
         return $game->toDTO();
     }
+
+    public function getHighscore(string $idSerie, $idUser): int
+    {
+        return $this->gameRepository->getHighscoreForUserBySerie($idSerie, $idUser);
+    }
 }

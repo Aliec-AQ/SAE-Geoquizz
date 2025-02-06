@@ -28,6 +28,6 @@ interface GameRepositoryInterface
     public function historiqueGames(string $userId): array;
     public function gameById(string $id): Game;
     public function getSequenceById(?string $id): Sequence;
-
     public function ajouterPlayer(Player $p) : void;
+    public function getHighscoreForUserBySerie(string $idSerie, string $idUser): int;
 }
