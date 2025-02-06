@@ -156,13 +156,11 @@ services:
     ports:
       - "35630:8055"
     volumes:
-      - ./api-map/uploads:/directus/uploads
+      - ./api-map/data/uploads:/directus/uploads
       - ./api-map/extensions:/directus/extensions
 
     depends_on:
       directus.database:
-        condition: service_healthy
-      directus.cache:
         condition: service_healthy
     env_file:
       - ./api-map/env/directus.env

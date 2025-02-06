@@ -23,5 +23,8 @@ composer.lock
 *.env
 # rabbitmq
 rabbitmq_dir
+
 api-map/data
 *.ini
+api-map/data/uploads
+api-map/data/database
