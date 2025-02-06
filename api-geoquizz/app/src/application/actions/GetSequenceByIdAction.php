@@ -6,19 +6,20 @@ use geoquizz\core\services\GameServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class PostGameReplayAction extends AbstractAction
+class GetSequenceByIdAction extends AbstractAction
 {
+
     private GameServiceInterface $gameService;
 
-    public function __construct(GameServiceInterface $gs) {
+    public function __construct(GameServiceInterface $gs)
+    {
         $this->gameService = $gs;
     }
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-        $idSequence = $rq->getQueryParams()['idSequence'];
-        $idUser = $rq->getAttribute('playerID');
-        $game = $this->gameService->replayGame($idSequence, $idUser);
+        $idGame = $args['id'];
+        $game = $this->gameService->gameById($idGame);
 
         $res = [
             'game' => $game
