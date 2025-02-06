@@ -154,7 +154,7 @@ services:
   directus:
     image: directus/directus:11.3.5
     ports:
-      - "3530:8055"
+      - "35630:8055"
     volumes:
       - ./api-map/uploads:/directus/uploads
       - ./api-map/extensions:/directus/extensions
