@@ -1,6 +1,7 @@
 <?php
 
 use GuzzleHttp\Client;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Psr\Container\ContainerInterface;
 
 return  [
@@ -21,6 +22,13 @@ return  [
 
     'client_auth' => function (ContainerInterface $c){
         return new Client(['base_uri' => 'http://api.auth.geoquizz:80']);
+    },
+
+    'channel' => function (ContainerInterface $c) {
+        $rabbit = parse_ini_file('iniconf/geoquizz.rabbitmq.ini');
+        $connection = new AMQPStreamConnection($rabbit['host'], $rabbit['port'], $rabbit['user'], $rabbit['password']);
+        $channel = $connection->channel();
+        return $channel;
     },
 
     'SECRET_KEY' => getenv('JWT_SECRET_KEY'),
