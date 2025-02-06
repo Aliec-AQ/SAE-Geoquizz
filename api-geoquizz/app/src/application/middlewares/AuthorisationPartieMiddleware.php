@@ -40,7 +40,7 @@ class AuthorisationPartieMiddleware
         $tokenstring = sscanf($h, "Bearer %s")[0];
         $partieId = $this->tokenPartieProvider->getTokenPartie($tokenstring);
         $rq = $rq->withAttribute('idGame', $partieId);
-        $response = $next->handle($rq);
+
         try{
             $this->tokenPartieService->verifyPartie($partieId);
         }catch (TokenServiceException $e){
@@ -49,7 +49,7 @@ class AuthorisationPartieMiddleware
             throw new HttpInternalServerErrorException($rq,"Erreur put game");
         }
 
-
+        $response = $next->handle($rq);
         return $response;
 
     }
