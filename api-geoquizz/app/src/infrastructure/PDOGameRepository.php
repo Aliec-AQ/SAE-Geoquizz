@@ -206,16 +206,19 @@ class PDOGameRepository implements GameRepositoryInterface
 
     public function gameById(string $id): Game
     {
-        $stmt = $this->pdo->prepare('SELECT * FROM players_sequences WHERE id = ? inner join sequences on players_sequences.sequence_id = sequences.id');
+        $stmt = $this->pdo->prepare('SELECT * FROM players_sequences inner join sequences on players_sequences.sequence_id = sequences.id WHERE players_sequences.id = ?');
         $stmt->bindParam(1, $id);
         $stmt->execute();
         $row = $stmt->fetch();
+
+        $sequence = new Sequence($row['public'], $row['serie_id']);
+        $sequence->setId($row['sequence_id']);
 
         if($row) {
             $game = new Game(
                 $row['player_id'],
                 $row['serie_id'],
-                new Sequence($row['public'], $row['serie_id']),
+                $sequence,
                 $row['score'],
                 $row['status']
             );
