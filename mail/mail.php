@@ -14,24 +14,35 @@ $password = getenv('PASSWORD');
 $connection = new AMQPStreamConnection($host, $port, $user, $password);
 $channel = $connection->channel();
 
-$channel->exchange_declare('game', 'direct', false, true, false);
-$channel->queue_declare('game', false, true, false, false);
-$channel->queue_bind('game', 'game', 'game');
-
 $queue = 'game';
+
+$channel->exchange_declare($queue, 'direct', false, true, false);
+$channel->queue_declare($queue, false, true, false, false);
+$channel->queue_bind($queue, $queue, $queue);
 
 $callback = function(AMQPMessage $msg) {
     $msgJson = json_decode($msg->body, true);
     print "[x] message reçu : " . $msgJson . "\n";
     print_r($msgJson);
 
-    $corpsMail = "<p> date de debut : ". $msgJson['rdv']['dateDebut'] ."</p> <p> Rendez vous de : ". $msgJson['rdv']['specialite_label'] ."</p> <p> De type : ". $msgJson['rdv']['type'] ."</p>";
-    $corpsMailPatient = $corpsMail . "<p> Votre praticien sera : ". $msgJson['praticien']['nom'] . " " . $msgJson['praticien']['prenom']."</p>";
+    switch ($msgJson['action']){
+        case 'finish_game':
+            $subject = "Fin du jeu";
+            $corps="<p> Votre score est : ".$msgJson['score']."</p>";
+            break;
+        case 'newGame':
+            $subject = "Nouvelle partie";
+            $corps="<p>Nouvelle partie !!!</p>";
+            break;
+        default:
+            $subject = "Action inconnue";
+            $corps = "Corps inconnue";
+            break;
+    }
 
     try {
         $mail = new MailEnvoi();
-        //envoie patient
-        $mail->envoi(getenv('DNS'),'toubelib@mail.com',$msgJson['patient']['mail'],$msgJson['action'],$corpsMailPatient);
+        $mail->envoi(getenv('DNS'),'geoquizz@mail.com',$msgJson['mail'],$subject,$corps);
     }catch (Exception $e){
         print $e->getMessage();
     }
