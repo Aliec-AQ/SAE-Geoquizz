@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use geoquizz\application\actions\GetHistoriqueGameAction;
 use geoquizz\application\actions\GetPublicSequencesAction;
 use geoquizz\application\actions\PostGameAction;
 use geoquizz\application\actions\PutFinishGameAction;
@@ -39,8 +40,9 @@ return function( App $app): App {
     $app->put('/sequences/{idSequence}/status[/]',PutSequenceStatusAction::class)
         ->setName('putStatusSequences');
 
-    $app->get('/users/{id}/games[/]', GetUserGamesAction::class)
-        ->setName('getUserGames');
+    $app->get('/users/games[/]', GetHistoriqueGameAction::class)
+        ->add(AuthorisationMiddleware::class)
+        ->setName('getHistoriqueGames');
 
 
 

@@ -1,6 +1,7 @@
 <?php
 
 
+use geoquizz\application\actions\GetHistoriqueGameAction;
 use geoquizz\application\actions\GetPublicSequencesAction;
 use geoquizz\application\actions\PostGameAction;
 use geoquizz\application\actions\PutFinishGameAction;
@@ -78,6 +79,10 @@ return [
 
     PutFinishGameAction::class => function (ContainerInterface $container) {
         return new PutFinishGameAction($container->get(GameServiceInterface::class));
+    },
+
+    GetHistoriqueGameAction::class => function (ContainerInterface $container) {
+        return new GetHistoriqueGameAction($container->get(GameServiceInterface::class));
     },
 
     //middleware
