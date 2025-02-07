@@ -12,6 +12,7 @@ use geoquizz\application\actions\PutFinishGameAction;
 use geoquizz\application\actions\PutSequenceStatusAction;
 use geoquizz\application\middlewares\AuthorisationMiddleware;
 use geoquizz\application\middlewares\AuthorisationPartieMiddleware;
+use geoquizz\application\middlewares\AuthorisationReplayMiddleware;
 use Slim\App;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
@@ -40,7 +41,8 @@ return function( App $app): App {
         ->setName('getPublicSequences');
 
     $app->post('/sequences/replay[/]', PostSequenceReplayAction::class) // id de la séquence dans la query
-    ->setName('postReplaySequence');
+        ->add(AuthorisationReplayMiddleware::class)
+        ->setName('postReplaySequence');
 
     $app->put('/sequences/{idSequence}/status[/]',PutSequenceStatusAction::class)
         ->setName('putStatusSequences');

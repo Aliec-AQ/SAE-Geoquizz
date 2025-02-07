@@ -38,14 +38,14 @@ class AuthorisationPartieMiddleware
         $routeName = $route->getName();
 
         if (! $rq->hasHeader('Origin'))
-            New HttpUnauthorizedException ($rq, "missing Origin Header (auth)");
+            New HttpUnauthorizedException ($rq, "missing Origin Header (game)");
         if (! $rq->hasHeader("Authorization")){
-            New HttpUnauthorizedException ($rq, "missing Authorization Header (auth)");
+            New HttpUnauthorizedException ($rq, "missing Authorization Header (game)");
         }
 
         $h = $rq->getHeader('Authorization')[0];
         if($h == null || empty($h)){
-            throw new HttpUnauthorizedException($rq,"no auth, try /users/signin[/] or /users/signup[/]");
+            throw new HttpUnauthorizedException($rq,"no game token");
         }
         $tokenstring = sscanf($h, "Bearer %s")[0];
         $partieId = $this->tokenPartieProvider->getTokenPartie($tokenstring);

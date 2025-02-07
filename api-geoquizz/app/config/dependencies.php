@@ -12,6 +12,7 @@ use geoquizz\application\actions\PutFinishGameAction;
 use geoquizz\application\actions\PutSequenceStatusAction;
 use geoquizz\application\middlewares\AuthorisationMiddleware;
 use geoquizz\application\middlewares\AuthorisationPartieMiddleware;
+use geoquizz\application\middlewares\AuthorisationReplayMiddleware;
 use geoquizz\application\providers\tokenPartie\TokenPartieProvider;
 use geoquizz\application\providers\tokenPartie\TokenPartieProviderInterface;
 use geoquizz\application\providers\tokenPartie\JWTManager;
@@ -119,6 +120,10 @@ return [
 
     AuthorisationPartieMiddleware::class => function(ContainerInterface $container){
     return new AuthorisationPartieMiddleware($container->get(JWTManager::class),$container->get(TokenPartieServiceInterface::class),$container->get(TokenPartieProviderInterface::class));
+    },
+
+    AuthorisationReplayMiddleware::class => function (ContainerInterface $container){
+        return new AuthorisationReplayMiddleware($container->get(AuthorisationServiceInterface::class));
     }
 
 

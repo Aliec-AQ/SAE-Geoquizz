@@ -31,10 +31,10 @@ class AuthorisationMiddleware{
             New HttpUnauthorizedException ($rq, "missing Authorization Header (auth)");
         }
         if(!isset($rq->getHeader('Authorization')[0])){
-            throw new HttpUnauthorizedException($rq,"no auth, try /utilisateur/signin[/] or /utilisateur/signup[/]");
+            throw new HttpUnauthorizedException($rq,"no auth, try /signin[/] or /register[/]");
         }
         if(strlen($rq->getHeader('Authorization')[0]) == 6){
-            throw new HttpUnauthorizedException($rq,"no auth, try /utilisateur/signin[/] or /utilisateur/signup[/]");
+            throw new HttpUnauthorizedException($rq,"no auth, try /signin[/] or /register[/]");
         }
 
         try{
@@ -43,8 +43,14 @@ class AuthorisationMiddleware{
         }catch (Exception $e){
             throw new HttpUnauthorizedException($rq,"token invalide");
         }
-        $playerID = $this->authorisationService->playerID($tokenstring);
-        $rq = $rq->withAttribute('playerID',$playerID);
+
+        try {
+            $playerID = $this->authorisationService->playerID($tokenstring);
+            $rq = $rq->withAttribute('playerID',$playerID);
+        }catch (Exception $e){
+            throw new HttpForbiddenException($rq,"Vous n'êtes pas l'auteur de cette résource");
+        }
+
         return $next->handle($rq);
     }
 
