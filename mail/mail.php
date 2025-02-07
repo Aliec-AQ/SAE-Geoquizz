@@ -34,7 +34,7 @@ $callback = function(AMQPMessage $msg) {
                     <footer>
                         <p>Merci de jouer à notre jeu.</p>
                         <p>L'équipe GeoQuizz</p>
-                        <p><a href=\"http://docketu.iutnc.univ-lorraine.fr:35623/\">Visitez notre site</a></p>
+                        <p><a href=\"http://docketu.iutnc.univ-lorraine.fr:35633/\">Visitez notre site</a></p>
                     </footer>";
             break;
         case 'newGame':
@@ -44,7 +44,7 @@ $callback = function(AMQPMessage $msg) {
                     <footer>
                         <p>Merci de jouer à notre jeu.</p>
                         <p>L'équipe GeoQuizz</p>
-                        <p><a href=\"http://docketu.iutnc.univ-lorraine.fr:35623/\">Visitez notre site</a></p>
+                        <p><a href=\"http://docketu.iutnc.univ-lorraine.fr:35633/\">Visitez notre site</a></p>
                     </footer>";
             break;
         case 'replayGame':
@@ -54,7 +54,7 @@ $callback = function(AMQPMessage $msg) {
                     <footer>
                         <p>Merci de jouer à notre jeu.</p>
                         <p>L'équipe GeoQuizz</p>
-                        <p><a href=\"http://docketu.iutnc.univ-lorraine.fr:35623/\">Visitez notre site</a></p>
+                        <p><a href=\"http://docketu.iutnc.univ-lorraine.fr:35633/\">Visitez notre site</a></p>
                     </footer>";
             break;
         default:
