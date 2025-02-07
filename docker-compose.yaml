@@ -93,6 +93,7 @@ services:
       - '35629:8080'
     networks:
       - geoquizz.net
+    command: 'php -S 0.0.0.0:8080 -t /var/www/html'
 
   rabbitmq:
     image: rabbitmq:4-management
