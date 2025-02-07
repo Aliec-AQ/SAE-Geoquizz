@@ -101,7 +101,7 @@ return [
     },
 
     PostSequenceReplayAction::class => function (ContainerInterface $container) {
-        return new PostSequenceReplayAction($container->get(GameServiceInterface::class));
+        return new PostSequenceReplayAction($container->get(GameServiceInterface::class),$container->get(RabbitMQRepositoryInterface::class),$container->get(AuthorisationServiceInterface::class), $container->get(TokenPartieProviderInterface::class));
     },
 
     PostPlayerAction::class => function (ContainerInterface $container) {
