@@ -8,6 +8,8 @@ use geoquizz\core\services\AuthorisationServiceInterface;
 use geoquizz\core\services\GameServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Respect\Validation\Validator;
+use Slim\Exception\HttpBadRequestException;
 
 class PostGameAction extends AbstractAction
 {
@@ -31,10 +33,28 @@ class PostGameAction extends AbstractAction
     {
         $idserie = $rq->getQueryParams()['idserie'];
         $idUser = $rq->getAttribute('playerID');
-        $game = $this->game_service->createGame($idserie, $idUser);
 
-        $token = $this->token_partie->createTokenPartie($game->id);
-        
+        if (!isset($idserie)) {
+            throw new HttpBadRequestException($rq, 'id de la série manquant dans la requête');
+        }
+
+        if (! (Validator::uuid()->validate($idserie))) {
+            throw new HttpBadRequestException($rq, "l'uuid de la série n'est pas valide");
+        }
+
+        if (! (Validator::uuid()->validate($idUser))) {
+            throw new HttpBadRequestException($rq, "l'uuid de l'utilisateur n'est pas valide");
+        }
+
+
+        try {
+            $game = $this->game_service->createGame($idserie, $idUser);
+            $token = $this->token_partie->createTokenPartie($game->id);
+        }catch (\Exception $e){
+            throw new HttpBadRequestException($rq, $e->getMessage());
+        }
+
+
         $res = [
             "token" => $token,
             "game" => $game

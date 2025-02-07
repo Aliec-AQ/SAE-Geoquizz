@@ -21,7 +21,11 @@ class AuthorisationService implements AuthorisationServiceInterface
 
     public function playerID(string $token): string
     {
-        return $this->authRepository->RecuperationIDPlayer($token);
+        try {
+            return $this->authRepository->RecuperationIDPlayer($token);
+        } catch (Exception $e) {
+            throw new \Exception("Erreur lors de la récupération de l'id du joueur");
+        }
     }
 
     public function playerEmail(string $idplayer): string{

@@ -8,6 +8,7 @@ use geoquizz\core\services\AuthorisationServiceInterface;
 use geoquizz\core\services\GameServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Respect\Validation\Validator;
 use Slim\Exception\HttpBadRequestException;
 
 class PutFinishGameAction extends AbstractAction
@@ -28,9 +29,27 @@ class PutFinishGameAction extends AbstractAction
         $idGame = $rq->getAttribute('idGame');
         $param = $rq->getQueryParams()['score'];
         $score = intval($param);
-        $player_id = $this->gameService->finishGame($idGame, $score);
 
-        $mail = $this->authorisationService->playerEmail($player_id);
+        if (!isset($score) || $score < 0) {
+            throw new HttpBadRequestException($rq, 'score manquant ou invalide');
+        }
+
+        if (! (Validator::uuid()->validate($idGame))) {
+            throw new HttpBadRequestException($rq, "l'uuid de la partie n'est pas valide");
+        }
+
+        if (! (Validator::intVal()->validate($score))) {
+            throw new HttpBadRequestException($rq, "le score n'est pas valide");
+        }
+
+
+        try {
+            $player_id = $this->gameService->finishGame($idGame, $score);
+            $mail = $this->authorisationService->playerEmail($player_id);
+        }catch (\Exception $e){
+            throw new HttpBadRequestException($rq, $e->getMessage());
+        }
+
 
         $msg = [
             'action' => 'finish_game',

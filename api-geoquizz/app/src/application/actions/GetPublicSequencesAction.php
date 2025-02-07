@@ -5,6 +5,7 @@ namespace geoquizz\application\actions;
 use geoquizz\core\services\GameServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Exception\HttpBadRequestException;
 
 class GetPublicSequencesAction extends AbstractAction
 {
@@ -18,7 +19,11 @@ class GetPublicSequencesAction extends AbstractAction
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-        $publicSequences = $this->gameService->getPublicSequences();
+        try {
+            $publicSequences = $this->gameService->getPublicSequences();
+        }catch (\Exception $e){
+            throw new HttpBadRequestException($rq, $e->getMessage());
+        }
 
         $res = [
             "sequences_publiques" => $publicSequences

@@ -5,6 +5,8 @@ namespace geoquizz\application\actions;
 use geoquizz\core\services\GameServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Respect\Validation\Validator;
+use Slim\Exception\HttpBadRequestException;
 
 class GetHighscoreAction extends AbstractAction
 {
@@ -20,7 +22,20 @@ class GetHighscoreAction extends AbstractAction
     {
         $idSerie = $args['id'];
         $idUser = $rq->getAttribute('playerID');
-        $highscore = $this->gameService->getHighscore($idSerie, $idUser);
+
+        if (!(Validator::uuid()->validate($idSerie))) {
+            throw new HttpBadRequestException($rq, "l'uuid de la série n'est pas valide");
+        }
+
+        if (!(Validator::uuid()->validate($idUser))) {
+            throw new HttpBadRequestException($rq, "l'uuid de l'utilisateur n'est pas valide");
+        }
+
+        try {
+            $highscore = $this->gameService->getHighscore($idSerie, $idUser);
+        } catch (\Exception $e) {
+            throw new HttpBadRequestException($rq, $e->getMessage());
+        }
 
         $res = [
             'highscore' => $highscore

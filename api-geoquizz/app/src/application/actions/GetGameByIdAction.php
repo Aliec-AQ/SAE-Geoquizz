@@ -5,6 +5,8 @@ namespace geoquizz\application\actions;
 use geoquizz\core\services\GameServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Exception\HttpBadRequestException;
+use Respect\Validation\Validator;
 
 class GetGameByIdAction extends AbstractAction
 {
@@ -19,7 +21,17 @@ class GetGameByIdAction extends AbstractAction
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         $idGame = $rq->getAttribute('idGame');
-        $game = $this->gameService->gameById($idGame);
+
+        if (!(Validator::uuid()->validate($idGame))) {
+            throw new HttpBadRequestException($rq, "l'uuid de la partie n'est pas valide");
+        }
+
+
+        try {
+            $game = $this->gameService->gameById($idGame);
+        }catch (\Exception $e){
+            throw new HttpBadRequestException($rq, $e->getMessage());
+        }
 
         $res = [
             'game' => $game

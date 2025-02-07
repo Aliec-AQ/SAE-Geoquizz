@@ -30,6 +30,9 @@ class PostPlayerAction extends AbstractAction
 
         if(isset($params['pseudo'])){
             $pseudo = $params['pseudo'];
+            if (filter_var($pseudo, FILTER_SANITIZE_STRING) === false) {
+                throw new HttpBadRequestException($rq, 'Pseudo invalide');
+            }
         }
 
         try {
