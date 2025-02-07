@@ -67,7 +67,7 @@ class AuthProvider implements AuthProviderInterface
         $arrayToken = $this->jwtManager->decodeToken($token);
         $payload = [
             'iat'=>time(),
-            'exp'=>time()+3600,
+            'exp'=>time()+3600*2,
             'sub' => $arrayToken['sub'],
             'data' => [
                 'role' => $arrayToken['data']->role,
