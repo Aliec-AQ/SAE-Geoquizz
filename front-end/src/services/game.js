@@ -1,6 +1,7 @@
 import { useGameStore } from "@/stores/game";
 import { useUserStore } from "@/stores/user";
 import { inject } from "vue";
+import { useToast } from 'vue-toastification';
 
 export function useGame(){
 
@@ -9,6 +10,7 @@ export function useGame(){
     const gameStore = useGameStore();
     const userStore = useUserStore();
     const gameConfig = gameStore.getGameConfig;
+    const toast = useToast();
 
     function calculateDistance(lat1Deg, lon1Deg, lat2Deg, lon2Deg) {
         function toRad(degree) {
@@ -55,8 +57,8 @@ export function useGame(){
         return points;
     }
 
-    function validate(lat, long, time) {
-        const currentPhoto = gameStore.getCurrentPhoto;
+    async function validate(lat, long, time) {
+        const currentPhoto = await gameStore.getCurrentPhoto();
         const guess = { lat, long, time, distance: 0, score: 0, photoLat: currentPhoto.lat, photoLong: currentPhoto.long };
         
         if (lat !== null && long !== null) {
@@ -67,9 +69,14 @@ export function useGame(){
 
         gameStore.storeNewGuess(guess);
         const i = gameStore.nextPhoto();
-        if (i === -1) {
-            console.log('Game ended');
+    }
+
+    async function replayGame(idSequence) {
+        let token = null;
+        if (userStore.isSignedIn) {
+            token = userStore.getAccessToken;
         }
+        await gameStore.replayGame(idSequence, token);
     }
 
     async function startGame(idSerie){
@@ -85,14 +92,29 @@ export function useGame(){
     const api = inject('api');
 
     async function getPublicGames(){
-        let publicGames = await api.get('/sequences/public');
-        return publicGames.data.sequences_publiques;
+        try {
+            let publicGames = await api.get('/sequences/public');
+            return publicGames.data.sequences_publiques;
+        } catch (e) {
+            toast.error('Erreur lors de la récupération des parties publiques');
+            return [];
+        }
     }
 
-    async function getSeries(){
-        let series = await api.get('/items/themes');
-        return series.data.data;
+    async function makeGamePublic(idSequence) { // Rend une partie de l'utilisateur publique
+        try {
+            await api.put(`sequences/${idSequence}/status`, {}, {
+                headers: {
+                    "Authorization": `Bearer ${userStore.getAccessToken}`
+                }
+            });
+            toast.success('Partie rendue publique');
+            return true;
+        } catch (e) {
+            toast.error('Erreur lors de la mise en public');
+            return false;
+        }
     }
 
-    return {startGame, validate, resetGame,  gameConfig, getPublicGames, getSeries};
+    return {startGame, validate, resetGame,  gameConfig, getPublicGames, makeGamePublic, replayGame};
 }

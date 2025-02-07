@@ -35,15 +35,15 @@ return function(App $app): App {
     $app->get('/sequences/public[/]', GeneriqueGeoQuizzAction::class)
         ->setName('getPublicGames');
 
-    $app->post('/games[/]', GeneriqueGeoQuizzAction::class)
+    $app->post('/game[/]', GeneriqueGeoQuizzAction::class)
         ->add(AuthMiddleware::class)
         ->setName('createGame');
 
-    $app->put('/games[/]', GeneriqueGeoQuizzAction::class)
+    $app->put('/game[/]', GeneriqueGeoQuizzAction::class)
         ->setName('finishGame');
 
-    $app->get('/sequences/{id}[/]', GeneriqueGeoQuizzAction::class)
-        ->setName('getSequenceById');
+    $app->get('/game[/]', GeneriqueGeoQuizzAction::class)
+        ->setName('getGameById');
 
     $app->post('/sequences/replay[/]', GeneriqueGeoQuizzAction::class)
         ->setName('postReplaySequence');
@@ -57,6 +57,9 @@ return function(App $app): App {
 
     $app->post('/players[/]', GeneriqueGeoQuizzAction::class)
         ->setName('createUser');
+    
+    $app->get('/series/{id}/highscore[/]', GeneriqueGeoQuizzAction::class)
+        ->setName('getHighscore');
 
     /*************************
     * Routes de l'API Auth

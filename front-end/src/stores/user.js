@@ -1,4 +1,7 @@
 import { defineStore } from 'pinia'
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 export const useUserStore = defineStore('user', {
     state() {
@@ -18,6 +21,7 @@ export const useUserStore = defineStore('user', {
                 this.refreshToken = res.data.rtoken;
                 return true;
             } catch (e) {
+                toast.error('Erreur lors de l\'inscription');
                 return false;
             }
         },
@@ -33,6 +37,7 @@ export const useUserStore = defineStore('user', {
                 this.refreshToken = res.data.rtoken;
                 return true;
             } catch (e) {
+                toast.error('Erreur lors de la connexion');
                 return false;
             }
         },

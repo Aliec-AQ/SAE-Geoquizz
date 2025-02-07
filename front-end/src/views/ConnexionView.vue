@@ -2,10 +2,10 @@
     import { ref } from 'vue';
     import PasswordInput from '@/components/forms/PasswordInput.vue';
     import { useToast } from 'vue-toastification';
-    import { useUserStore } from '@/stores/user'
     import { useRouter } from 'vue-router';
+    import { useUser } from '@/services/user';
 
-    const userStore = useUserStore();
+    const {signIn, signUp} = useUser();
     const router = useRouter();
     const toast = useToast();
 
@@ -14,20 +14,21 @@
     const password = ref('');
     const password2 = ref('');
 
-    const signIn = async () => {
+    const submitSignIn = async () => {
         if (!email.value || !password.value) {
             toast.warning('Veuillez remplir tous les champs');
             return;
         }
 
-        let achieved = await userStore.signIn(email.value, password.value);
+        let achieved = await signIn(email.value, password.value);
         if (!achieved) {
             return;
         }
+        toast.success('Connexion réussie');
         router.push('/');
     };
 
-    const signUp = async () => {
+    const submitSignUp = async () => {
         if (!email.value || !password.value || !password2.value) {
             toast.warning('Veuillez remplir tous les champs');
             return;
@@ -38,11 +39,12 @@
             return;
         }
 
-        let achieved = await userStore.signUp(email.value, password.value);
+        let achieved = await signUp(email.value, password.value);
 
         if (!achieved) {
             return;
         }
+        toast.success('Compte créé avec succès');
         router.push('/');
     };
     
@@ -53,7 +55,7 @@
         <div class="form-container">
             <div v-if="page == 1" class="connexion">
                 <h1>Se connecter</h1>
-                <form @submit.prevent="signIn">
+                <form @submit.prevent="submitSignIn">
                     <input type="text" id="email" name="email" v-model="email" placeholder="Email">
                     <PasswordInput v-model:password="password" />
                     <button type="submit">Se connecter</button>
@@ -61,7 +63,7 @@
             </div>
             <div v-if="page == 2" class="creation">
                 <h1>Créer un compte</h1>
-                <form @submit.prevent="signUp">
+                <form @submit.prevent="submitSignUp">
                     <input type="email" id="email" name="email" v-model="email" placeholder="Email">
                     <PasswordInput v-model:password="password" />
                     <PasswordInput v-model:password="password2" placeholder="Confirmer le mot de passe" />

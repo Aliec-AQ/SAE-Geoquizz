@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useGameStore } from '@/stores/game'
+import { useUserStore } from '@/stores/user'
+import { useThemeStore } from '@/stores/theme'
 import HomeView from '@/views/HomeView.vue'
 import ConnexionView from '@/views/ConnexionView.vue'
 import CreateGameView from '@/views/game/CreateGameView.vue'
@@ -40,17 +42,42 @@ const router = createRouter({
           component: EndGameView,
         },
       ],
+    },
+    {
+      path: '/profil',
+      name: 'profil',
+      component: () => import('@/views/ProfilView.vue'),
     }
   ],
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
+
+
+
+
+  // verifications pour les routes de jeu
   const gameStore = useGameStore()
+  const themeStore = useThemeStore()
+  
+  if (!themeStore.isInit) {
+    await themeStore.loadSeries()
+  }
+
   if ((to.name == 'game-play' || to.name == 'game-end') && !gameStore.isInit) {
-    console.log('Redirect to create')
-    console.log(gameStore.isInit)
     next({ name: 'game-create' })
-  } else {
+  }
+
+  if(to.name == 'game-create' && gameStore.isInit) {
+    next({ name: 'game-play' })
+  }
+
+
+  // verifications pour les routes de profil
+  const userStore = useUserStore();
+  if (to.name == 'profil' && !userStore.isSignedIn) {
+    next({ name: 'connexion' })
+  }else{
     next()
   }
 })

@@ -11,7 +11,7 @@ const guesses = ref([]);
 const router = useRouter();
 
 function createMap() {
-    const map = L.map('map').setView([gameStore.defaultCoordinates.lat, gameStore.defaultCoordinates.long], 13);
+    const map = L.map('map').setView([gameStore.defaultCoordinates.lat, gameStore.defaultCoordinates.long], gameStore.zoomLevel);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

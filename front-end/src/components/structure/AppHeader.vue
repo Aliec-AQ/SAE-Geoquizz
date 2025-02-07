@@ -39,7 +39,7 @@ const logout = () => {
                     <i class="fas fa-user"></i>
                 </button>
                 <button @click="logout" title="Déconnexion">
-                    <i class="fas fa-power-off"></i>
+                    <i class="fas fa-sign-out-alt"></i>
                 </button>
             </template>
             <template v-else>

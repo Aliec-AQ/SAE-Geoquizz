@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
+import { useGameStore } from '@/stores/game';
 import L from 'leaflet';
 
 const props = defineProps({
@@ -13,11 +14,12 @@ const props = defineProps({
     }
 });
 
+const gameStore = useGameStore();
 const emit = defineEmits(['next']);
 const timeout = ref(false);
 
 onMounted(() => {
-    const map = L.map('map').setView([props.guess.photoLat, props.guess.photoLong], 16);
+    const map = L.map('map').setView([props.guess.photoLat, props.guess.photoLong], gameStore.zoomLevel);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -61,7 +63,6 @@ onMounted(() => {
 });
 
 const nextPhoto = () => {
-    console.log('next');
     emit('next');
 };
 </script>

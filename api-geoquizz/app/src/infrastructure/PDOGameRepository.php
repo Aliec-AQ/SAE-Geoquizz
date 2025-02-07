@@ -319,12 +319,16 @@ class PDOGameRepository implements GameRepositoryInterface
 
     public function getHighscoreForUserBySerie(string $idSerie, string $idUser): int
     {
-        try {
-            $stmt = $this->pdo->prepare('SELECT score FROM sequences INNER JOIN players_sequences ON sequences.id = players_sequences.sequence_id WHERE sequences.serie_id = ? ORDER BY score DESC LIMIT 1');
-            $stmt->bindParam(1, $idSerie);
-            $stmt->execute();
-            $row = $stmt->fetch();
-            return $row['score'];
+        try{
+            $stmt = $this->pdo->prepare('SELECT score FROM sequences INNER JOIN players_sequences ON sequences.id = players_sequences.sequence_id WHERE sequences.serie_id = ? AND players_sequences.player_id = ? ORDER BY score DESC LIMIT 1');
+        $stmt->bindParam(1, $idSerie);
+        $stmt->bindParam(2, $idUser);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        if($row == false){
+            return 0;
+        }
+        return $row['score'];
         }catch (\Exception $e){
             throw new GameRepositoryException("Impossible de trouver le highscore");
         }

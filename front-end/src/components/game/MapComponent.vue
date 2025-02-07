@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, watch, computed } from 'vue';
+import { useGameStore } from '@/stores/game';
 import L from 'leaflet';
 
 const props = defineProps({
@@ -10,6 +11,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['validate']);
+const gameStore = useGameStore();
 
 const map = ref(null);
 const marker = ref(null);
@@ -38,7 +40,7 @@ const onMapClick = (e) => {
 };
 
 onMounted(() => {
-    map.value = L.map('map').setView([props.defaultCoordinates.lat, props.defaultCoordinates.long], 13);
+    map.value = L.map('map').setView([props.defaultCoordinates.lat, props.defaultCoordinates.long], gameStore.zoomLevel);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

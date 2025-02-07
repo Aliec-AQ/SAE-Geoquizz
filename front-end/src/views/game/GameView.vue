@@ -24,14 +24,14 @@ onBeforeUnmount(() => {
     resetGame();
 });
 
-function submitGuess(data) {
-    validate(data.lat, data.long, gameConfig.time - time.value);
+async function submitGuess(data) {
+    await validate(data.lat, data.long, gameConfig.time - time.value);
     resetGame();
 }
 
-function initGame(){
+async function initGame(){
     gameIsOver.value = false;
-    currentPhoto.value = gameStore.getCurrentPhoto;
+    currentPhoto.value = await gameStore.getCurrentPhoto();
 
     time.value = gameConfig.time;
     timer.value = setInterval(() => {
@@ -49,9 +49,7 @@ function resetGame(){
 }
 
 function nextPhoto(){
-    console.log('next');
     if(gameStore.isEnded){
-        console.log('end');
         router.push({name: 'game-end'});
     }else{
         initGame();

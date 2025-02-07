@@ -15,14 +15,6 @@ api.install = function (app, options) {
             }
         });
 
-        axiosInstance.interceptors.response.use(
-            response => response,
-            error => {
-                toast.error(`API Error: ${error.message}`);
-                return Promise.reject(error);
-            }
-        );
-
         return axiosInstance;
     };
 

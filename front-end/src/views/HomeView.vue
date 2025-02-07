@@ -147,7 +147,7 @@ p {
 }
 
 button {
-  background-color: transparent;
+  background-color: var(--primary-color);
   color: var(--text-color);
   border: none;
   font-family: "Lexend", sans-serif;

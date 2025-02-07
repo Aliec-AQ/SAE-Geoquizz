@@ -1,9 +1,13 @@
 import { defineStore } from 'pinia'
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 export const useGameStore = defineStore('game', {
     state() {
         return {
             GameJWT: '',
+            sequenceId: '',
             photos: [],
             currentPhoto: 0,
             defaultCoordinates: {},
@@ -18,26 +22,39 @@ export const useGameStore = defineStore('game', {
             this.resetData();
         
             try {
-                let res = await this.$api.post('/games?idserie=' + id, {}, {
+                let res = await this.$api.post('/game?idserie=' + id, {}, {
                     headers: {
                         "Authorization": `Bearer ${token}`
                     }
                 });
                 res = res.data;
-        
-                this.GameJWT = res.token;
-                this.photos = res.game.sequence.photo;
-                this.defaultCoordinates = {
-                    lat: res.game.sequence.photo[0].lat,
-                    long: res.game.sequence.photo[0].long
-                };
-                this.score = res.game.score;
-            
-                let seriesInfo = await this.$api.get(`/items/themes?filter[id][_eq]=${id}`);
-                console.log(seriesInfo);
                 
+                await this.setData(res);
             } catch (e) {
                 console.log(e);
+                toast.error('Failed to create game.');
+            }
+        },
+
+        async replayGame(id, token) {
+            this.resetData();
+            let headers = {};
+
+            if (token) {
+                headers = {
+                    "Authorization": `Bearer ${token}`
+                };
+            }
+        
+            try {
+                let res = await this.$api.post('/sequences/replay?idSequence='+id, {}, {
+                    headers: headers
+                });
+                console.log(res);
+                await this.setData(res.data);
+            } catch (e) {
+                console.log(e);
+                toast.error('Failed to replay game.');
             }
         },
 
@@ -59,8 +76,16 @@ export const useGameStore = defineStore('game', {
         },
 
         saveGame() {
-            console.log('Game saved');
-            console.log("envoi de la partie au serveur");
+            try{
+                this.$api.put('/game?score=' + this.score, {}, {
+                    headers: {
+                        "Authorization": `Bearer ${this.GameJWT}`
+                    }
+                });
+            }catch(e){
+                console.log(e);
+                toast.error('Failed to save game.');
+            }
         },
 
         resetData() {
@@ -72,12 +97,62 @@ export const useGameStore = defineStore('game', {
             this.distance = 0;
             this.score = 0;
             this.time = 0;
+            this.sequenceId = '';
+        },
+
+        async setData(data) {
+            const res = data;
+
+            this.GameJWT = res.token;
+            this.photos = res.game.sequence.photo.map(photo => {
+                return {
+                    lat: photo.lat,
+                    long: photo.long,
+                    nom: photo.nom,
+                    url: this.$imageApiUrl + photo.image
+                }
+            });
+            this.score = res.game.score;
+            this.sequenceId = res.game.sequence.id;
+        
+            let seriesInfo = await this.$api.get(`/items/themes?filter[id][_eq]=${res.game.serie_id}`);
+            seriesInfo = seriesInfo.data.data[0];
+
+            this.time = parseInt(seriesInfo.temps);
+            this.distance = parseFloat(seriesInfo.distance);
+            this.defaultCoordinates = {
+                lat: parseFloat(seriesInfo.lat),
+                long: parseFloat(seriesInfo.long)
+            };
+        },
+
+        async getCurrentPhoto() {
+            if(this.photos.length <= 0) {
+                try {
+                    let res = await this.$api.get('/game', {
+                        headers: {
+                            "Authorization": `Bearer ${this.GameJWT}`
+                        }
+                    });
+                    this.photos = res.data.game.sequence.photo.map(photo => {
+                        return {
+                            lat: photo.lat,
+                            long: photo.long,
+                            nom: photo.nom,
+                            url: this.$imageApiUrl + photo.image
+                        }
+                    });
+                }catch(e) {
+                    console.log(e);
+                    this.resetData();
+                    toast.error('Failed to load photos.');
+                }
+            }
+
+            return this.photos[this.currentPhoto];
         }
     },
     getters: {
-        getCurrentPhoto(state) {
-            return state.photos[state.currentPhoto];
-        },
         getScore(state) {
             return state.score;
         },
@@ -98,12 +173,22 @@ export const useGameStore = defineStore('game', {
         },
         getGameConfig(state) {
             return { defaultCoordinates: state.defaultCoordinates, time: state.time, distance: state.distance };
+        },
+        zoomLevel(state) {
+            if (state.distance <= 0.25) {
+                return 13;
+            } else if (state.distance >= 50) {
+                return 2;
+            } else {
+                const zoomLevel = 18 - (state.distance - 0.25) * (17 / (50 - 0.25));
+                return Math.min(zoomLevel, 13); 
+            }
         }
     },
     persist: {
         enabled: true,
         strategies: [
-            { storage: localStorage, paths: ['GameJWT', 'photos', 'currentPhoto', 'defaultCoordinates', 'guesses', 'score', 'time'] }
+            { storage: localStorage, paths: ['GameJWT', 'currentPhoto', 'defaultCoordinates', 'guesses', 'score', 'time', 'distance', 'sequenceId'] }
         ]
     }
 })

@@ -34,7 +34,7 @@ return [
     },
 
     AuthMiddleware::class => function (ContainerInterface $c) {
-        return new AuthMiddleware($c->get('client_auth'));
+        return new AuthMiddleware($c->get('client_authn'));
     },
 
 
