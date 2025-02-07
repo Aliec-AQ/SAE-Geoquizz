@@ -49,6 +49,7 @@ return function(App $app): App {
         ->setName('postReplaySequence');
 
     $app->put('/sequences/{idSequence}/status[/]', GeneriqueGeoQuizzAction::class)
+        ->add(AuthMiddleware::class)
         ->setName('putStatusSequences');
 
     $app->get('/users/games[/]', GeneriqueGeoQuizzAction::class)
@@ -59,6 +60,7 @@ return function(App $app): App {
         ->setName('createUser');
     
     $app->get('/series/{id}/highscore[/]', GeneriqueGeoQuizzAction::class)
+        ->add(AuthMiddleware::class)
         ->setName('getHighscore');
 
     /*************************
