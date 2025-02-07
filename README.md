@@ -7,14 +7,14 @@ SAE geoquizz
 - [Quilliec Amaury](https://github.com/Aliec-AQ)
 - [Bruson Paul](https://github.com/Dr-J-Watson)
 
-  ## URLs de l'application
-  - [api auth](http://docketu.iutnc.univ-lorraine.fr:35622/)
-  - [api jeu](http://docketu.iutnc.univ-lorraine.fr:35623/)
-  - [mail catcher](http://docketu.iutnc.univ-lorraine.fr:35628/)
-  - [directus](http://docketu.iutnc.univ-lorraine.fr:35630/)
-  - [application front-end](http://docketu.iutnc.univ-lorraine.fr:35633/)
-  - [rabbitMQ](http://docketu.iutnc.univ-lorraine.fr:35626/)
-  - [adminer](http://docketu.iutnc.univ-lorraine.fr:35629/)
+## URLs de l'application
+- [api auth](http://docketu.iutnc.univ-lorraine.fr:35622/)
+- [api jeu](http://docketu.iutnc.univ-lorraine.fr:35623/)
+- [mail catcher](http://docketu.iutnc.univ-lorraine.fr:35628/)
+- [directus](http://docketu.iutnc.univ-lorraine.fr:35630/)
+- [application front-end](http://docketu.iutnc.univ-lorraine.fr:35633/)
+- [rabbitMQ](http://docketu.iutnc.univ-lorraine.fr:35626/)
+- [adminer](http://docketu.iutnc.univ-lorraine.fr:35629/)
 
 ## Instalation :
 
