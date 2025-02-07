@@ -28,34 +28,34 @@ $callback = function(AMQPMessage $msg) {
     switch ($msgJson['action']){
         case 'finish_game':
             $subject = "Vous avez fini une partie !";
-            $corps= `<h2>Bravo !</h2>
+            $corps= "<h2>Bravo !</h2>
                     <p>Vous avez terminé la partie !</p>
-                    <p>Votre score est de : ${msgJson['score']}</p>
+                    <p>Votre score est de : {$msgJson['score']}</p>
                     <footer>
                         <p>Merci de jouer à notre jeu.</p>
                         <p>L'équipe GeoQuizz</p>
-                        <p><a href="http://docketu.iutnc.univ-lorraine.fr:35623/">Visitez notre site</a></p>
-                    </footer>`;
+                        <p><a href=\"http://docketu.iutnc.univ-lorraine.fr:35623/\">Visitez notre site</a></p>
+                    </footer>";
             break;
         case 'newGame':
             $subject = "Nouvelle partie !";
-            $corps=`<h2>Vous avez créer une nouvelle partie de geoquizz !</h2>
+            $corps="<h2>Vous avez créer une nouvelle partie de geoquizz !</h2>
                     <p>Nous vous enverrons un mail dès que la partie sera terminée.</p>
                     <footer>
                         <p>Merci de jouer à notre jeu.</p>
                         <p>L'équipe GeoQuizz</p>
-                        <p><a href="http://docketu.iutnc.univ-lorraine.fr:35623/">Visitez notre site</a></p>
-                    </footer>`;
+                        <p><a href=\"http://docketu.iutnc.univ-lorraine.fr:35623/\">Visitez notre site</a></p>
+                    </footer>";
             break;
         case 'replayGame':
             $subject = "Rejouer une sequence !";
-            $corps = `<h2>Vous avez décidé de rejouer une séquence !</h2>
+            $corps = "<h2>Vous avez décidé de rejouer une séquence !</h2>
                     <p>Vous allez recevoir un mail dès que la partie sera terminée.</p>
                     <footer>
                         <p>Merci de jouer à notre jeu.</p>
                         <p>L'équipe GeoQuizz</p>
-                        <p><a href="http://docketu.iutnc.univ-lorraine.fr:35623/">Visitez notre site</a></p>
-                    </footer>`;
+                        <p><a href=\"http://docketu.iutnc.univ-lorraine.fr:35623/\">Visitez notre site</a></p>
+                    </footer>";
             break;
         default:
             $subject = "Action inconnue";
