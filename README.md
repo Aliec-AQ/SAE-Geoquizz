@@ -18,7 +18,7 @@ SAE geoquizz
 
 ## Instalation :
 
-Par micro services :
+A mettre en place par micro services :
 
 - api-auth
   - ini : auth.db.ini
@@ -40,11 +40,13 @@ Par micro services :
  
 ## Répartition des taches :
 
+*Nous nous sommes tous intéressés à chaque partie, mais ce sont les parties sur lesquelles chacun a le plus travaillé.*
+
 |  |  |
 |--------------|--------|
 | Frontend | Amaury QUILLIEC |
 | Backend | Clément NETANGE / Kévin ETIQUE |
-| Directus/db/infrastructure/déployement | Paul BRESON |
+| Directus/db/infrastructure/déployement | Paul BRUSON |
 
 ## Routes :
 
