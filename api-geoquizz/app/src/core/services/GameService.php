@@ -110,7 +110,7 @@ class GameService implements GameServiceInterface
                 $images[] = $this->mapsRepository->getPhotoByID($id);
             }
             $sequence->setPhotos($images);
-            $game = $this->gameRepository->createGame($sequence, $idUser);
+            $game = $this->gameRepository->createGameReplay($sequence, $idUser);
             return $game->toDTO();
         }catch (\Exception $e){
             throw new \Exception($e->getMessage());

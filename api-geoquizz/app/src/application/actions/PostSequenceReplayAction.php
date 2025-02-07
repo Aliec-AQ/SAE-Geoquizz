@@ -64,7 +64,6 @@ class PostSequenceReplayAction extends AbstractAction
             $msg= [
                 'action' => 'replayGame',
                 'mail' => $mail,
-                'game' => $game
             ];
 
             try {

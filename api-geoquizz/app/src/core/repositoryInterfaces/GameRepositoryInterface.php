@@ -30,4 +30,5 @@ interface GameRepositoryInterface
     public function getSequenceById(?string $id): Sequence;
     public function ajouterPlayer(Player $p) : void;
     public function getHighscoreForUserBySerie(string $idSerie, string $idUser): int;
+    public function createGameReplay(Sequence $sequence, string $playerId): Game;
 }

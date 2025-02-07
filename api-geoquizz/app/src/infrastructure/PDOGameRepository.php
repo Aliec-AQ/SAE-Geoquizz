@@ -46,7 +46,7 @@ class PDOGameRepository implements GameRepositoryInterface
         }
     }
 
-    public function createGame(Sequence $sequence,?string $playerId): Game
+    public function createGame(Sequence $sequence,string $playerId): Game
     {
         try {
             $idSequence = $sequence->getId();
@@ -327,6 +327,38 @@ class PDOGameRepository implements GameRepositoryInterface
             return $row['score'];
         }catch (\Exception $e){
             throw new GameRepositoryException("Impossible de trouver le highscore");
+        }
+    }
+
+    public function createGameReplay(Sequence $sequence, ?string $playerId): Game
+    {
+        try {
+            $date = date('Y-m-d H:i:s');
+            $idSequence = $sequence->getId();
+
+
+            $stmt = $this->pdo->prepare('INSERT INTO players_sequences (player_id, sequence_id, date) VALUES (?,?,?) RETURNING id');
+            $stmt->bindParam(1, $playerId);
+            $stmt->bindParam(2, $idSequence);
+            $stmt->bindParam(3, $date);
+            $stmt->execute();
+            $row = $stmt->fetch();
+        }catch (\Exception $e){
+            throw new GameRepositoryException("Impossible de créer la partie");
+        }
+
+        if($row) {
+            $game = new Game(
+                $playerId,
+                $sequence->serie_id,
+                $sequence,
+                0,
+                false
+            );
+            $game->setId($row['id']);
+            return $game;
+        } else {
+            throw new RepositoryEntityNotFoundException("Game not found");
         }
     }
 }

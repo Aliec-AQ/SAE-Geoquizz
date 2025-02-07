@@ -60,14 +60,22 @@ class PostGameAction extends AbstractAction
             "game" => $game
         ];
 
-        $mail = $this->authorisationService->playerEmail($idUser);
+        try {
+            $mail = $this->authorisationService->playerEmail($idUser);
+        }catch (\Exception $e){
+            throw new HttpBadRequestException($rq, $e->getMessage());
+        }
 
         $msg= [
             'action' => 'newGame',
-            'mail' => $mail
+            'mail' => $mail,
         ];
 
-        $this->MQRepository->publish($msg,'game');
+        try {
+            $this->MQRepository->publish($msg,'game');
+        }catch (\Exception $e){
+            throw new HttpBadRequestException($rq, $e->getMessage());
+        }
 
         $rs->getBody()->write(json_encode($res));
         return $rs->withHeader('Content-Type', 'application/json');
