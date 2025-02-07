@@ -21,74 +21,107 @@ class GameService implements GameServiceInterface
 
     public function createGame(string $idserie, string $idUser): GameDTO
     {
-        $imagesInfos = $this->mapsRepository->getImagesRandoms($idserie);
-        $sequence = $this->gameRepository->createSequence($idserie,$imagesInfos);
-        $game = $this->gameRepository->createGame($sequence,$idUser);
-        $gameDTO = $game->toDTO();
-        return $gameDTO;
+        try {
+            $imagesInfos = $this->mapsRepository->getImagesRandoms($idserie);
+            $sequence = $this->gameRepository->createSequence($idserie,$imagesInfos);
+            $game = $this->gameRepository->createGame($sequence,$idUser);
+            $gameDTO = $game->toDTO();
+            return $gameDTO;
+        }catch (\Exception $e){
+            throw new \Exception($e->getMessage());
+        }
     }
 
     public function getPublicSequences(): array
     {
-        $sequences = $this->gameRepository->getPublicSequences();
-        $sequencesHighScore = $this->gameRepository->getHighScore($sequences);
-        $sequencesTheme = $this->mapsRepository->getThemesBySequences($sequences);
+        try {
+            $sequences = $this->gameRepository->getPublicSequences();
+            $sequencesHighScore = $this->gameRepository->getHighScore($sequences);
+            $sequencesTheme = $this->mapsRepository->getThemesBySequences($sequences);
 
-        $publicSequences = [];
-        foreach ($sequences as $sequence) {
-            $publicSequences[] = new PublicSequencesDTO($sequence->ID, $sequence->serie_id, $sequencesTheme[$sequence->ID], $sequencesHighScore[$sequence->ID]);
+            $publicSequences = [];
+            foreach ($sequences as $sequence) {
+                $publicSequences[] = new PublicSequencesDTO($sequence->ID, $sequence->serie_id, $sequencesTheme[$sequence->ID], $sequencesHighScore[$sequence->ID]);
+            }
+            return $publicSequences;
+        }catch (\Exception $e){
+            throw new \Exception($e->getMessage());
         }
-        return $publicSequences;
     }
 
 
     public function changeSequenceStatus(string $idSequence): void
     {
-        $this->gameRepository->changeSequenceStatus($idSequence);
+        try {
+
+            $this->gameRepository->changeSequenceStatus($idSequence);
+        }catch (\Exception $e){
+            throw new \Exception($e->getMessage());
+        }
     }
 
     public function finishGame(string $idGame, int $score): void
     {
-        $this->gameRepository->finishGame($idGame, $score);
+        try {
+            $this->gameRepository->finishGame($idGame, $score);
+        }catch (\Exception $e){
+            throw new \Exception($e->getMessage());
+        }
     }
 
     public function historiqueGames(string $userId): array
     {
-        $historique =  $this->gameRepository->historiqueGames($userId);
-        $games = [];
-        foreach ($historique as $game) {
-            $games[] = $this->gameRepository->gameById($game['id'])->toDTO();
+        try {
+            $historique =  $this->gameRepository->historiqueGames($userId);
+            $games = [];
+            foreach ($historique as $game) {
+                $games[] = $this->gameRepository->gameById($game['id'])->toDTO();
+            }
+            return $games;
+        }catch (\Exception $e){
+            throw new \Exception($e->getMessage());
         }
-        return $games;
     }
 
     public function gameById(string $id): GameDTO
     {
-        $game = $this->gameRepository->gameById($id);
-        $images = $this->gameRepository->getIDPhotosByIDSequence($game->sequence->ID);
-        $photos = [];
-        foreach ($images as $id) {
-            $photos[] = $this->mapsRepository->getPhotoByID($id);
+        try {
+            $game = $this->gameRepository->gameById($id);
+            $images = $this->gameRepository->getIDPhotosByIDSequence($game->sequence->ID);
+            $photos = [];
+            foreach ($images as $id) {
+                $photos[] = $this->mapsRepository->getPhotoByID($id);
+            }
+            $game->sequence->setPhotos($photos);
+            return $game->toDTO();
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
         }
-        $game->sequence->setPhotos($photos);
-        return $game->toDTO();
     }
 
     public function replaySequence(string $idSequence, ?string $idUser): GameDTO
     {
-        $sequence = $this->gameRepository->getSequenceById($idSequence);
-        $imagesIds = $this->gameRepository->getIDPhotosByIDSequence($idSequence);
-        $images = [];
-        foreach ($imagesIds as $id) {
-            $images[] = $this->mapsRepository->getPhotoByID($id);
+        try {
+            $sequence = $this->gameRepository->getSequenceById($idSequence);
+            $imagesIds = $this->gameRepository->getIDPhotosByIDSequence($idSequence);
+            $images = [];
+            foreach ($imagesIds as $id) {
+                $images[] = $this->mapsRepository->getPhotoByID($id);
+            }
+            $sequence->setPhotos($images);
+            $game = $this->gameRepository->createGame($sequence, $idUser);
+            return $game->toDTO();
+        }catch (\Exception $e){
+            throw new \Exception($e->getMessage());
         }
-        $sequence->setPhotos($images);
-        $game = $this->gameRepository->createGame($sequence, $idUser);
-        return $game->toDTO();
     }
 
     public function getHighscore(string $idSerie, $idUser): int
     {
-        return $this->gameRepository->getHighscoreForUserBySerie($idSerie, $idUser);
+        try {
+            return $this->gameRepository->getHighscoreForUserBySerie($idSerie, $idUser);
+        }catch (\Exception $e){
+            throw new \Exception($e->getMessage());
+        }
     }
 }
