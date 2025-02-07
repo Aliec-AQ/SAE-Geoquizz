@@ -12,22 +12,23 @@ import Toast from "vue-toastification";
 import App from '@/App.vue'
 import router from '@/router'
 
+const url = import.meta.env.VITE_API_URL
 const app = createApp(App)
 
 //setup api
 app.use(api, {
-    baseURL: 'http://localhost:35621/',
+    baseURL: url,
 })
 
 //setup pinia
 const pinia = createPinia()
 pinia.use(piniaPersist)
 pinia.use(({ store }) => {
-    store.$imageApiUrl = 'http://localhost:35621/assets/';
+    store.$imageApiUrl = url + "assets/";
     store.$api = app.config.globalProperties.$api;
 });
 
-app.use(Toast,{
+app.use(Toast, {
     position: "bottom-right"
 })
 app.use(pinia)

@@ -11,7 +11,8 @@ use Slim\Exception\HttpUnauthorizedException;
 class Cors{
 
     private $allowedOrigins = [
-        'http://localhost:5173',
+        'http://localhost:35633',
+        'http://docketu.iutnc.univ-lorraine.fr:35633'
     ];
 
     /**
