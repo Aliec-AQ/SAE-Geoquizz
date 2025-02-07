@@ -18,6 +18,7 @@ use geoquizz\application\providers\tokenPartie\JWTManager;
 use geoquizz\core\repositoryInterfaces\AuthRepositoryInterface;
 use geoquizz\core\repositoryInterfaces\GameRepositoryInterface;
 use geoquizz\core\repositoryInterfaces\MapsRepositoryInterface;
+use geoquizz\core\repositoryInterfaces\RabbitMQRepositoryInterface;
 use geoquizz\core\services\AuthorisationService;
 use geoquizz\core\services\AuthorisationServiceInterface;
 use geoquizz\core\services\GameService;
@@ -26,6 +27,7 @@ use geoquizz\core\services\TokenPartieService;
 use geoquizz\core\services\TokenPartieServiceInterface;
 use geoquizz\infrastructure\AdapterAuthRepository;
 use geoquizz\infrastructure\AdapterMapsRepository;
+use geoquizz\infrastructure\AdapterRabbitMQ;
 use geoquizz\infrastructure\PDOGameRepository;
 use Psr\Container\ContainerInterface;
 
@@ -49,6 +51,10 @@ return [
         return new AdapterAuthRepository($container->get('client_auth'));
     },
 
+    RabbitMQRepositoryInterface::class => function(ContainerInterface $container) {
+        return new AdapterRabbitMQ($container->get('channel'));
+    },
+
     //services
     GameServiceInterface::class => function(ContainerInterface $container) {
         return new GameService($container->get(GameRepositoryInterface::class), $container->get(MapsRepositoryInterface::class));
@@ -70,7 +76,7 @@ return [
 
     //actions
     PostGameAction::class => function (ContainerInterface $container) {
-    return new PostGameAction($container->get(GameServiceInterface::class), $container->get(TokenPartieProviderInterface::class));
+    return new PostGameAction($container->get(GameServiceInterface::class), $container->get(TokenPartieProviderInterface::class), $container->get(RabbitMQRepositoryInterface::class), $container->get(AuthorisationServiceInterface::class));
     },
 
     GetPublicSequencesAction::class => function (ContainerInterface $container) {
@@ -82,7 +88,7 @@ return [
     },
 
     PutFinishGameAction::class => function (ContainerInterface $container) {
-        return new PutFinishGameAction($container->get(GameServiceInterface::class));
+        return new PutFinishGameAction($container->get(GameServiceInterface::class),$container->get(RabbitMQRepositoryInterface::class),$container->get(AuthorisationServiceInterface::class));
     },
 
     GetHistoriqueGameAction::class => function (ContainerInterface $container) {

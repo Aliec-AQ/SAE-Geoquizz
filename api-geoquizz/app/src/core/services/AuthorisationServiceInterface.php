@@ -9,4 +9,6 @@ interface AuthorisationServiceInterface
     public function  playerID(string $token):string;
 
     public function creationPlayer(InputPlayerDTO $ipd): void;
+
+    public function playerEmail(string $idplayer): string;
 }

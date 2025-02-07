@@ -231,13 +231,15 @@ class PDOGameRepository implements GameRepositoryInterface
         }
     }
 
-    public function finishGame(string $idGame, $score): void
+    public function finishGame(string $idGame, $score): string
     {
         try {
-            $stmt = $this->pdo->prepare('UPDATE players_sequences SET score = ?, status = true WHERE id = ?');
+            $stmt = $this->pdo->prepare('UPDATE players_sequences SET score = ?, status = true WHERE id = ? RETURNING player_id');
             $stmt->bindParam(1, $score);
             $stmt->bindParam(2, $idGame);
             $stmt->execute();
+            $row = $stmt->fetch();
+            return $row['player_id'];
         }catch (\Exception $e){
             throw new GameRepositoryException("Impossible de finir la partie");
         }

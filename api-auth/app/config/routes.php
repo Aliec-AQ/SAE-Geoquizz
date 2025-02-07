@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use geoquizz_auth\application\actions\GetPlayerIDAction;
+use geoquizz_auth\application\actions\GetUserMailAction;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\App;
@@ -23,6 +24,9 @@ return function( App $app): App {
     $app->post('/register[/]',RegisterAction::class)
         ->setName('tokenRegister');
 
+    $app->get('/users/mail',GetUserMailAction::class)
+        ->setName('getUserMail');
+
     $app->post('/token/refresh[/]',RefreshAction::class)
         ->setName('tokenRefresh');
 
@@ -31,6 +35,7 @@ return function( App $app): App {
 
     $app->get('/token/playerID[/]',GetPlayerIDAction::class)
         ->setName('getPlayerID');
+
 
     return $app;
 };

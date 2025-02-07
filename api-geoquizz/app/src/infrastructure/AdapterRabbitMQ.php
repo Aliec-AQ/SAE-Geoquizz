@@ -2,10 +2,11 @@
 
 namespace geoquizz\infrastructure;
 
+use geoquizz\core\repositoryInterfaces\RabbitMQRepositoryInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Channel\AMQPChannel;
 
-class AdapterRabbitMQ
+class AdapterRabbitMQ implements RabbitMQRepositoryInterface
 {
     private AMQPChannel $channel;
 

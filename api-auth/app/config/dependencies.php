@@ -1,6 +1,7 @@
 <?php
 
 use geoquizz_auth\application\actions\GetPlayerIDAction;
+use geoquizz_auth\application\actions\GetUserMailAction;
 use geoquizz_auth\core\repositoryInterfaces\GeoquizzRepositoryInterface;
 use geoquizz_auth\infrastructure\adaptater\AdapterGeoquizzRepository;
 use Psr\Container\ContainerInterface;
@@ -63,6 +64,10 @@ return [
 
     GetPlayerIDAction::class => function(ContainerInterface $c){
         return new GetPlayerIDAction($c->get(AuthProviderInterface::class));
+    },
+
+    GetUserMailAction::class => function(ContainerInterface $c){
+    return new GetUserMailAction($c->get(UserServiceInterface::class));
     }
 
 ];
