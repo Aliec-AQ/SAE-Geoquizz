@@ -9,7 +9,7 @@ interface GameServiceInterface
     public function createGame(string $idserie, string $idUser) : GameDTO;
     public function getPublicSequences(): array;
     public function changeSequenceStatus(string $idSequence): void;
-    public function finishGame(string $idGame, int $score): string;
+    public function finishGame(string $idGame, int $score): ?string;
     public function historiqueGames(string $userId): array;
     public function gameById(string $id): GameDTO;
     public function replaySequence(string $idSequence, ?string $idUser): GameDTO;

@@ -60,7 +60,7 @@ class GameService implements GameServiceInterface
         }
     }
 
-    public function finishGame(string $idGame, int $score): string
+    public function finishGame(string $idGame, int $score): ?string
     {
         try {
             $player_id = $this->gameRepository->finishGame($idGame, $score);

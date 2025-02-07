@@ -43,24 +43,26 @@ class PutFinishGameAction extends AbstractAction
         }
 
 
-        try {
-            $player_id = $this->gameService->finishGame($idGame, $score);
-            $mail = $this->authorisationService->playerEmail($player_id);
-        }catch (\Exception $e){
-            throw new HttpBadRequestException($rq, $e->getMessage());
-        }
+            try {
+                $player_id = $this->gameService->finishGame($idGame, $score);
+
+            } catch (\Exception $e) {
+                throw new HttpBadRequestException($rq, $e->getMessage());
+            }
 
 
-        $msg = [
-            'action' => 'finish_game',
-            'mail' => $mail,
-            'score' => $score
-        ];
-
-        try{
-            $this->rabbitMQRep->publish($msg, 'game');
-        }catch (Exception $e){
-            throw new HttpBadRequestException($rq,'erreur lors de l envoi de msg '. $e->getMessage());
+        if($player_id != null) {
+            try{
+                $mail = $this->authorisationService->playerEmail($player_id);
+                $msg = [
+                    'action' => 'finish_game',
+                    'mail' => $mail,
+                    'score' => $score
+                ];
+                $this->rabbitMQRep->publish($msg, 'game');
+            }catch (Exception $e){
+                throw new HttpBadRequestException($rq,'erreur lors de l envoi de msg '. $e->getMessage());
+            }
         }
 
         return $rs->withHeader('Content-Type', 'application/json');

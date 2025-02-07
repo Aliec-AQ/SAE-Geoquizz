@@ -231,7 +231,7 @@ class PDOGameRepository implements GameRepositoryInterface
         }
     }
 
-    public function finishGame(string $idGame, $score): string
+    public function finishGame(string $idGame, $score): ?string
     {
         try {
             $stmt = $this->pdo->prepare('UPDATE players_sequences SET score = ?, status = true WHERE id = ? RETURNING player_id');
