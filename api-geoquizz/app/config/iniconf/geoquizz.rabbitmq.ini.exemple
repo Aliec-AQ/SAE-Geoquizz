@@ -1,0 +1,4 @@
+host=rabbitmq
+port=5672
+user=admin
+password="@dm1#!"
